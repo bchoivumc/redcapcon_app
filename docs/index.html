@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REDCapCon Schedule API</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1 { color: #333; }
+        .endpoint {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        code {
+            background: #e0e0e0;
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+        a { color: #0066cc; }
+    </style>
+</head>
+<body>
+    <h1>REDCapCon 2026 Schedule API</h1>
+    <p>This page hosts the auto-updating schedule data for the REDCapCon mobile app.</p>
+
+    <div class="endpoint">
+        <h3>API Endpoint</h3>
+        <p><a href="schedule_2026_api.json">schedule_2026_api.json</a></p>
+        <p>Returns the complete 2026 conference schedule in JSON format.</p>
+    </div>
+
+    <h3>Data Format</h3>
+    <pre><code>{
+  "year": 2026,
+  "lastUpdated": "2026-04-04T22:25:47.440Z",
+  "source": "https://redcap.vumc.org/surveys/...",
+  "sessionCount": 102,
+  "sessions": [
+    {
+      "id": "2026-1",
+      "title": "Session Title",
+      "description": "...",
+      "startTime": "2026-08-31T18:00:00.000Z",
+      "endTime": "2026-08-31T21:30:00.000Z",
+      "type": "Workshop",
+      "audience": "All",
+      "speaker": "Speaker Name",
+      "location": "Room Name",
+      "tags": []
+    }
+  ]
+}</code></pre>
+
+    <h3>Usage</h3>
+    <p>The mobile app automatically fetches this data to stay synchronized with the latest conference schedule.</p>
+
+    <p><small>Last updated: <span id="lastUpdated">Loading...</span></small></p>
+
+    <script>
+        fetch('schedule_2026_api.json')
+            .then(r => r.json())
+            .then(data => {
+                document.getElementById('lastUpdated').textContent =
+                    new Date(data.lastUpdated).toLocaleString();
+            });
+    </script>
+</body>
+</html>

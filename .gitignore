@@ -46,3 +46,9 @@ app.*.map.json
 
 # FVM Version Cache
 .fvm/
+
+# Scripts intermediate files (keep the API JSON for hosting)
+scripts/schedule_parsed.json
+scripts/schedule_rendered.html
+scripts/schedule_raw.html
+scripts/node_modules/

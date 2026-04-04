@@ -1,10 +1,6 @@
-Launching browser...
-Loading: https://redcap.vumc.org/surveys/?__report=Y7EMJR9L797FTX83
-Waiting for content to load...
-Scraped 102 sessions
 {
   "year": 2026,
-  "lastUpdated": "2026-04-04T22:25:47.440Z",
+  "lastUpdated": "2026-04-04T22:52:06.116Z",
   "source": "https://redcap.vumc.org/surveys/?__report=Y7EMJR9L797FTX83",
   "sessionCount": 102,
   "sessions": [

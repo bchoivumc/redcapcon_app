@@ -4,9 +4,8 @@ import '../models/session.dart';
 
 /// Service to fetch schedule from hosted JSON API
 class JsonApiService {
-  // TODO: Replace with your actual hosted JSON URL
-  // Options: GitHub Pages, your website, S3, etc.
-  static const String apiUrl = 'https://YOUR_DOMAIN/schedule_2026_api.json';
+  // GitHub Pages hosted JSON - auto-updates when schedule changes
+  static const String apiUrl = 'https://bchoivumc.github.io/redcapcon_app/schedule_2026_api.json';
 
   /// Fetch schedule from JSON API
   Future<List<Session>> fetchSchedule() async {

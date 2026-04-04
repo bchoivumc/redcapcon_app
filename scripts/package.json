@@ -1,0 +1,16 @@
+{
+  "name": "redcapcon-scraper",
+  "version": "1.0.0",
+  "description": "Web scraper for REDCap Conference schedule",
+  "type": "module",
+  "scripts": {
+    "scrape": "node scrape.js",
+    "convert": "node convert_to_dart.js",
+    "update": "npm run scrape && npm run convert",
+    "server": "node api_server.js"
+  },
+  "dependencies": {
+    "express": "^5.2.1",
+    "puppeteer": "^22.0.0"
+  }
+}

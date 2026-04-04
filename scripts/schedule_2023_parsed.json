@@ -1,0 +1,1002 @@
+[
+  {
+    "date": "Sunday, September 10, 2023",
+    "time": "15:00",
+    "title": "18:30",
+    "description": "Grand Foyer and Fifth Ave\n4th floor",
+    "type": "Registration/Conference Check-In",
+    "audience": "Registration and Check-in for Conference Attendees\n\n(All Attendees) Note: Required only once.",
+    "speaker": "",
+    "location": "Activity (Misc)"
+  },
+  {
+    "date": "Sunday, September 10, 2023",
+    "time": "16:00",
+    "title": "17:00",
+    "description": "Grand Ballroom III\n4th floor",
+    "type": "New Administrator Welcome (NAW) *pre-registered attendees only*",
+    "audience": "This session is geared towards new REDCap administrators attending REDCapCon for the first time. During the session we welcome new admins to the conference, get them connected to start building relationships and oriented with the REDCap consortium and resources.\n\n(New Administrators)",
+    "speaker": "Various REDCap Veterans",
+    "location": "Discussion"
+  },
+  {
+    "date": "Sunday, September 10, 2023",
+    "time": "16:00",
+    "title": "17:00",
+    "description": "Grand Foyer\n4th floor",
+    "type": "Not-So-New Admin Welcome *anyone can attend*",
+    "audience": "Informal social opportunity to play a game and meet other attendees (light refreshments provided)\n\n\n\n(All Attendees)",
+    "speaker": "",
+    "location": "Activity (Misc)"
+  },
+  {
+    "date": "Sunday, September 10, 2023",
+    "time": "16:00",
+    "title": "18:00",
+    "description": "Grand Crescent\n4th floor",
+    "type": "Installing a Local REDCap Instance",
+    "audience": "Installing a Local REDCap Instance: How-To / Walkthrough for installing REDCap on your laptop. Only needed if you are attending coding/external modules sessions\n\n(Technical)",
+    "speaker": "Brian Main",
+    "location": "Optional Pre-/Post- Session Assistance"
+  },
+  {
+    "date": "Sunday, September 10, 2023",
+    "time": "18:30",
+    "title": "19:00",
+    "description": "Seattle Center Monorail (transportation)",
+    "type": "Travel from Westin Hotel to Pacific Science Center for Welcome Dinner",
+    "audience": "Note: For transportation, we will have a block of tickets reserved for the Seattle Center Monorail (1 block from the hotel). It's a quick 3-5 minute ride. Please plan to start boarding between 6:30-6:45pm. From the monorail station at the Seattle Center it's another 5 minute-ish walk to the Science Center.\n\n(All Attendees)",
+    "speaker": "",
+    "location": "Activity (Misc)"
+  },
+  {
+    "date": "Sunday, September 10, 2023",
+    "time": "19:00",
+    "title": "22:00",
+    "description": "Pacific Science Center: 200 2nd Ave N, Seattle, WA 98109",
+    "type": "Welcome Dinner & MVP Award Announcement",
+    "audience": "Kickoff dinner, welcome to Con from the Hosts, and this year's REDCap MVP Award Announcement!\n\n(All Attendees)",
+    "speaker": "Bas de Veer, Courtney Howell, and Sean Mooney, University of Washington\n\nPaul Harris, Vanderbilt University Medical Center",
+    "location": "Activity (Misc)"
+  },
+  {
+    "date": "Monday, September 11, 2023",
+    "time": "07:00",
+    "title": "08:15",
+    "description": "Grand Crescent\n4th floor",
+    "type": "Installing a Local REDCap Instance - Cont'd",
+    "audience": "Optional ad hoc small group session as a continuation of the pre-con afternoon session, \"Install a Local REDCap Instance\" for anyone who could not attend the previous session or who would like some extra guidance.\n\n(Technical)",
+    "speaker": "Brian Main",
+    "location": "Optional Pre-/Post- Session Assistance"
+  },
+  {
+    "date": "Monday, September 11, 2023",
+    "time": "07:30",
+    "title": "08:20",
+    "description": "Grand Ballroom III\n4th floor",
+    "type": "Breakfast",
+    "audience": "",
+    "speaker": "",
+    "location": "Break"
+  },
+  {
+    "date": "Monday, September 11, 2023",
+    "time": "07:30",
+    "title": "08:20",
+    "description": "Grand Foyer\n4th floor",
+    "type": "Late Conference Check-In",
+    "audience": "Check-in for the Conference if you did not already check-in previously\n\n(All Attendees) Note: Required only once.",
+    "speaker": "",
+    "location": "Activity (Misc)"
+  },
+  {
+    "date": "Monday, September 11, 2023",
+    "time": "08:20",
+    "title": "08:30",
+    "description": "Grand Ballroom I & II\n4th floor",
+    "type": "Opening Remarks",
+    "audience": "(All Attendees)",
+    "speaker": "Bas de Veer and Courtney Howell\nUniversity of Washington",
+    "location": "Plenary"
+  },
+  {
+    "date": "Monday, September 11, 2023",
+    "time": "08:30",
+    "title": "09:00",
+    "description": "Grand Ballroom I & II\n4th floor",
+    "type": "REDCap Facilitated Research for the Prevention of Sudden Cardiac Death in Athletes",
+    "audience": "(All Attendees)",
+    "speaker": "Jonathan A. Drezner M.D. UW Medicine Center for Sports Cardiology",
+    "location": "Keynote"
+  },
+  {
+    "date": "Monday, September 11, 2023",
+    "time": "09:00",
+    "title": "09:45",
+    "description": "Grand Ballroom I & II\n4th floor",
+    "type": "REDCap Consortium: A Year in Review",
+    "audience": "(All Attendees)",
+    "speaker": "Paul Harris Vanderbilt University Medical Center",
+    "location": "Plenary"
+  },
+  {
+    "date": "Monday, September 11, 2023",
+    "time": "09:45",
+    "title": "10:30",
+    "description": "Grand Ballroom I & II\n4th floor",
+    "type": "REDCap Software: What's New & What's Next",
+    "audience": "REDCap Software: What's New and What's Next\n\n(All Attendees)",
+    "speaker": "Rob Taylor\nManager of Application Development\nVanderbilt University Medical Center",
+    "location": "Plenary"
+  },
+  {
+    "date": "Monday, September 11, 2023",
+    "time": "10:30",
+    "title": "10:45",
+    "description": "",
+    "type": "15-Minute Break",
+    "audience": "",
+    "speaker": "",
+    "location": "Break"
+  },
+  {
+    "date": "Monday, September 11, 2023",
+    "time": "10:45",
+    "title": "10:50",
+    "description": "Grand Ballroom I & II\n4th floor",
+    "type": "All-Star Awards",
+    "audience": "Appreciation awards for some of our most active members\n\n\n\n(All Attendees)",
+    "speaker": "Brenda Minor",
+    "location": "Plenary"
+  },
+  {
+    "date": "Monday, September 11, 2023",
+    "time": "10:50",
+    "title": "11:20",
+    "description": "Grand Ballroom I & II\n4th floor",
+    "type": "Creative Uses of REDCap I (Beginner level)",
+    "audience": "Creative and novel uses of REDCap strictly using basic REDCap functionality. No external modules, no hooks, no plugins, etc.\n\n(All Attendees)",
+    "speaker": "Creative Uses Team",
+    "location": "Plenary"
+  },
+  {
+    "date": "Monday, September 11, 2023",
+    "time": "11:20",
+    "title": "11:25",
+    "description": "Grand Ballroom I & II\n4th floor",
+    "type": "Stretch Break",
+    "audience": "Some quick morning stretches led by University of Washington's own Fred Dowd!",
+    "speaker": "Fred Dowd",
+    "location": "Break"
+  },
+  {
+    "date": "Monday, September 11, 2023",
+    "time": "11:25",
+    "title": "11:55",
+    "description": "Grand Ballroom I & II\n4th floor",
+    "type": "REDCap Specialized Features: What's New & What's Next?",
+    "audience": "High level overview of new and upcoming features for the REDCap Mobile App, MyCap, and CDIS\n\n\n\n(All Attendees)",
+    "speaker": "Alex Cheng",
+    "location": "Plenary"
+  },
+  {
+    "date": "Monday, September 11, 2023",
+    "time": "11:55",
+    "title": "13:00",
+    "description": "Grand Ballroom III\n4th floor",
+    "type": "Lunch Buffet",
+    "audience": "",
+    "speaker": "",
+    "location": "Break"
+  },
+  {
+    "date": "Monday, September 11, 2023",
+    "time": "13:00",
+    "title": "14:15",
+    "description": "Grand Ballroom I\n4th floor",
+    "type": "Advanced Logic and Complex Calculations in REDCap",
+    "audience": "This session will dive into complex calculations and a streamlined way to create them from start to finish. These admins will share with you strategies for designing complex calculations as well as for troubleshooting calculations written by others, how to address calculation performance issues, and other best practices.\n\n(Administrative)",
+    "speaker": "Chris Kadolph, Courtney Howell, Natalie Williams, and Günther Rezniczek",
+    "location": "Deep Dives"
+  },
+  {
+    "date": "Monday, September 11, 2023",
+    "time": "13:00",
+    "title": "14:15",
+    "description": "Grand Ballroom II\n4th floor",
+    "type": "When and How to Upgrade: A Panel Discussion",
+    "audience": "REDCap Upgrades are a part of every organization. How to upgrade, when to upgrade and who should be on your upgrade team will be covered. Upgrades in Windows and AWS will be reviewed.\n\n(Technical)",
+    "speaker": "Leila Deering, Joe Wick, Adam Mahama,, Andy Arenson, and Amanda Miller",
+    "location": "Deep Dives"
+  },
+  {
+    "date": "Monday, September 11, 2023",
+    "time": "14:15",
+    "title": "14:45",
+    "description": "",
+    "type": "30-Minute Break",
+    "audience": "",
+    "speaker": "",
+    "location": "Break"
+  },
+  {
+    "date": "Monday, September 11, 2023",
+    "time": "14:45",
+    "title": "16:00",
+    "description": "Grand Ballroom I\n4th floor",
+    "type": "Fundamentals: Improving the Survey Participant Experience",
+    "audience": "Tips and techniques for improving the visual presentation and flow of your surveys.\n\n(Both Technical & Administrative)",
+    "speaker": "Joe Wick, Michelle Cascio, Rachel Wenthe, and Laurie Bailey",
+    "location": "Deep Dives"
+  },
+  {
+    "date": "Monday, September 11, 2023",
+    "time": "14:45",
+    "title": "16:00",
+    "description": "Grand Ballroom II\n4th floor",
+    "type": "RSVC Validation Package - Manual and Automated Testing",
+    "audience": "The REDCap Software Validation Committee has been hard at work preparing documentation for 21 CFR Part 11 compliant REDCap. Join us to learn about how to use this package to set up a Part 11 compliant REDCap at your institution and how you can contribute to the consortium efforts in manual and automated testing.\n\n(Both Technical and Administrative)",
+    "speaker": "Theresa Baker, Teresa Bosler, Adam De Fouw, and Alex Cheng",
+    "location": "Deep Dives"
+  },
+  {
+    "date": "Monday, September 11, 2023",
+    "time": "14:45",
+    "title": "16:00",
+    "description": "Fifth Avenue\n4th floor",
+    "type": "REDCap + R: How to Do All the Things!",
+    "audience": "This workshop aims to introduce participants to an elegant and flexible approach to manipulate REDCap databases using the R programming language using the open-source REDCapR and REDCapTidieR packages. By the end of this workshop, participants will be able to extract data from REDCap into R, understanding the intricacies of the REDCap data structure, particularly in complex databases like longitudinal ones or those with repeated instruments. They will also understand how to leverage the REDCap API for advanced data tasks.\n\n\n(Technical)",
+    "speaker": "Stephan Kadauke and Will Beasley",
+    "location": "Deep Dives"
+  },
+  {
+    "date": "Monday, September 11, 2023",
+    "time": "16:00",
+    "title": "16:15",
+    "description": "",
+    "type": "15-Minute Break",
+    "audience": "15-Minute Break",
+    "speaker": "",
+    "location": "Break"
+  },
+  {
+    "date": "Monday, September 11, 2023",
+    "time": "16:15",
+    "title": "17:15",
+    "description": "Grand Ballroom III\n4th floor",
+    "type": "Engage and Empower",
+    "audience": "Opportunities for discussion with other administrators.\n\nBefore the session, please make your way to Grand Ballroom III. On your name badge, you'll find a number or symbol in the corner. At around 4:15, please sit at the corresponding table number or symbol that matches your name badge number.\n\nFor prompted conversation: CLICK HERE\n\nFor connection information: CLICK HERE\n\n\n\n\n(All Attendees)",
+    "speaker": "Brenda Minor and Leila Deering",
+    "location": "Activity (Misc)"
+  },
+  {
+    "date": "Monday, September 11, 2023",
+    "time": "19:00",
+    "title": "20:30",
+    "description": "Blakely\n3rd floor",
+    "type": "Optional After-Hours Session: Development Setup Help",
+    "audience": "Interested in attending the Coding/External Modules after-hours session or doing REDCap module development, but don't have a development environment set up? We can help you get setup with git and an IDE to make it possible for you to follow along with the coding session or contribute to modules.\n\n\n\n(Technical / Pre-Session Assitance)",
+    "speaker": "Mark McEver and Kyle McGuffin",
+    "location": "Optional Pre-/Post- Session Assistance"
+  },
+  {
+    "date": "Tuesday, September 12, 2023",
+    "time": "07:00",
+    "title": "08:00",
+    "description": "Fifth Avenue\n4th floor",
+    "type": "Optional Early Bird Yoga Session",
+    "audience": "Join us for an (optional) rejuvenating yoga session before starting the day\n\n\n\n(Activity)",
+    "speaker": "Fred Dowd",
+    "location": "Activity (Misc)"
+  },
+  {
+    "date": "Tuesday, September 12, 2023",
+    "time": "07:00",
+    "title": "08:00",
+    "description": "Grand Crescent\n4th floor",
+    "type": "Optional Early Bird Session: How to run REDCap in Europe with GDPR implementation",
+    "audience": "This session aims to explain the principles of the GDPR and how we strive to achieve optimal compliance for REDCap users and projects, with the current tools and applications REDCap provides. We do this by education, guidance and consultation throughout the study design process and by taking control over user rights management (viewing and exporting) in the production phase. We will also tackle some misconceptions on how strict the GDPR actually is and how GDPR relates to other standards in data protection and processing outside Europe.\n\n\n(Administrative)",
+    "speaker": "Wessel Sloof and Marloes Cardol",
+    "location": "Discussion"
+  },
+  {
+    "date": "Tuesday, September 12, 2023",
+    "time": "07:10",
+    "title": "07:50",
+    "description": "Grand Ballroom I & II\n4th floor",
+    "type": "Optional 'Early Bird' Session: Twilio to Mosio: Why and How Johns Hopkins made the switch.",
+    "audience": "Come join this presentation / discussion looking at Johns Hopkins University's REDCap transition from Twilio to Mosio: The Good, The Bad and The Ugly.\n\n(Both Technical & Administrative)",
+    "speaker": "Scott Carey",
+    "location": "Discussion"
+  },
+  {
+    "date": "Tuesday, September 12, 2023",
+    "time": "07:30",
+    "title": "08:20",
+    "description": "Grand Ballroom III\n4th floor",
+    "type": "Breakfast",
+    "audience": "",
+    "speaker": "",
+    "location": "Break"
+  },
+  {
+    "date": "Tuesday, September 12, 2023",
+    "time": "07:30",
+    "title": "08:20",
+    "description": "Grand Foyer\n4th floor",
+    "type": "Late Conference Check-In",
+    "audience": "Check-in for the Conference if you did not already check-in previously\n\n(All Attendees) (Note: Required only once.)",
+    "speaker": "",
+    "location": "Activity (Misc)"
+  },
+  {
+    "date": "Tuesday, September 12, 2023",
+    "time": "08:20",
+    "title": "08:30",
+    "description": "Grand Ballroom I & II\n4th floor",
+    "type": "Opening Remarks and Additional All-Star Awards",
+    "audience": "(All Attendees)",
+    "speaker": "VUMC / UW Team(s)",
+    "location": "Plenary"
+  },
+  {
+    "date": "Tuesday, September 12, 2023",
+    "time": "08:30",
+    "title": "08:50",
+    "description": "Grand Ballroom I & II\n4th floor",
+    "type": "Achieving Semantic Interoperability in Clinical Trials",
+    "audience": "(All Attendees)",
+    "speaker": "Yama F Mujadidi",
+    "location": "Plenary"
+  },
+  {
+    "date": "Tuesday, September 12, 2023",
+    "time": "08:50",
+    "title": "09:10",
+    "description": "Grand Ballroom I & II\n4th floor",
+    "type": "Accelerating Compliance: The RSVC Rapid Validation Approach for Meeting Regulatory Requirements in REDCap",
+    "audience": "Attendees with a basic understanding of REDCap will learn about the RSVC Rapid Validation, a collaborative effort between the consortium committee and Vanderbilt. This initiative focuses on integrating manual and automated feature testing into the RSVC Validation package, which is designed to help institutions meet regulatory requirements, including ICH E6 and 21 CFR Part 11.\n\n\n(All Attendees)",
+    "speaker": "Theresa Baker",
+    "location": "Plenary"
+  },
+  {
+    "date": "Tuesday, September 12, 2023",
+    "time": "09:10",
+    "title": "09:40",
+    "description": "Grand Ballroom I & II\n4th floor",
+    "type": "Leadership Panel: Looking Forward",
+    "audience": "REDCap Consortium MVP's give their perspectives on looking forward with REDCap\n\n\n\n(All Attendees)",
+    "speaker": "MVP Panel",
+    "location": "Plenary"
+  },
+  {
+    "date": "Tuesday, September 12, 2023",
+    "time": "09:40",
+    "title": "09:55",
+    "description": "",
+    "type": "15-Minute Break",
+    "audience": "",
+    "speaker": "",
+    "location": "Break"
+  },
+  {
+    "date": "Tuesday, September 12, 2023",
+    "time": "09:55",
+    "title": "10:15",
+    "description": "Grand Ballroom I & II\n4th floor",
+    "type": "Creative Uses of REDCap II (Intermediate level)",
+    "audience": "More examples of creative and novel uses of REDCap strictly using basic REDCap functionality (Intermediate level).\n\n\n\n(All Attendees)",
+    "speaker": "Creative Uses Team",
+    "location": "Plenary"
+  },
+  {
+    "date": "Tuesday, September 12, 2023",
+    "time": "10:15",
+    "title": "10:35",
+    "description": "Grand Ballroom I & II\n4th floor",
+    "type": "Preventing Bots and Fraudulent Participation in REDCap Surveys",
+    "audience": "With incentives becoming normalized in research, precautions must be taken to prevent human and automated fraudulent participation in REDCap surveys. Attendees will learn practical strategies to enhance survey security, protect data integrity, and ensure reliable participant responses from target populations.\n\n\n(All Attendees)",
+    "speaker": "Viktoriya Babicheva",
+    "location": "Plenary"
+  },
+  {
+    "date": "Tuesday, September 12, 2023",
+    "time": "10:35",
+    "title": "10:55",
+    "description": "Grand Ballroom I & II\n4th floor",
+    "type": "Strategic Platform Integration: REDCap and Leaf",
+    "audience": "Leaf is a homegrown cohort discovery tool that integrates closely with REDCap. We will demonstrate how this works for both the import and the export of data between Leaf and REDCap.\n\n\n\n(All Attendees)",
+    "speaker": "Nic Dobbins and Bas de Veer",
+    "location": "Plenary"
+  },
+  {
+    "date": "Tuesday, September 12, 2023",
+    "time": "10:55",
+    "title": "11:10",
+    "description": "Grand Ballroom I & II\n4th floor",
+    "type": "Instructions for Interactive Session, Setup, and Break",
+    "audience": "",
+    "speaker": "",
+    "location": "Activity (Misc)"
+  },
+  {
+    "date": "Tuesday, September 12, 2023",
+    "time": "11:10",
+    "title": "11:55",
+    "description": "Grand Ballroom I & II and Fifth Ave\n4th Floor",
+    "type": "Interactive Committees and Groups Fair",
+    "audience": "Committee Tables will be located in Fifth Ave Room (4th Floor)\nGames and Activities will be located in Grand Ballroom I and II (4th Floor)\n\n\n\n(All Attendees)",
+    "speaker": "",
+    "location": "Group Activity / Interactive"
+  },
+  {
+    "date": "Tuesday, September 12, 2023",
+    "time": "11:55",
+    "title": "13:00",
+    "description": "Grand Ballroom III\n4th floor",
+    "type": "Lunch",
+    "audience": "",
+    "speaker": "",
+    "location": "Break"
+  },
+  {
+    "date": "Tuesday, September 12, 2023",
+    "time": "13:00",
+    "title": "13:45",
+    "description": "Grand Ballroom I\n4th floor",
+    "type": "How to Use REDCap to Manage REDCap",
+    "audience": "Helpful tricks and use cases (ticketing systems, policy delivery, user guides, FAQ, etc.) for leveraging REDCap to assist with REDCap administrative tasks.\n\n\n(Administrative)",
+    "speaker": "Ashleigh Lewis, Laura McLeod, and Michelle Fernandez",
+    "location": "Breakout"
+  },
+  {
+    "date": "Tuesday, September 12, 2023",
+    "time": "13:00",
+    "title": "13:45",
+    "description": "Grand Ballroom II\n4th floor",
+    "type": "Connecting REDCap Projects: Why, What, and How?",
+    "audience": "Why might you need/want to use more than one REDCap project together? What does it mean to connect two REDCap projects and how do you do it?\n\n\n(Both Technical & Administrative)",
+    "speaker": "Andy Arenson and Irma Maré",
+    "location": "Breakout"
+  },
+  {
+    "date": "Tuesday, September 12, 2023",
+    "time": "13:00",
+    "title": "13:45",
+    "description": "Grand Crescent\n4th floor",
+    "type": "Using REDCap to Empower Large Programs - Rare Disease Clinical Research Network",
+    "audience": "The Data Management and Coordinating Center of the Rare Diseases Clinical Research Network (RDCRN) uses REDCap's core functionality and multiple external modules and customizations for clinical research data acquisition and management in 75+ complex, muti-institutional studies. After a brief overview of RDCRN structure including the AWS-based RDCRN Data Ecosystem, we will discuss several innovations and custom integrations we have implemented, including an interface with a research PACS system, multiple EHR/FHIR data sources and a biospecimen tracker, all of which highlight REDCap's incredible versatility and flexibility to support clinical research workflows.\n\n(Interesting Use Case)",
+    "speaker": "Michael Wagner, Joshua Fortriede, and Audrey Perdew",
+    "location": "Breakout"
+  },
+  {
+    "date": "Tuesday, September 12, 2023",
+    "time": "13:45",
+    "title": "14:00",
+    "description": "",
+    "type": "15-Minute Break",
+    "audience": "",
+    "speaker": "",
+    "location": "Break"
+  },
+  {
+    "date": "Tuesday, September 12, 2023",
+    "time": "14:00",
+    "title": "14:45",
+    "description": "Grand Ballroom I\n4th floor",
+    "type": "REDCap Special Features Overview: Action Tags, Smart Variables, Piping, Embedding",
+    "audience": "Learn how to use action tags, smart variables, piping, and embedding for practical project building and how to combine them for more robust and flexible projects.\n\n\n(Administrative)",
+    "speaker": "Amanda Miller, Michelle Lore, and Melissa Jeffries",
+    "location": "Breakout"
+  },
+  {
+    "date": "Tuesday, September 12, 2023",
+    "time": "14:00",
+    "title": "14:45",
+    "description": "Grand Ballroom II\n4th floor",
+    "type": "Getting to know REDCap's API - API Access and API Playground",
+    "audience": "In this session, participants will explore REDCap's API through a real-world use case. The API Playground will be highlighted as a valuable tool to learn how to interact with REDCap through its API. An overview of the available API methods will be presented, as well as how to manage access to the API. At least half the session will be dedicated to Q&A.\n\n\n(Technical)",
+    "speaker": "Viswa Gopinath and Günther Rezniczek",
+    "location": "Breakout"
+  },
+  {
+    "date": "Tuesday, September 12, 2023",
+    "time": "14:00",
+    "title": "14:45",
+    "description": "Grand Crescent\n4th floor",
+    "type": "Using REDCap to Empower Large Programs - Trial Innovation Network",
+    "audience": "We'll show how created a REDCap solution to manage this complex meta protocol, what operational challenges we faced as a result of our approach, and how we (mostly) were able to maintain our sanity while facing an evolving protocol, a diverse user group, and Covid.\n\n\n\n(Both Technical & Administrative)",
+    "speaker": "Kyle McGuffin and Michelle Jones",
+    "location": "Breakout"
+  },
+  {
+    "date": "Tuesday, September 12, 2023",
+    "time": "14:45",
+    "title": "15:00",
+    "description": "",
+    "type": "15-Minute Break",
+    "audience": "",
+    "speaker": "",
+    "location": "Break"
+  },
+  {
+    "date": "Tuesday, September 12, 2023",
+    "time": "15:00",
+    "title": "15:45",
+    "description": "Grand Ballroom I\n4th floor",
+    "type": "Being a REDCap Detective",
+    "audience": "Join us in learning what Laura and Leila do first to investigate common REDCap issues. First they put on their detective hats, but what comes next? This session will explore common troubleshooting issues seen in REDCap. Such as, Missing data, Piping issues, No email found errors and more. These admins will go over there process from taking the call and troubleshooting the issue.\n\n\n(Administrative)",
+    "speaker": "Leila Deering & Laura McLeod",
+    "location": "Breakout"
+  },
+  {
+    "date": "Tuesday, September 12, 2023",
+    "time": "15:00",
+    "title": "15:45",
+    "description": "Grand Ballroom II\n4th floor",
+    "type": "Using REDCap to Empower Large Programs - All of Us Research Program and Nutrition for Precision Health",
+    "audience": "REDCap can support large programs in multiple ways - primary research data collection with user oriented customizations as well as operational, support and administrative process management, all within a secure FISMA compliant environment. We will present case studies from the All of Us and Nutrition for Precision Health programs to illustrate how to leverage REDCap functionality in ways that can scale effectively and bring together large, multi-institutional teams.\n\n\n(Interesting Use Case)",
+    "speaker": "Kate Burdekin, Darlanne Wollam, and Irma Maré",
+    "location": "Breakout"
+  },
+  {
+    "date": "Tuesday, September 12, 2023",
+    "time": "15:00",
+    "title": "15:45",
+    "description": "Grand Crescent\n4th floor",
+    "type": "External Modules",
+    "audience": "(Technical)",
+    "speaker": "Andy Martin, Kyle McGuffin, Mark McEver, & Chris Kadolph",
+    "location": "Breakout"
+  },
+  {
+    "date": "Tuesday, September 12, 2023",
+    "time": "15:45",
+    "title": "17:30",
+    "description": "Grand Foyer\n4th floor",
+    "type": "Poster Session",
+    "audience": "(All Attendees)",
+    "speaker": "",
+    "location": "Poster"
+  },
+  {
+    "date": "Tuesday, September 12, 2023",
+    "time": "17:30",
+    "title": "18:00",
+    "description": "Grand Crescent\n4th floor",
+    "type": "Optional After-Hours Session: REDCap Canadian Admin Group",
+    "audience": "Join us for a quick session to meet other Canadian administrators and discuss some Canada-specific challenges with running REDCap at your institution, find out what we are up to and just put some faces to the names! Join us for dinner after the session if you like!\n\n\n(Administrative)",
+    "speaker": "Led by Pam Thiell and Rick Watts",
+    "location": "Discussion"
+  },
+  {
+    "date": "Tuesday, September 12, 2023",
+    "time": "19:00",
+    "title": "21:00",
+    "description": "Grand Crescent\n4th floor",
+    "type": "Optional: Coding/External Modules Activity",
+    "audience": "Optional Coding/External Modules after-hours session\n\n\n\n(Technical)",
+    "speaker": "Chris Kadolph et al",
+    "location": "Optional Interactive"
+  },
+  {
+    "date": "Wednesday, September 13, 2023",
+    "time": "06:00",
+    "title": "08:00",
+    "description": "Westin Lobby",
+    "type": "Optional 5K Fun Run/Walk",
+    "audience": "5K runners/walkers will meet up in the lobby of the Westin at 6am. Please see the conference dashboard for more information (link at the top of this page)\n\n\n(Activity)",
+    "speaker": "Organized by Ann Gleason & Paul Litwin",
+    "location": "Activity (Misc)"
+  },
+  {
+    "date": "Wednesday, September 13, 2023",
+    "time": "07:30",
+    "title": "08:20",
+    "description": "Grand Ballroom III\n4th floor",
+    "type": "Breakfast",
+    "audience": "",
+    "speaker": "",
+    "location": "Break"
+  },
+  {
+    "date": "Wednesday, September 13, 2023",
+    "time": "08:30",
+    "title": "09:00",
+    "description": "Grand Ballroom I\n4th floor",
+    "type": "Developing Training Modules and Wizards in REDCap",
+    "audience": "Attendees will learn what training modules and wizards are and how to use them. Presenters will demonstrate how to access existing wizards and modules and discuss lessons learned and technical considerations for developing your own.\n\n\n\n(Both Technical and Administrative)",
+    "speaker": "Laurie Bailey,Anne Lagomarcino, and Jessica Hale",
+    "location": "Discussion"
+  },
+  {
+    "date": "Wednesday, September 13, 2023",
+    "time": "08:30",
+    "title": "09:00",
+    "description": "Grand Ballroom II\n4th floor",
+    "type": "External Module Administration",
+    "audience": "Join us in exploring all aspects of utilizing external modules; from getting started, deciding on which external modules to download, end user support/documentation, tracking/change management, and retiring/deactivating.\n\n\n\n(Administrative)",
+    "speaker": "Ashleigh Lewis and Courtney Howell",
+    "location": "Discussion"
+  },
+  {
+    "date": "Wednesday, September 13, 2023",
+    "time": "08:30",
+    "title": "09:00",
+    "description": "Fifth Avenue\n4th floor",
+    "type": "What's new and what's next with eConsent?",
+    "audience": "This is an annual touch base discussion for Admins that support institutional eConsent initiatives. We'll share compliance findings, multisite consent concerns, how recent changes to REDCap have impacted eConsent, and attempt to predict the future state of eConsent!\n\n\n\n(Administrative)",
+    "speaker": "Lynn Simpson, Dan Foley",
+    "location": "Discussion"
+  },
+  {
+    "date": "Wednesday, September 13, 2023",
+    "time": "08:30",
+    "title": "09:00",
+    "description": "Grand Crescent\n4th floor",
+    "type": "Growing Pains: Expansion into AWS Native Technologies",
+    "audience": "Advantages and pitfalls of using AWS technologies in place of on-prem solutions.\n\n\n(Technical)",
+    "speaker": "Jessie Lee, Xiaobo Fuld, David Kraemer, and Eddie Le",
+    "location": "Discussion"
+  },
+  {
+    "date": "Wednesday, September 13, 2023",
+    "time": "08:30",
+    "title": "09:00",
+    "description": "Orcas\n3rd floor",
+    "type": "CDIS",
+    "audience": "Walkthrough in the CDIS features within REDCap. Attendees will learn how to connect to a FHIR system, utilize CDIS-enabled projects like CDP and CDM, and leverage tools such as the Mapping Helper to effectively inspect data from EHR systems.\n\n\n\n(Administrative)",
+    "speaker": "Francesco Delacqua",
+    "location": "Discussion"
+  },
+  {
+    "date": "Wednesday, September 13, 2023",
+    "time": "08:30",
+    "title": "09:00",
+    "description": "Whidbey\n3rd floor",
+    "type": "Security Access Groups External Module",
+    "audience": "Discussion and demonstration of an EM that allows system-level control of allowable project-level user rights based on an admin-defined Security Access Group. Rationale, use-cases, and implications for regulatory compliance/validation will be discussed.\n\n\n(Technical)",
+    "speaker": "Andrew Poppeand Elinora Price",
+    "location": "Discussion"
+  },
+  {
+    "date": "Wednesday, September 13, 2023",
+    "time": "09:00",
+    "title": "09:15",
+    "description": "",
+    "type": "15-Minute Break",
+    "audience": "",
+    "speaker": "",
+    "location": "Break"
+  },
+  {
+    "date": "Wednesday, September 13, 2023",
+    "time": "09:15",
+    "title": "09:45",
+    "description": "Grand Ballroom I\n4th floor",
+    "type": "Complex projects using base REDCap",
+    "audience": "Discover how compounding advanced features on each other can take your project from decently effective to near self-automation. See how a network of alerts and notifications can increase efficiency, cut down on man-hours, and make projects autonomous, and also learn how to add new functionality to older projects.\n\n(Administrative)",
+    "speaker": "Madison Albright and Michelle Cascio",
+    "location": "Discussion"
+  },
+  {
+    "date": "Wednesday, September 13, 2023",
+    "time": "09:15",
+    "title": "09:45",
+    "description": "Grand Ballroom II\n4th floor",
+    "type": "MyCap Discussion Group",
+    "audience": "Join us to discuss MyCap current and future development. Ask questions, see interesting use cases and learn how to, best practices and tips and tricks.\n\n\n(Both Technical and Administrative)",
+    "speaker": "Giovanni Delacqua and Byungsuk Choi",
+    "location": "Discussion"
+  },
+  {
+    "date": "Wednesday, September 13, 2023",
+    "time": "09:15",
+    "title": "09:45",
+    "description": "Fifth Avenue\n4th floor",
+    "type": "Unlocking Efficiency: Deep Automation Testing for REDCap Production Environments",
+    "audience": "Introducing a zero-downtime REDCap testing package designed to automate manual testing processes, specifically tailored for production environments with minimal impact. This comprehensive solution enables continuous testing, streamlines system analysis, and supports various change scenarios that necessitate regression testing.\n\n\n\n(Both Technical and Administrative)",
+    "speaker": "Stanislav Ivasyuk and Richard Navarro",
+    "location": "Discussion"
+  },
+  {
+    "date": "Wednesday, September 13, 2023",
+    "time": "09:15",
+    "title": "09:45",
+    "description": "Grand Crescent\n4th floor",
+    "type": "API Security & Management and Extending the API through External Modules",
+    "audience": "In this session, a brief introduction to the way REDCap handles API access (through \"API Tokens\"), token management (both, within REDCap, by project owners and admins, and outside of REDCap, by developers and API users), how the API can be \"extended\" through external modules, and related security implications will be presented, as well as the proposal for a new model of API extensibility that leverages the exising token scheme. The larger part of the session will be dedicated to discussion and attendees are encouraged to actively participate in this discussion.\n\n\n(Both Technical & Administrative)",
+    "speaker": "Günther Rezniczek",
+    "location": "Discussion"
+  },
+  {
+    "date": "Wednesday, September 13, 2023",
+    "time": "09:15",
+    "title": "09:45",
+    "description": "Blakely\n3rd floor",
+    "type": "CDIS continued conversations",
+    "audience": "This will be an informal session where participants can ask further questions and see a little further into how CDIS works.",
+    "speaker": "Adam Lewis",
+    "location": "Optional Pre-/Post- Session Assistance"
+  },
+  {
+    "date": "Wednesday, September 13, 2023",
+    "time": "09:15",
+    "title": "09:45",
+    "description": "Orcas\n3rd floor",
+    "type": "Managing Difficult REDCap Users",
+    "audience": "This session will focus on what makes some users difficult and how best to communicate with them. This session will be discussion heavy so we can learn from other institutions.\n\n(Administrative)",
+    "speaker": "Andy Arenson, Alexander Valenzuela, and Michelle Lore",
+    "location": "Discussion"
+  },
+  {
+    "date": "Wednesday, September 13, 2023",
+    "time": "09:15",
+    "title": "09:45",
+    "description": "Whidbey\n3rd floor",
+    "type": "Best Practices of Migrating a 10-year-old REDCap Instance to a new OS and VM",
+    "audience": "A live migration might be completed in 12 hours, but it requires months of resource allocation, planning, and practicing. We discuss strategies for minimizing risk and downtime as you move an established REDCap instance to new hardware.\n\n\n(Technical and Administrative)",
+    "speaker": "Will Beasley, Thomas Wilson, and Greg Neils",
+    "location": "Discussion"
+  },
+  {
+    "date": "Wednesday, September 13, 2023",
+    "time": "09:45",
+    "title": "10:00",
+    "description": "",
+    "type": "15-Minute Break",
+    "audience": "",
+    "speaker": "",
+    "location": "Break"
+  },
+  {
+    "date": "Wednesday, September 13, 2023",
+    "time": "10:00",
+    "title": "10:30",
+    "description": "Grand Ballroom I\n4th floor",
+    "type": "Data Visualization: Exports, Reports, Stats, Project Dashboards",
+    "audience": "Learn about pulling targeted data from your REDCap project and the tools REDCap offers for display and visualization.\n\n\n\n(Administrative)",
+    "speaker": "Amanda Miller and Natalie Williams",
+    "location": "Discussion"
+  },
+  {
+    "date": "Wednesday, September 13, 2023",
+    "time": "10:00",
+    "title": "10:30",
+    "description": "Grand Ballroom II\n4th floor",
+    "type": "Converting Custom Code to External Modules",
+    "audience": "Gain insight on building external modules with changes to REDCap's base code. Provide a perspective from plugins to modules.\n\n\n\n(Technical)",
+    "speaker": "Michael Tran and Chris Kadolph",
+    "location": "Discussion"
+  },
+  {
+    "date": "Wednesday, September 13, 2023",
+    "time": "10:00",
+    "title": "10:30",
+    "description": "Fifth Avenue\n4th floor",
+    "type": "Project Design best Practices/Use Cases and Optimal Design Strategies",
+    "audience": "This session will cover some best practices and optimal design strategies in REDCap. Some topics we will cover include universal naming and coding conventions, accessibility considerations when developing projects, design friendly external modules and action tags, boosting response rates, and ways to prevent bots.\n\n\n\n(Administrative)",
+    "speaker": "Lindsey Breslin and Jason Lones",
+    "location": "Discussion"
+  },
+  {
+    "date": "Wednesday, September 13, 2023",
+    "time": "10:00",
+    "title": "10:30",
+    "description": "Grand Crescent\n4th floor",
+    "type": "REDCap Web Development 101",
+    "audience": "Review basics of web development program languages: HTML, CSS and JavaScript and how they can be used to extend the capabilities of REDCap. Will include demos on how to build dynamic landing pages, dashboards, and tabbed forms/surveys.\n\n\n(Technical)",
+    "speaker": "Jess Hale and Jason Lones",
+    "location": "Discussion"
+  },
+  {
+    "date": "Wednesday, September 13, 2023",
+    "time": "10:00",
+    "title": "10:30",
+    "description": "Orcas\n3rd floor",
+    "type": "Validation through Comparison",
+    "audience": "How to compare your existing REDCap server version against an updated version. Ensuring that there is no changes to the existing data, that existing and new vanilla REDCap data collection functionalities (Smart variables, Action Tags, etc. ) are working as expected.\n\n\n(Both Technical & Administrative)",
+    "speaker": "Jaco Dreyer and Anna Jaeger",
+    "location": "Discussion"
+  },
+  {
+    "date": "Wednesday, September 13, 2023",
+    "time": "10:00",
+    "title": "10:30",
+    "description": "Whidbey\n3rd floor",
+    "type": "Multi-Language Management (MLM)",
+    "audience": "This session will highlight some core concepts of MLM, discussing topics such as the general MLM philosophy, how languages and projects settings interact, recently added management features, and where to find more information/training materials. A large portion will be reserved for YOUR questions and discussion.\n\n\n\n(Administrative)",
+    "speaker": "Günther Rezniczek and Scott Carey",
+    "location": "Discussion"
+  },
+  {
+    "date": "Wednesday, September 13, 2023",
+    "time": "10:30",
+    "title": "10:45",
+    "description": "",
+    "type": "15-Minute Break",
+    "audience": "",
+    "speaker": "",
+    "location": "Break"
+  },
+  {
+    "date": "Wednesday, September 13, 2023",
+    "time": "10:45",
+    "title": "11:15",
+    "description": "Grand Ballroom I\n4th floor",
+    "type": "ChatGPT and REDCap",
+    "audience": "Exploring ways to use ChatGPT to enhance reporting and data analysis in REDCap.\n\n\n\n(Both Technical & Administrative)",
+    "speaker": "Kyle McGuffin",
+    "location": "Discussion"
+  },
+  {
+    "date": "Wednesday, September 13, 2023",
+    "time": "10:45",
+    "title": "11:15",
+    "description": "Grand Ballroom II\n4th floor",
+    "type": "Streamlining Participant Compensation",
+    "audience": "Learn how REDCap can connect to rewards providers and automate the delivery of gift cards to survey participants.\nThis new feature transforms the compensation process for enhanced efficiency and participant engagement.\n\n\n\n(Both Technical & Administrative)",
+    "speaker": "Francesco Delacqua",
+    "location": "Discussion"
+  },
+  {
+    "date": "Wednesday, September 13, 2023",
+    "time": "10:45",
+    "title": "11:15",
+    "description": "Fifth Avenue\n4th floor",
+    "type": "Data Visualization with REDCap and other softwares",
+    "audience": "Understand key factors to consider when selecting a Data Visualization Software for use with REDCap, how they influence the design of the solution, and explore examples of real-world implementations\n\n\n\n(Technical)",
+    "speaker": "Cristobal Carvajal, Natalie Williams, and Dan Foley",
+    "location": "Discussion"
+  },
+  {
+    "date": "Wednesday, September 13, 2023",
+    "time": "10:45",
+    "title": "11:15",
+    "description": "Grand Crescent\n4th floor",
+    "type": "The Business of REDCap: Support Models / Managing Growth",
+    "audience": "A discussion of various support models implemented throughout the consortium. Topics will include:\nREDCap Services Offered (technical support, project builds...)\nREDCap features supported (MLM, CDM/CDP, Twilio/Mosio, REDCap Mobile, MyCAP...)\nStaffing\nFunding / Cost Recovery\nOther topics\n\n(Both Technical & Administrative)",
+    "speaker": "Scott Carey and Michelle Lore",
+    "location": "Discussion"
+  },
+  {
+    "date": "Wednesday, September 13, 2023",
+    "time": "10:45",
+    "title": "11:15",
+    "description": "Orcas\n3rd floor",
+    "type": "REDCap Mobile App Discussion Group",
+    "audience": "Come and be a part of our engaging discussion on the present and future developments of RMA. Participate in asking questions, exploring interesting use cases, and gaining valuable insights into best practices, tips, and tricks.\n\n\n(Both Technical & Administrative)",
+    "speaker": "Giovanni Delacqua and Byunsuk Choi",
+    "location": "Discussion"
+  },
+  {
+    "date": "Wednesday, September 13, 2023",
+    "time": "10:45",
+    "title": "11:15",
+    "description": "Whidbey\n3rd floor",
+    "type": "REDCap and Azure",
+    "audience": "Understand the essentials of using the Azure Cloud to host REDCap. The fundamentals of cloud hosting and the various levels of Azure services are covered at the outset of this webinar. Dive into the services that are offered, including self-managed virtual machines (VMs), web servers, MySQL databases, file storage, key vaults and more! Find out about migrating on-site REDCap to Azure and gain helpful tips and tricks along the way. Learn about REDCap community resources for Azure include the ARM template. Participate in a live Q&A session with organizations that switched to Azure.\n\n\n(Both Technical & Administrative)",
+    "speaker": "Greg Neils, Lynn Simpson, and Paul Litwin",
+    "location": "Discussion"
+  },
+  {
+    "date": "Wednesday, September 13, 2023",
+    "time": "11:15",
+    "title": "12:15",
+    "description": "Grand Ballroom III\n4th floor",
+    "type": "Lunch",
+    "audience": "",
+    "speaker": "",
+    "location": "Break"
+  },
+  {
+    "date": "Wednesday, September 13, 2023",
+    "time": "12:15",
+    "title": "12:30",
+    "description": "Grand Ballroom I & II\n4th floor",
+    "type": "Door Prizes!",
+    "audience": "(All Attendees)",
+    "speaker": "",
+    "location": "Plenary"
+  },
+  {
+    "date": "Wednesday, September 13, 2023",
+    "time": "12:30",
+    "title": "12:50",
+    "description": "Grand Ballroom I & II\n4th floor",
+    "type": "Pushing REDCap to the Limits: Lessons from the Dog Aging Project",
+    "audience": "During the session, attendees will gain an understanding of the Dog Aging Project and the challenges encountered while collecting and managing data for this longitudinal study of longevity in companion dogs. Attendees will learn how the Dog Aging Project team optimized REDCap for their very large study and found solutions to the technical hurdles they encountered. Attendees may also encounter some cute dog pictures during the session.\n\n\n\n(All Attendees)",
+    "speaker": "Paul Litwin",
+    "location": "Plenary"
+  },
+  {
+    "date": "Wednesday, September 13, 2023",
+    "time": "12:50",
+    "title": "13:10",
+    "description": "Grand Ballroom I & II\n4th floor",
+    "type": "Creative Uses of REDCap III (Advanced level)",
+    "audience": "Final demonstration of some of the cool ways that basic REDCap can be used (Advanced level).\n\n\n(All Attendees)",
+    "speaker": "Creative Uses Team",
+    "location": "Plenary"
+  },
+  {
+    "date": "Wednesday, September 13, 2023",
+    "time": "13:10",
+    "title": "13:40",
+    "description": "Grand Ballroom I & II\n4th floor",
+    "type": "Creative Uses \"Unleashed\"",
+    "audience": "Creative and novel uses of REDCap that goes beyond using base REDCap functionality. (may include external modules, hooks, plugins, etc.)\n\n\n\n(All Attendees)",
+    "speaker": "Luke Stevens, Andy Martin, and Chris Kadolph",
+    "location": "Plenary"
+  },
+  {
+    "date": "Wednesday, September 13, 2023",
+    "time": "13:40",
+    "title": "13:50",
+    "description": "",
+    "type": "10-Minute Break",
+    "audience": "",
+    "speaker": "",
+    "location": "Break"
+  },
+  {
+    "date": "Wednesday, September 13, 2023",
+    "time": "13:50",
+    "title": "14:10",
+    "description": "Grand Ballroom I & II\n4th floor",
+    "type": "The Power of Community Engagement: Strengthening Our Research Outcomes Whiles Creating Lasting Change in our Communities.",
+    "audience": "At the Africa Health Research Institute (AHRI) our community is central to the research we conduct. None of our research activities would be possible without the collaboration of our community members and traditional leaders. I would like to take you on a journey to our community and share how AHRI is collaborating with our community to realize our vision of: \"Optimal health and well-being of under-resourced populations\".\n\n\n\n(All Attendees)",
+    "speaker": "Jaco Dreyer",
+    "location": "Plenary"
+  },
+  {
+    "date": "Wednesday, September 13, 2023",
+    "time": "14:10",
+    "title": "14:30",
+    "description": "Grand Ballroom I & II\n4th floor",
+    "type": "Looking Forward: Teaching Users to Fish",
+    "audience": "Doesn't fishing look easy? Toss a line with a worm and wait! Have you tried fishing? There are tricks of the trade that can increase your fishing experience. Same with REDCap. Simple survey to complex study designs. As administrators how do we pass this information on to our end users? How do you learn all the features yourself? I will cover how to teach others even if you're not a teacher, how you can find support and how you too can contribute to the future of REDCap\n\n(All Attendees)",
+    "speaker": "Leila Deering",
+    "location": "Plenary"
+  },
+  {
+    "date": "Wednesday, September 13, 2023",
+    "time": "14:30",
+    "title": "14:40",
+    "description": "Grand Ballroom I & II\n4th floor",
+    "type": "Competition winner announcements / awards",
+    "audience": "(All Attendees)",
+    "speaker": "",
+    "location": "Plenary"
+  },
+  {
+    "date": "Wednesday, September 13, 2023",
+    "time": "14:40",
+    "title": "14:50",
+    "description": "Grand Ballroom I & II\n4th floor",
+    "type": "Final Thoughts",
+    "audience": "(All Attendees)",
+    "speaker": "Paul Harris and Brenda Minor",
+    "location": "Plenary"
+  },
+  {
+    "date": "Wednesday, September 13, 2023",
+    "time": "14:50",
+    "title": "14:55",
+    "description": "Grand Ballroom I & II\n4th floor",
+    "type": "2024 REDCapCon Host Announcement",
+    "audience": "(All Attendees)",
+    "speaker": "",
+    "location": "Plenary"
+  },
+  {
+    "date": "Wednesday, September 13, 2023",
+    "time": "14:55",
+    "title": "15:00",
+    "description": "Grand Ballroom I & II\n4th floor",
+    "type": "Closing remarks and event dismissal",
+    "audience": "(All Attendees)",
+    "speaker": "",
+    "location": "Plenary"
+  }
+]

@@ -1,0 +1,152 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import '../models/session.dart';
+
+/// Service to fetch and parse REDCap Conference schedule from the survey
+class RedCapScraperService {
+  // For now, use a local API endpoint. In production, this would be your backend API
+  // that runs the Node.js scraper
+  static const String apiEndpoint = 'http://localhost:3000/api/schedule';
+
+  // Fallback to direct URL (won't work for JS-rendered content)
+  static const String scheduleUrl =
+      'https://redcap.vumc.org/surveys/?__report=R7MDEEJTA89C34MH';
+
+  /// Fetch the schedule from the API endpoint
+  /// The API should return JSON in the format from schedule_parsed.json
+  Future<List<Session>> fetchSchedule() async {
+    try {
+      // Try API endpoint first (would run Node.js scraper)
+      try {
+        final response = await http.get(
+          Uri.parse(apiEndpoint),
+        ).timeout(const Duration(seconds: 10));
+
+        if (response.statusCode == 200) {
+          final List<dynamic> data = json.decode(response.body);
+          return _parseFromApiJson(data);
+        }
+      } catch (e) {
+        // API not available, will use fallback
+        print('API not available: $e');
+      }
+
+      // Fallback: return empty list or throw exception
+      // In production, you might want to cache the last successful fetch
+      throw Exception('Schedule API not available. Please check your connection.');
+
+    } catch (e) {
+      throw Exception('Error fetching schedule: $e');
+    }
+  }
+
+  /// Parse JSON data from API endpoint
+  List<Session> _parseFromApiJson(List<dynamic> data) {
+    final sessions = <Session>[];
+
+    for (var i = 0; i < data.length; i++) {
+      try {
+        final item = data[i] as Map<String, dynamic>;
+        final session = _createSessionFromApiData(i + 1, item);
+        if (session != null) {
+          sessions.add(session);
+        }
+      } catch (e) {
+        print('Error parsing session $i: $e');
+      }
+    }
+
+    return sessions;
+  }
+
+  /// Create session from API JSON data
+  Session? _createSessionFromApiData(int index, Map<String, dynamic> data) {
+    try {
+      final dateStr = data['Session Date'] ?? '';
+      final startTimeStr = data['Start time'] ?? '';
+      final endTimeStr = data['End time'] ?? '';
+      final title = data['Session Title:'] ?? '';
+      final location = data['Session Location:'] ?? '';
+      final speaker = data['Presenter Information:'] ?? '';
+      final description = data['Session Description w/ (Audience):'] ?? '';
+      final type = data['Session Type:'] ?? '';
+
+      if (dateStr.isEmpty || startTimeStr.isEmpty || title.isEmpty) {
+        return null;
+      }
+
+      // Parse date
+      final date = DateTime.tryParse(dateStr);
+      if (date == null) return null;
+
+      // Parse times
+      final startParts = startTimeStr.split(':');
+      if (startParts.length != 2) return null;
+
+      final endParts = endTimeStr.split(':');
+      if (endParts.length != 2) return null;
+
+      final startTime = DateTime(
+        date.year,
+        date.month,
+        date.day,
+        int.parse(startParts[0]),
+        int.parse(startParts[1]),
+      );
+
+      final endTime = DateTime(
+        date.year,
+        date.month,
+        date.day,
+        int.parse(endParts[0]),
+        int.parse(endParts[1]),
+      );
+
+      // Extract audience from description
+      String audience = 'All';
+      String cleanDescription = description;
+
+      final audienceMatch = RegExp(r'\(([^)]+)\)\s*$').firstMatch(description);
+      if (audienceMatch != null) {
+        final extracted = audienceMatch.group(1)?.trim() ?? '';
+        audience = _mapAudience(extracted);
+        cleanDescription = description.replaceAll(RegExp(r'\s*\([^)]+\)\s*$'), '').trim();
+      }
+
+      return Session(
+        id: index.toString(),
+        title: title,
+        description: cleanDescription,
+        startTime: startTime,
+        endTime: endTime,
+        type: type,
+        audience: audience,
+        speaker: speaker,
+        location: location,
+        tags: const [],
+      );
+    } catch (e) {
+      print('Error creating session: $e');
+      return null;
+    }
+  }
+
+
+  /// Map audience text to standard categories
+  String _mapAudience(String audience) {
+    if (audience.contains('New') || audience.contains('Beginner')) {
+      return 'Beginner';
+    } else if (audience.contains('Intermediate')) {
+      return 'Intermediate';
+    } else if (audience.contains('Advanced') || audience.contains('Developer')) {
+      return 'Advanced';
+    } else if (audience.contains('Technical')) {
+      return 'Technical';
+    } else if (audience.contains('Administrative')) {
+      return 'Administrative';
+    } else if (audience.contains('All')) {
+      return 'All';
+    }
+    return audience; // Return as-is if no match
+  }
+}

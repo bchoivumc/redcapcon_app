@@ -1,0 +1,762 @@
+[
+  {
+    "date": "Monday, September 19, 2022",
+    "time": "16:00",
+    "title": "18:30",
+    "description": "Statler Room",
+    "type": "Registration/Conference Check-In",
+    "audience": "Registration and Check-in for Conference Attendees\n\nAll Attendees\nNote: Required only once.",
+    "speaker": "",
+    "location": "Activity (Misc)"
+  },
+  {
+    "date": "Monday, September 19, 2022",
+    "time": "16:30",
+    "title": "18:30",
+    "description": "Arlington and Berkeley Rooms (combined)",
+    "type": "Installing a Local REDCap Instance",
+    "audience": "Installing a Local REDCap Instance: How-Tos / Walkthrough\n\n(Technical)",
+    "speaker": "Brian Main",
+    "location": "Small Group"
+  },
+  {
+    "date": "Monday, September 19, 2022",
+    "time": "17:00",
+    "title": "18:00",
+    "description": "Grand Ballroom B",
+    "type": "Not-So-New Admin Welcome *anyone can attend*",
+    "audience": "Informal social opportunity to play a game and meet other attendees (no refreshments provided, no registration required, open to all)\n\n(All Attendees)",
+    "speaker": "",
+    "location": "Activity (Misc)"
+  },
+  {
+    "date": "Monday, September 19, 2022",
+    "time": "17:00",
+    "title": "18:00",
+    "description": "Georgian Room",
+    "type": "New Administrator Welcome (NAW) *pre-registered attendees only*",
+    "audience": "This session is geared towards new REDCap administrators attending REDCapCon for the first time. During the session we welcome new admins to the conference, get them connected to start building relationships and oriented with the REDCap consortium and resources.\n\n(New Administrators)",
+    "speaker": "Various REDCap Veterans",
+    "location": "Small Group"
+  },
+  {
+    "date": "Monday, September 19, 2022",
+    "time": "19:00",
+    "title": "20:30",
+    "description": "Grand Ballroom A",
+    "type": "Welcome Dinner & MVP Award Announcement",
+    "audience": "Kickoff dinner, welcome to Con from the Hosts, and this year's REDCap MVP Award Announcement\n\n(All Attendees)",
+    "speaker": "Diane Keogh,Lynn Simpson, and Paul Harris",
+    "location": "Activity (Misc)"
+  },
+  {
+    "date": "Tuesday, September 20, 2022",
+    "time": "07:00",
+    "title": "08:15",
+    "description": "Georgian Room",
+    "type": "Installing a Local REDCap Instance - Cont'd",
+    "audience": "Optional help with installing an instance of REDCap on your laptop for the conference's coding/external modules session(s). Continuation of the pre-con afternoon session for anyone who could not attend the previous session or who would like some extra guidance.\n\n(Technical)",
+    "speaker": "Brian Main",
+    "location": "Small Group"
+  },
+  {
+    "date": "Tuesday, September 20, 2022",
+    "time": "07:30",
+    "title": "08:20",
+    "description": "Grand B Foyer",
+    "type": "Late Conference Check-In",
+    "audience": "Check-in for the Conference if you did not already check-in previously\n\n\nAll Attendees\nNote: Required only once.",
+    "speaker": "",
+    "location": "Activity (Misc)"
+  },
+  {
+    "date": "Tuesday, September 20, 2022",
+    "time": "07:30",
+    "title": "08:20",
+    "description": "Grand B Foyer",
+    "type": "Breakfast",
+    "audience": "",
+    "speaker": "",
+    "location": "Break"
+  },
+  {
+    "date": "Tuesday, September 20, 2022",
+    "time": "08:20",
+    "title": "08:30",
+    "description": "Grand Ballroom A",
+    "type": "Opening Remarks",
+    "audience": "(All Attendees)",
+    "speaker": "Lynn Simpson",
+    "location": "Plenary"
+  },
+  {
+    "date": "Tuesday, September 20, 2022",
+    "time": "08:30",
+    "title": "08:55",
+    "description": "Grand Ballroom A",
+    "type": "REDCap for Infection Control & Emerging Infectious Diseases Research, Operations, & Response: Is there anything REDCap can't do?",
+    "audience": "REDCap for Infection Control and Emerging Infectious Diseases Research, Operations, and Response: Is there anything REDCap can't do?\n\n(All Attendees)",
+    "speaker": "Dr. Erica S. Shenoy, MD, PhD",
+    "location": "Plenary"
+  },
+  {
+    "date": "Tuesday, September 20, 2022",
+    "time": "08:55",
+    "title": "09:30",
+    "description": "Grand Ballroom A",
+    "type": "Making an Impact with REDCap",
+    "audience": "Opening thoughts from REDCap's founder\n\n\n(All Attendees)",
+    "speaker": "Paul Harris",
+    "location": "Plenary"
+  },
+  {
+    "date": "Tuesday, September 20, 2022",
+    "time": "09:30",
+    "title": "10:15",
+    "description": "Grand Ballroom A",
+    "type": "REDCap Software: What's New & What's Next",
+    "audience": "REDCap Software: What's New and What's Next\n\n(All Attendees)",
+    "speaker": "Rob Taylor",
+    "location": "Plenary"
+  },
+  {
+    "date": "Tuesday, September 20, 2022",
+    "time": "10:15",
+    "title": "10:30",
+    "description": "",
+    "type": "15-Minute Break",
+    "audience": "",
+    "speaker": "",
+    "location": "Break"
+  },
+  {
+    "date": "Tuesday, September 20, 2022",
+    "time": "10:30",
+    "title": "10:35",
+    "description": "Grand Ballroom A",
+    "type": "All-Star Awards",
+    "audience": "Appreciation awards for some of our most active members",
+    "speaker": "Brenda Minor",
+    "location": "Plenary"
+  },
+  {
+    "date": "Tuesday, September 20, 2022",
+    "time": "10:35",
+    "title": "12:00",
+    "description": "Grand Ballroom A",
+    "type": "Creative Uses of REDCap",
+    "audience": "Creative and novel uses of REDCap strictly using basic REDCap functionality. No external modules, no hooks, no plugins, etc.\n\n(All Attendees)",
+    "speaker": "Creative Uses Team",
+    "location": "Plenary"
+  },
+  {
+    "date": "Tuesday, September 20, 2022",
+    "time": "12:00",
+    "title": "13:00",
+    "description": "Avenue 34",
+    "type": "Lunch Buffet",
+    "audience": "",
+    "speaker": "",
+    "location": "Break"
+  },
+  {
+    "date": "Tuesday, September 20, 2022",
+    "time": "13:00",
+    "title": "14:15",
+    "description": "Grand Ballroom A",
+    "type": "Supporting REDCap at your Institution",
+    "audience": "Supporting REDCap at your Institution from a non-technical perspective. Includes topics such as: REDCap business models for different sized organizations, tools to help with user support, tips for working with even the most difficult users, tracking fee for service work, getting funding and buy-in from leadership, etc.\n\n(Administrative)",
+    "speaker": "Dan Foley, Aviva Buck-Yael, Laura McLeod, Lindsay Barrigan, and Lisa Hallberg",
+    "location": "Deep Dives"
+  },
+  {
+    "date": "Tuesday, September 20, 2022",
+    "time": "13:00",
+    "title": "14:15",
+    "description": "Georgian Room",
+    "type": "EHR Integration Workshop",
+    "audience": "Hands-on workshop for setting up and using EHR-REDCap integration with the Clinical Data Interoperability Services Module (CDIS). Please bring your laptop if you have it.",
+    "speaker": "Alex Cheng, Francesco Delacqua, Adam Lewis, and Teresa Bosler",
+    "location": "Deep Dives"
+  },
+  {
+    "date": "Tuesday, September 20, 2022",
+    "time": "14:15",
+    "title": "14:45",
+    "description": "",
+    "type": "30-Minute Break",
+    "audience": "",
+    "speaker": "",
+    "location": "Break"
+  },
+  {
+    "date": "Tuesday, September 20, 2022",
+    "time": "14:45",
+    "title": "16:00",
+    "description": "Grand Ballroom A",
+    "type": "A Dive into External Modules",
+    "audience": "A Dive into External Modules\n\n(Both Technical & Administrative)",
+    "speaker": "Andy Martin, Kyle McGuffin, and Mark McEver",
+    "location": "Deep Dives"
+  },
+  {
+    "date": "Tuesday, September 20, 2022",
+    "time": "14:45",
+    "title": "16:00",
+    "description": "Georgian Room",
+    "type": "Regulatory Compliance Deep Dive",
+    "audience": "We will guide you through regulatory compliance requirements governing electronic signatures and records. We will also provide a step-by-step approach for how to launch and become compliant.\n\n(Both Technical & Administrative)",
+    "speaker": "Theresa Baker, Teresa Bosler and Nidhi Jethoo",
+    "location": "Deep Dives"
+  },
+  {
+    "date": "Tuesday, September 20, 2022",
+    "time": "16:00",
+    "title": "16:15",
+    "description": "",
+    "type": "15-Minute Break",
+    "audience": "15-Minute Break",
+    "speaker": "",
+    "location": "Break"
+  },
+  {
+    "date": "Tuesday, September 20, 2022",
+    "time": "16:15",
+    "title": "17:00",
+    "description": "Grand Ballroom B and Statler Rooms (attendees split between)",
+    "type": "Dish and Dash",
+    "audience": "Make connections with other administrators\n\n(All Attendees)",
+    "speaker": "",
+    "location": "Activity (Misc)"
+  },
+  {
+    "date": "Tuesday, September 20, 2022",
+    "time": "19:00",
+    "title": "21:00",
+    "description": "Grand Ballroom B",
+    "type": "Optional After-Hours \"Bring Your Own Board Games\" Session",
+    "audience": "Optional Game Night/ Board Game Session - TBD",
+    "speaker": "",
+    "location": "Activity (Misc)"
+  },
+  {
+    "date": "Wednesday, September 21, 2022",
+    "time": "07:30",
+    "title": "08:20",
+    "description": "Grand B Foyer",
+    "type": "Breakfast",
+    "audience": "",
+    "speaker": "",
+    "location": "Break"
+  },
+  {
+    "date": "Wednesday, September 21, 2022",
+    "time": "07:30",
+    "title": "08:20",
+    "description": "Grand B Foyer",
+    "type": "Late Conference Check-In",
+    "audience": "Check-in for the Conference if you did not already check-in previously\n\n(All Attendees)\n(Note: Required only once.)",
+    "speaker": "",
+    "location": "Activity (Misc)"
+  },
+  {
+    "date": "Wednesday, September 21, 2022",
+    "time": "08:20",
+    "title": "08:30",
+    "description": "Grand Ballroom A",
+    "type": "Opening Remarks and Additional All-Star Awards",
+    "audience": "(All Attendees)",
+    "speaker": "Stephany Duda and Brenda Minor",
+    "location": "Plenary"
+  },
+  {
+    "date": "Wednesday, September 21, 2022",
+    "time": "08:30",
+    "title": "09:00",
+    "description": "Grand Ballroom A",
+    "type": "FHIR: What's New and What's Next",
+    "audience": "Updates on new and planned features for REDCap-EHR FHIR integration through the Clinical Data Interoperability Services Module (CDIS) including new data types and workflows. Includes discussion about evaluating CDIS with an actual clinical trial.",
+    "speaker": "Alex Cheng, and Francesco Delacqua",
+    "location": "Plenary"
+  },
+  {
+    "date": "Wednesday, September 21, 2022",
+    "time": "09:00",
+    "title": "09:20",
+    "description": "Grand Ballroom A",
+    "type": "Making a REDCap Impact",
+    "audience": "Making a REDCap Impact: How even from the smallest location you can make an impact. How REDCap has made an impact in our intuitions, research, and with each other.\n\n(All Attendees)",
+    "speaker": "Leila Deering",
+    "location": "Plenary"
+  },
+  {
+    "date": "Wednesday, September 21, 2022",
+    "time": "09:20",
+    "title": "09:40",
+    "description": "Grand Ballroom A",
+    "type": "Empowering organisations to deliver better, faster and accurate data in large/complex Clinical Trials",
+    "audience": "Empowering organisations to deliver better, faster and accurate data in large/complex Clinical Trials\n\n(All Attendees)",
+    "speaker": "Yama Farooq Mujadidi",
+    "location": "Plenary"
+  },
+  {
+    "date": "Wednesday, September 21, 2022",
+    "time": "09:30",
+    "title": "09:40",
+    "description": "",
+    "type": "10-Minute Break",
+    "audience": "",
+    "speaker": "",
+    "location": "Break"
+  },
+  {
+    "date": "Wednesday, September 21, 2022",
+    "time": "09:40",
+    "title": "10:00",
+    "description": "Grand Ballroom A",
+    "type": "REDCap Mobile Applications - Now & What's Next",
+    "audience": "Learn what development is occurring on the REDCap Mobile Applications - REDCap Mobile App and MyCap. We will discuss the goals of our current development and share what is to come in the next year.\n\n(All Attendees)",
+    "speaker": "Michelle Fernandez and Emily Serdoz",
+    "location": "Plenary"
+  },
+  {
+    "date": "Wednesday, September 21, 2022",
+    "time": "10:00",
+    "title": "10:30",
+    "description": "Grand Ballroom A",
+    "type": "Impact of Committees and Groups: Leadership Panel",
+    "audience": "Impact of Committees and Groups: Committees and Groups Leadership Panel\n\n(All Attendees)",
+    "speaker": "Committees and Groups Leadership Panel",
+    "location": "Plenary"
+  },
+  {
+    "date": "Wednesday, September 21, 2022",
+    "time": "10:30",
+    "title": "10:45",
+    "description": "",
+    "type": "15-Minute Break and Interactive Session Setup",
+    "audience": "",
+    "speaker": "",
+    "location": "Break"
+  },
+  {
+    "date": "Wednesday, September 21, 2022",
+    "time": "10:45",
+    "title": "12:00",
+    "description": "Grand Ballroom A and Statler Rooms (attendees move between)",
+    "type": "Interactive Committees and Groups Fair",
+    "audience": "(All Attendees)",
+    "speaker": "",
+    "location": "Group Activity / Interactive"
+  },
+  {
+    "date": "Wednesday, September 21, 2022",
+    "time": "12:00",
+    "title": "13:00",
+    "description": "Avenue 34",
+    "type": "Lunch",
+    "audience": "",
+    "speaker": "",
+    "location": "Break"
+  },
+  {
+    "date": "Wednesday, September 21, 2022",
+    "time": "13:00",
+    "title": "13:45",
+    "description": "Grand Ballroom A",
+    "type": "Using the API to get data out of REDCap",
+    "audience": "API data extraction for dummies\nUsing the API to get data out of REDCap into Excel and Google Sheets",
+    "speaker": "Dan Foley",
+    "location": "Breakout"
+  },
+  {
+    "date": "Wednesday, September 21, 2022",
+    "time": "13:00",
+    "title": "13:45",
+    "description": "Georgian Room",
+    "type": "Best Practices When Designing Data Capture Instruments",
+    "audience": "Best Practices When Designing Data Capture Instruments: What are considered best practices? How do you name your variable? How do you create your code set? What field types do you use? This session is about learning from each other and how best we go about when designing a data collection instrument.\n\n(Administrative)",
+    "speaker": "John Liman and Nick Shortt",
+    "location": "Breakout"
+  },
+  {
+    "date": "Wednesday, September 21, 2022",
+    "time": "13:45",
+    "title": "14:00",
+    "description": "",
+    "type": "15-Minute Break",
+    "audience": "",
+    "speaker": "",
+    "location": "Break"
+  },
+  {
+    "date": "Wednesday, September 21, 2022",
+    "time": "14:00",
+    "title": "14:45",
+    "description": "Grand Ballroom A",
+    "type": "Flexible Data Ingestion into REDCap",
+    "audience": "Flexible Data Ingestion into REDCap to streamline and sustain users with recurrent data imports to REDCap. The topic will describe years of experience gained through the development and deployment of in-house, custom-built tool called REDCap Data Import, or REDDI, and current development efforts towards a generalizable approach that leads to version REDDI 2.0.\n\n(Administrative)",
+    "speaker": "Eduardo Morales and Lynn Simpson",
+    "location": "Breakout"
+  },
+  {
+    "date": "Wednesday, September 21, 2022",
+    "time": "14:00",
+    "title": "14:45",
+    "description": "Georgian Room",
+    "type": "REDCap Mobile Applications",
+    "audience": "Join us for an overview of REDCap's two mobile applications: REDCap Mobile App and MyCap. During this session we will give an introduction to each app, share uses and utilization statistics, as well as share best practices for REDCap Administrators on supporting each mobile application (project setup, testing, device management, how to train data collection, etc.) and common challenges.\n\n(Administrative)",
+    "speaker": "Michelle Fernandez, Emily Serdoz, and Stephany Duda",
+    "location": "Breakout"
+  },
+  {
+    "date": "Wednesday, September 21, 2022",
+    "time": "14:45",
+    "title": "15:00",
+    "description": "",
+    "type": "15-Minute Break",
+    "audience": "",
+    "speaker": "",
+    "location": "Break"
+  },
+  {
+    "date": "Wednesday, September 21, 2022",
+    "time": "15:00",
+    "title": "15:45",
+    "description": "Grand Ballroom A",
+    "type": "Impact of eConsent and Sustainable Support Model",
+    "audience": "Impact of eConsent and sustainable support model: During the pandemic, Mass General Brigham launched a 21 CFR Part 11 validated eConsent Workflow to support research studies that required signatures on IRB stamped approved Informed Consent PDFs. eConsent continues to be the most popular REDCap template and workflow. This session will discuss how we continue to reevaluate, update and improve the workflow to sustain support.\n\n(Administrative)",
+    "speaker": "Lynn Simpson, Dan Foley, and Eduardo Morales",
+    "location": "Breakout"
+  },
+  {
+    "date": "Wednesday, September 21, 2022",
+    "time": "15:00",
+    "title": "15:45",
+    "description": "Georgian Room",
+    "type": "Action Tags",
+    "audience": "What are Action Tags? How to use it? List of action tags.\n\n(Administrative)",
+    "speaker": "John Liman and Nick Shortt",
+    "location": "Breakout"
+  },
+  {
+    "date": "Wednesday, September 21, 2022",
+    "time": "15:45",
+    "title": "17:15",
+    "description": "Mezzanine Foyers Railing",
+    "type": "Poster Sessions",
+    "audience": "(All Attendees)",
+    "speaker": "",
+    "location": "Poster"
+  },
+  {
+    "date": "Wednesday, September 21, 2022",
+    "time": "19:00",
+    "title": "21:00",
+    "description": "Georgian Room",
+    "type": "Optional: Coding/External Modules after-hours session",
+    "audience": "Optional after-hours session on coding/external modules\n\n(Both Technical & Administrative)",
+    "speaker": "Andy Martin, Mark McEver, and Kyle McGuffin",
+    "location": "Group Activity / Interactive"
+  },
+  {
+    "date": "Thursday, September 22, 2022",
+    "time": "06:30",
+    "title": "08:00",
+    "description": "Hotel Lobby Meetup",
+    "type": "Optional 5K Fun Run/Walk",
+    "audience": "",
+    "speaker": "",
+    "location": "Activity (Misc)"
+  },
+  {
+    "date": "Thursday, September 22, 2022",
+    "time": "07:00",
+    "title": "08:30",
+    "description": "Arlington and Berkeley Rooms (combined)",
+    "type": "REDCap FHIR - Cerner Millennium & EPIC",
+    "audience": "In this session, attendees will learn about the setup and implementation of REDCap FHIR using the Cerner Millennium EHR. Attendees will learn to create REDCap projects with Clinical Data Mart setup and also Clinical Data Pull setup. Attendees will also learn how to help research projects with FHIR EHR Integration.\n\n(Both Technical & Administrative)",
+    "speaker": "Vasanthi Mandhadi, Yaswitha Jampani, and Scott Carey",
+    "location": "Small Group"
+  },
+  {
+    "date": "Thursday, September 22, 2022",
+    "time": "08:00",
+    "title": "09:00",
+    "description": "Grand B Foyer",
+    "type": "Breakfast",
+    "audience": "",
+    "speaker": "",
+    "location": "Break"
+  },
+  {
+    "date": "Thursday, September 22, 2022",
+    "time": "09:00",
+    "title": "09:40",
+    "description": "Grand Ballroom A",
+    "type": "Connecting REDCap Projects",
+    "audience": "Connecting REDCap Projects: Review some of the tools available for connecting projects together\n\n(Both Technical & Administrative)",
+    "speaker": "Aviva Buck-Yael, David Heskett, Yelena Fridgant, Andy Martin, and Nick Shortt",
+    "location": "Small Group"
+  },
+  {
+    "date": "Thursday, September 22, 2022",
+    "time": "09:00",
+    "title": "09:40",
+    "description": "Georgian Room",
+    "type": "mskPyCap - REDCap Python Class",
+    "audience": "Attendees will learn how to use mskPyCap, a Python Class for interacting with REDCap, and go over common use cases.\n\n(Technical)",
+    "speaker": "Julian Schwartz",
+    "location": "Small Group"
+  },
+  {
+    "date": "Thursday, September 22, 2022",
+    "time": "09:00",
+    "title": "09:40",
+    "description": "Clarendon Room",
+    "type": "Using REDCap to Make an Impact on Infectious Disease Control",
+    "audience": "Mass General Brigham's REDCap team supports Occupational Health for many different employee initiatives including Flu/P2P/TB vaccination tracking, and COVID/MPX exposure and symptom tracking. A few key external modules and integrations help us manage (urgent) project requests.\n\n(Both Technical & Administrative)",
+    "speaker": "Dimitar Dimitrov and Lynn Simpson",
+    "location": "Small Group"
+  },
+  {
+    "date": "Thursday, September 22, 2022",
+    "time": "09:00",
+    "title": "09:40",
+    "description": "Arlington and Berkeley Rooms (combined)",
+    "type": "Use of REDCap for Quality Improvement",
+    "audience": "Attendees will be able to describe different ways to use REDCap for Quality Improvement including clinical and non-clinical situations. Attendees will participate in open brainstorming and sharing of ways to use/ways they have used REDCap to support quality improvement initiatives.\n\n(Administrative)",
+    "speaker": "Rachel Wenthe, Laurie Bailey, and Alice Hoeft",
+    "location": "Small Group"
+  },
+  {
+    "date": "Thursday, September 22, 2022",
+    "time": "09:40",
+    "title": "10:00",
+    "description": "",
+    "type": "20-Minute Break",
+    "audience": "",
+    "speaker": "",
+    "location": "Break"
+  },
+  {
+    "date": "Thursday, September 22, 2022",
+    "time": "10:00",
+    "title": "10:40",
+    "description": "Grand Ballroom A",
+    "type": "Data Automation: Tools and Strategies",
+    "audience": "Learn about the data migration tools REDCap-ETL and REDCap Custodian. Learn what each can do and how to get started in each. Learn how to pick the right tool to meet your need.\n\n(Technical)",
+    "speaker": "Philip Chase, Jim Mullen, and Kyle Chesney",
+    "location": "Small Group"
+  },
+  {
+    "date": "Thursday, September 22, 2022",
+    "time": "10:00",
+    "title": "10:40",
+    "description": "Georgian Room",
+    "type": "REDCap in a FISMA environment",
+    "audience": "REDCap in a FISMA environment: cloud strategies, secure research computing environments, and compliant data flow: For the RECOVER (Researching Covid to Enhance Recovery) study (https://recovercovid.org/), Mass General Brigham and Harvard Medical School supports REDCap in a FISMA (Federal Information Security Management Act) Moderate environment. The session will focus on compliance with security requirements, the impact to REDCap features and functionality, and the technical solutions implemented to launch and maintain the study.\n\n(Technical)",
+    "speaker": "Lynn Simpson, James Weatherell, and Dimitar Dimitrov",
+    "location": "Small Group"
+  },
+  {
+    "date": "Thursday, September 22, 2022",
+    "time": "10:00",
+    "title": "10:40",
+    "description": "Clarendon Room",
+    "type": "Implementation of Twilio in REDCap",
+    "audience": "Implementation and governance of Twilio in REDCap\n\n(Both Technical & Administrative)",
+    "speaker": "Yaswitha Jampani and Scott Carey",
+    "location": "Small Group"
+  },
+  {
+    "date": "Thursday, September 22, 2022",
+    "time": "10:00",
+    "title": "10:40",
+    "description": "Arlington and Berkeley Rooms (combined)",
+    "type": "Meeting Research Recruitment needs with REDCap",
+    "audience": "Share needs and strategies related to using REDCap to support research recruitment, including how to coordinate recruitment amongst multiple studies.\n\n(Both Technical & Administrative)",
+    "speaker": "Andy Arenson, Catherine Bauer-Martinez, and Laurie Bailey,",
+    "location": "Small Group"
+  },
+  {
+    "date": "Thursday, September 22, 2022",
+    "time": "10:40",
+    "title": "11:00",
+    "description": "",
+    "type": "20-Minute Break",
+    "audience": "",
+    "speaker": "",
+    "location": "Break"
+  },
+  {
+    "date": "Thursday, September 22, 2022",
+    "time": "11:00",
+    "title": "11:40",
+    "description": "Grand Ballroom A",
+    "type": "Data Quality Checks Application",
+    "audience": "Data Quality Checks Application: a supplemental Quality Assessment Tool to use with REDCap\n\n(Both Technical & Administrative)",
+    "speaker": "Yama Farooq Mujadidi, Andy Yao, Agnes Eordogh, and Mujtaba Ghulam Farooq",
+    "location": "Small Group"
+  },
+  {
+    "date": "Thursday, September 22, 2022",
+    "time": "11:00",
+    "title": "11:40",
+    "description": "Georgian Room",
+    "type": "Automated Testing of External Modules",
+    "audience": "Automated Testing of External Modules: tools, strategies and how-tos.\n\n(Both Technical & Administrative)",
+    "speaker": "Jim Mullen",
+    "location": "Small Group"
+  },
+  {
+    "date": "Thursday, September 22, 2022",
+    "time": "11:00",
+    "title": "11:40",
+    "description": "Clarendon Room",
+    "type": "International Groups/Regional Consortia Discussion",
+    "audience": "Provide ideas on how we are organized and answer all raised questions. Opportunity to learn from other regional consortia in terms of how they started their regional groups.\n\n(Administrative)",
+    "speaker": "Mapule Nhlapho, Katia Regina da Silva, Victor Espinosa, Yelena Fridgant, John Liman, and Peter Brunecker",
+    "location": "Small Group"
+  },
+  {
+    "date": "Thursday, September 22, 2022",
+    "time": "11:00",
+    "title": "11:40",
+    "description": "Arlington and Berkeley Rooms (combined)",
+    "type": "BioSpecimen Tracking",
+    "audience": "BioSpecimen Tracking: Strategies and Tools. How to use a newly developed external module for BioSpecimen tracking.\n\n(Both Technical & Administrative)",
+    "speaker": "Leila Deering and Chris Kadolph",
+    "location": "Small Group"
+  },
+  {
+    "date": "Thursday, September 22, 2022",
+    "time": "11:40",
+    "title": "12:00",
+    "description": "",
+    "type": "20-Minute Break",
+    "audience": "",
+    "speaker": "",
+    "location": "Break"
+  },
+  {
+    "date": "Thursday, September 22, 2022",
+    "time": "12:00",
+    "title": "12:50",
+    "description": "Avenue 34",
+    "type": "Lunch",
+    "audience": "",
+    "speaker": "",
+    "location": "Break"
+  },
+  {
+    "date": "Thursday, September 22, 2022",
+    "time": "12:50",
+    "title": "13:00",
+    "description": "Grand Ballroom A",
+    "type": "Door Prizes!",
+    "audience": "(All Attendees)",
+    "speaker": "",
+    "location": "Plenary"
+  },
+  {
+    "date": "Thursday, September 22, 2022",
+    "time": "13:00",
+    "title": "13:20",
+    "description": "Grand Ballroom A",
+    "type": "VA REDCap: An Unexpected Journey",
+    "audience": "The instance of REDCap at the US Veterans Health Administration is unique, which has implications for collaborative REDCap projects involving the VA. VA REDCap was recently approved for storage of PHI and PII, but it is still an off-the-shelf installation (no plug-ins or hooks) available on the VA network only.\n\n(All Attendees)",
+    "speaker": "Bonnie Paris",
+    "location": "Plenary"
+  },
+  {
+    "date": "Thursday, September 22, 2022",
+    "time": "13:20",
+    "title": "13:50",
+    "description": "Grand Ballroom A",
+    "type": "Impact of Regional Consortia",
+    "audience": "How we started the respective Regional Consortia. Each group will discuss their respective achievements and the impact of the groups on the REDCap consortium.\n\n(All Attendees)",
+    "speaker": "Regions Represented: South Africa, Germany, Brazil, Australia, Canada, Spanish-Speaking Countries",
+    "location": "Plenary"
+  },
+  {
+    "date": "Thursday, September 22, 2022",
+    "time": "13:50",
+    "title": "14:10",
+    "description": "Grand Ballroom A",
+    "type": "Reflections on Launching the Yale Study Support Suite",
+    "audience": "The Yale Study Support Suite (YES3) is a planned collection of EMs that extend REDCap's functionality with workflow support tools, based on experience running studies for Yale School of Medicine and the VA. The first of these, the YES3 Exporter, is available now on the EM Repository. We were lucky to receive funding from the NIH Office of Data Science Strategy (ODSS) that had a huge impact, allowing us to grow our program. We will discuss some of the challenges faced by our research software engineering team and how we are approaching them.\n\n(All Attendees)",
+    "speaker": "Peter Charpentier, Mary Geda, and Maxwell Wibert",
+    "location": "Plenary"
+  },
+  {
+    "date": "Thursday, September 22, 2022",
+    "time": "14:10",
+    "title": "14:20",
+    "description": "",
+    "type": "10-Minute Break",
+    "audience": "",
+    "speaker": "",
+    "location": "Break"
+  },
+  {
+    "date": "Thursday, September 22, 2022",
+    "time": "14:20",
+    "title": "14:40",
+    "description": "Grand Ballroom A",
+    "type": "Working with Regulations",
+    "audience": "In the US, the Code of Federal Regulations (21 CFR Part 11) and the Federal Information Security Management Act (FISMA), impact how we host and support REDCap for human research studies. This session will compare the two regulations, summarize the effort required for compliance, and review how we prepare our researchers for successful sponsor and government audits.\n\n(All Attendees)",
+    "speaker": "Lynn Simpson",
+    "location": "Plenary"
+  },
+  {
+    "date": "Thursday, September 22, 2022",
+    "time": "14:40",
+    "title": "15:00",
+    "description": "Grand Ballroom A",
+    "type": "Harmonist Hub: a REDCap External Module for managing research consortia",
+    "audience": "The \"Harmonist Hub\" is a REDCap External Module that functions as a web portal to support the workflow activities of a multi-site research network. We will share our work to develop and generalize this external module for use by other groups.\n\n(All Attendees)",
+    "speaker": "Stephany Duda",
+    "location": "Plenary"
+  },
+  {
+    "date": "Thursday, September 22, 2022",
+    "time": "15:00",
+    "title": "15:10",
+    "description": "Grand Ballroom A",
+    "type": "Competition winner announcements / awards",
+    "audience": "(All Attendees)",
+    "speaker": "",
+    "location": "Plenary"
+  },
+  {
+    "date": "Thursday, September 22, 2022",
+    "time": "15:10",
+    "title": "15:20",
+    "description": "Grand Ballroom A",
+    "type": "Final Thoughts",
+    "audience": "(All Attendees)",
+    "speaker": "Paul Harris and Brenda Minor",
+    "location": "Plenary"
+  },
+  {
+    "date": "Thursday, September 22, 2022",
+    "time": "15:20",
+    "title": "15:25",
+    "description": "Grand Ballroom A",
+    "type": "2023 REDCapCon Host Announcement",
+    "audience": "(All Attendees)",
+    "speaker": "",
+    "location": "Plenary"
+  },
+  {
+    "date": "Thursday, September 22, 2022",
+    "time": "15:25",
+    "title": "15:30",
+    "description": "Grand Ballroom A",
+    "type": "Closing remarks and event dismissal",
+    "audience": "(All Attendees)",
+    "speaker": "",
+    "location": "Plenary"
+  }
+]

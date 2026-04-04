@@ -1,0 +1,177 @@
+import 'package:flutter/material.dart';
+import '../models/session.dart';
+import '../services/schedule_service.dart';
+
+class SessionCard extends StatefulWidget {
+  final Session session;
+  final VoidCallback? onTap;
+
+  const SessionCard({
+    super.key,
+    required this.session,
+    this.onTap,
+  });
+
+  @override
+  State<SessionCard> createState() => _SessionCardState();
+}
+
+class _SessionCardState extends State<SessionCard> {
+  final ScheduleService _scheduleService = ScheduleService();
+
+  Color _getTypeColor(BuildContext context, String type) {
+    switch (type.toLowerCase()) {
+      case 'keynote':
+        return Colors.purple;
+      case 'workshop':
+        return Colors.blue;
+      case 'talk':
+        return Colors.green;
+      case 'break':
+        return Colors.orange;
+      default:
+        return Theme.of(context).colorScheme.secondary;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      child: InkWell(
+        onTap: widget.onTap,
+        borderRadius: BorderRadius.circular(12),
+        child: Padding(
+          padding: const EdgeInsets.all(12),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          widget.session.title,
+                          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
+                        ),
+                        const SizedBox(height: 4),
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.access_time,
+                              size: 16,
+                              color: Theme.of(context).colorScheme.secondary,
+                            ),
+                            const SizedBox(width: 4),
+                            Text(
+                              widget.session.timeRange,
+                              style: Theme.of(context).textTheme.bodySmall,
+                            ),
+                            const SizedBox(width: 12),
+                            Icon(
+                              Icons.location_on,
+                              size: 16,
+                              color: Theme.of(context).colorScheme.secondary,
+                            ),
+                            const SizedBox(width: 4),
+                            Expanded(
+                              child: Text(
+                                widget.session.location,
+                                style: Theme.of(context).textTheme.bodySmall,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  FutureBuilder<bool>(
+                    future: _scheduleService.isSessionSaved(widget.session.id),
+                    builder: (context, snapshot) {
+                      final isSaved = snapshot.data ?? false;
+                      return IconButton(
+                        icon: Icon(
+                          isSaved ? Icons.bookmark : Icons.bookmark_border,
+                          color: isSaved ? Theme.of(context).colorScheme.primary : null,
+                        ),
+                        onPressed: () async {
+                          await _scheduleService.toggleSession(widget.session.id);
+                          setState(() {});
+                        },
+                      );
+                    },
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8),
+              Wrap(
+                spacing: 8,
+                runSpacing: 4,
+                crossAxisAlignment: WrapCrossAlignment.center,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: _getTypeColor(context, widget.session.type).withValues(alpha: 0.2),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Text(
+                      widget.session.type,
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: _getTypeColor(context, widget.session.type),
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.secondaryContainer,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Text(
+                      widget.session.audience,
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Theme.of(context).colorScheme.onSecondaryContainer,
+                      ),
+                    ),
+                  ),
+                  if (widget.session.speaker.isNotEmpty)
+                    ConstrainedBox(
+                      constraints: const BoxConstraints(maxWidth: 200),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            Icons.person,
+                            size: 14,
+                            color: Theme.of(context).colorScheme.secondary,
+                          ),
+                          const SizedBox(width: 4),
+                          Flexible(
+                            child: Text(
+                              widget.session.speaker,
+                              style: Theme.of(context).textTheme.bodySmall,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

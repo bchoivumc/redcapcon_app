@@ -1,0 +1,30 @@
+{
+    "configurations": [
+        {
+            "name": "Android",
+            "type": "dart",
+            "request": "launch",
+            "program": "lib/main.dart",
+        },
+        {
+            "name": "Android release",
+            "type": "dart",
+            "request": "launch",
+            "program": "lib/main.dart",
+            "flutterMode": "release",
+        },
+        {
+            "name": "iOS",
+            "type": "dart",
+            "request": "launch",
+            "program": "lib/main.dart",
+        },
+        {
+            "name": "iOS release",
+            "type": "dart",
+            "request": "launch",
+            "program": "lib/main.dart",
+            "flutterMode": "release",
+        },
+    ]
+}

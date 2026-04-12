@@ -17,7 +17,7 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
+class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
   int _selectedYear = 2026;
 
@@ -115,6 +115,12 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
       ),
     );
     Overlay.of(context).insert(entry);
+  }
+
+  void _onYearChanged(int year) {
+    setState(() {
+      _selectedYear = year;
+    });
   }
 
   @override

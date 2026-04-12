@@ -16,15 +16,15 @@ async function convertToDart() {
 
   // Parse and transform sessions
   const dartSessions = sessions.map((session, index) => {
-    // Parse the date
-    const dateStr = session['Session Date'];
-    const startTime = session['Start time'];
-    const endTime = session['End time'];
+    // Parse the date - 2023 uses different field names
+    const dateStr = session.date;
+    const startTime = session.time;
+    const endTime = session.title; // In 2023 data, end time is in 'title' field
 
-    // Parse date like "Sunday, September 8, 2024"
+    // Parse date like "Sunday, September 10, 2023"
     const date = new Date(dateStr);
 
-    // Parse time like "14:00"
+    // Parse time like "15:00"
     const [startHour, startMin] = startTime.split(':').map(Number);
     const [endHour, endMin] = endTime.split(':').map(Number);
 
@@ -34,13 +34,13 @@ async function convertToDart() {
     const endDateTime = new Date(date);
     endDateTime.setHours(endHour, endMin, 0, 0);
 
-    // Extract audience from description
-    const description = session['Session Description w/ (Audience):'] || '';
+    // Extract audience from session.audience field
+    const audienceText = session.audience || '';
     let audience = 'All';
-    let cleanDescription = description;
+    let cleanDescription = audienceText;
 
-    // Try to extract audience from parentheses at end
-    const audienceMatch = description.match(/\(([^)]+)\)\s*$/);
+    // Try to extract audience from parentheses
+    const audienceMatch = audienceText.match(/\(([^)]+)\)/);
     if (audienceMatch) {
       const extracted = audienceMatch[1].trim();
       // Map various audience types
@@ -55,20 +55,20 @@ async function convertToDart() {
       } else {
         audience = extracted;
       }
-      // Remove audience from description
-      cleanDescription = description.replace(/\s*\([^)]+\)\s*$/, '').trim();
+      // Clean up description
+      cleanDescription = audienceText.replace(/\s*\([^)]+\)\s*/g, '').trim();
     }
 
     return {
       id: (index + 1).toString(),
-      title: session['Session Title:'] || '',
+      title: session.type || '',
       description: cleanDescription,
-      startTime: startDateTime.toISOString(),
-      endTime: endDateTime.toISOString(),
-      type: session['Session Type:'] || 'Session',
+      startTime: _toLocalDateTimeString(startDateTime),
+      endTime: _toLocalDateTimeString(endDateTime),
+      type: session.location || 'Session',
       audience: audience,
-      speaker: session['Presenter Information:'] || '',
-      location: session['Session Location:'] || '',
+      speaker: session.speaker || '',
+      location: session.description || '',
       tags: [],
     };
   });
@@ -128,6 +128,16 @@ class MockData2023 {
   console.log(`  Dates: ${dates.size} days`);
   console.log(`  Types: ${Array.from(types).join(', ')}`);
   console.log(`  Audiences: ${Array.from(audiences).join(', ')}`);
+}
+
+function _toLocalDateTimeString(date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  const hour = String(date.getHours()).padStart(2, '0');
+  const minute = String(date.getMinutes()).padStart(2, '0');
+  const second = String(date.getSeconds()).padStart(2, '0');
+  return `${year}-${month}-${day}T${hour}:${minute}:${second}`;
 }
 
 function _escapeDartString(str) {

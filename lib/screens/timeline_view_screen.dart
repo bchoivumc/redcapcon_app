@@ -4,13 +4,18 @@ import '../models/session.dart';
 import '../services/schedule_service.dart';
 
 class TimelineViewScreen extends StatefulWidget {
-  const TimelineViewScreen({super.key});
+  final int selectedYear;
+
+  const TimelineViewScreen({
+    super.key,
+    this.selectedYear = 2026,
+  });
 
   @override
-  State<TimelineViewScreen> createState() => _TimelineViewScreenState();
+  State<TimelineViewScreen> createState() => TimelineViewScreenState();
 }
 
-class _TimelineViewScreenState extends State<TimelineViewScreen> {
+class TimelineViewScreenState extends State<TimelineViewScreen> {
   final ScheduleService _scheduleService = ScheduleService();
   List<Session> _allSessions = [];
   bool _isLoading = true;
@@ -21,11 +26,19 @@ class _TimelineViewScreenState extends State<TimelineViewScreen> {
     _loadSchedule();
   }
 
+  @override
+  void didUpdateWidget(TimelineViewScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.selectedYear != widget.selectedYear) {
+      _loadSchedule();
+    }
+  }
+
   Future<void> _loadSchedule() async {
     if (!mounted) return;
     setState(() => _isLoading = true);
 
-    final sessions = await _scheduleService.fetchSchedule(year: 2026);
+    final sessions = await _scheduleService.fetchSchedule(year: widget.selectedYear);
 
     if (!mounted) return;
     setState(() {
@@ -235,7 +248,7 @@ class _TimelineViewScreenState extends State<TimelineViewScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Timeline View - 2026'),
+        title: Text('Timeline View - ${widget.selectedYear}'),
       ),
       body: SingleChildScrollView(
         child: SingleChildScrollView(

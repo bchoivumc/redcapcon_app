@@ -1,5 +1,5 @@
 /**
- * Convert 2024 scraped JSON data to Dart code
+ * Convert 2025 scraped JSON data to Dart code
  */
 
 import fs from 'fs/promises';
@@ -7,7 +7,7 @@ import fs from 'fs/promises';
 async function convertToDart() {
   // Read the parsed JSON
   const json = await fs.readFile(
-    '/Users/user/Documents/projects/redcapcon_beta/scripts/schedule_2024_parsed.json',
+    '/Users/user/Documents/projects/redcapcon_beta/scripts/schedule_2025_parsed.json',
     'utf-8'
   );
   const sessions = JSON.parse(json);
@@ -21,7 +21,7 @@ async function convertToDart() {
     const startTime = session['Start time'];
     const endTime = session['End time'];
 
-    // Parse date like "Sunday, September 8, 2024"
+    // Parse date like "Sunday, September 8, 2025"
     const date = new Date(dateStr);
 
     // Parse time like "14:00"
@@ -76,11 +76,11 @@ async function convertToDart() {
   // Generate Dart code
   let dartCode = `import '../models/session.dart';
 
-/// REDCap Conference 2024 schedule data
+/// REDCap Conference 2025 schedule data
 /// Last updated: ${new Date().toISOString()}
 /// Source: https://redcap.vumc.org/surveys/?__report=LXMLYK3R3JHDJCP7
 
-class MockData2024 {
+class MockData2025 {
   static List<Session> getSessions() {
     return [
 `;
@@ -112,11 +112,11 @@ class MockData2024 {
 
   // Save the Dart file
   await fs.writeFile(
-    '/Users/user/Documents/projects/redcapcon_beta/lib/data/mock_data_2024.dart',
+    '/Users/user/Documents/projects/redcapcon_beta/lib/data/mock_data_2025.dart',
     dartCode
   );
 
-  console.log('✅ Successfully generated mock_data_2024.dart');
+  console.log('✅ Successfully generated mock_data_2025.dart');
   console.log(`   ${dartSessions.length} sessions`);
 
   // Print some stats

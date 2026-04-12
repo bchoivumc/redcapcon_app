@@ -1,11 +1,11 @@
 {
-    "name": "redcapcon_beta",
-    "short_name": "redcapcon_beta",
+    "name": "REDCapCon",
+    "short_name": "REDCapCon",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "Your personalized guide to the REDCap Community Conference",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

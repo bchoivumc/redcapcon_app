@@ -7,7 +7,14 @@ import '../widgets/filter_bottom_sheet.dart';
 import 'settings_screen.dart';
 
 class AgendaScreen extends StatefulWidget {
-  const AgendaScreen({super.key});
+  final int selectedYear;
+  final ValueChanged<int>? onYearChanged;
+
+  const AgendaScreen({
+    super.key,
+    this.selectedYear = 2026,
+    this.onYearChanged,
+  });
 
   @override
   State<AgendaScreen> createState() => AgendaScreenState();
@@ -18,8 +25,6 @@ class AgendaScreenState extends State<AgendaScreen> {
   List<Session> _allSessions = [];
   List<Session> _filteredSessions = [];
   bool _isLoading = true;
-  bool _isRefreshing = false;
-  int _selectedYear = 2026; // Default to 2026
 
   // Filter state
   Set<String> _selectedDates = {};
@@ -35,6 +40,14 @@ class AgendaScreenState extends State<AgendaScreen> {
   }
 
   @override
+  void didUpdateWidget(AgendaScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.selectedYear != widget.selectedYear) {
+      _loadSchedule();
+    }
+  }
+
+  @override
   void dispose() {
     _searchController.dispose();
     super.dispose();
@@ -43,42 +56,26 @@ class AgendaScreenState extends State<AgendaScreen> {
   Future<void> _loadSchedule({bool forceRefresh = false}) async {
     if (!mounted) return;
     setState(() {
-      if (forceRefresh) {
-        _isRefreshing = true;
-      } else {
-        _isLoading = true;
-      }
+      _isLoading = true;
     });
 
     try {
       final sessions = await _scheduleService.fetchSchedule(
         forceRefresh: forceRefresh,
-        year: _selectedYear,
+        year: widget.selectedYear,
       );
-      await _scheduleService.markAsUpdated();
 
       if (!mounted) return;
       setState(() {
         _allSessions = sessions;
         _filteredSessions = sessions;
         _isLoading = false;
-        _isRefreshing = false;
       });
       _applyFilters();
-
-      if (mounted && forceRefresh) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Schedule updated successfully'),
-            duration: Duration(seconds: 2),
-          ),
-        );
-      }
     } catch (e) {
       if (!mounted) return;
       setState(() {
         _isLoading = false;
-        _isRefreshing = false;
       });
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -91,15 +88,6 @@ class AgendaScreenState extends State<AgendaScreen> {
     }
   }
 
-  /// Public method to refresh schedule (called from parent)
-  void refreshSchedule() {
-    _loadSchedule(forceRefresh: true);
-  }
-
-  /// Manual refresh triggered by user
-  Future<void> _handleManualRefresh() async {
-    await _loadSchedule(forceRefresh: true);
-  }
 
   void _applyFilters() {
     setState(() {
@@ -190,7 +178,7 @@ class AgendaScreenState extends State<AgendaScreen> {
             ),
             const SizedBox(width: 6),
             DropdownButton<int>(
-              value: _selectedYear,
+              value: widget.selectedYear,
               underline: Container(),
               dropdownColor: Theme.of(context).colorScheme.primary,
               iconEnabledColor: Theme.of(context).colorScheme.onPrimary,
@@ -300,9 +288,9 @@ class AgendaScreenState extends State<AgendaScreen> {
                 ),
               ],
               onChanged: (year) {
-                if (year != null && year != _selectedYear) {
+                if (year != null && year != widget.selectedYear) {
+                  widget.onYearChanged?.call(year);
                   setState(() {
-                    _selectedYear = year;
                     _selectedDates.clear();
                     _selectedTypes.clear();
                     _selectedAudiences.clear();
@@ -328,21 +316,6 @@ class AgendaScreenState extends State<AgendaScreen> {
             onPressed: _showFilterSheet,
             tooltip: 'Filter',
           ),
-          // Refresh button - always visible
-          IconButton(
-            icon: _isRefreshing
-                ? const SizedBox(
-                    width: 20,
-                    height: 20,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 2,
-                      color: Colors.white,
-                    ),
-                  )
-                : const Icon(Icons.refresh),
-            onPressed: _isRefreshing ? null : _handleManualRefresh,
-            tooltip: 'Refresh schedule',
-          ),
           // Settings button
           IconButton(
             icon: const Icon(Icons.settings_outlined),
@@ -359,7 +332,7 @@ class AgendaScreenState extends State<AgendaScreen> {
       body: Column(
         children: [
           // Historical year indicator banner
-          if (_selectedYear != 2026)
+          if (widget.selectedYear != 2026)
             Container(
               width: double.infinity,
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -382,7 +355,7 @@ class AgendaScreenState extends State<AgendaScreen> {
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
-                      'Viewing $_selectedYear Schedule (Historical)',
+                      'Viewing ${widget.selectedYear} Schedule (Historical)',
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.onSurface,
                         fontWeight: FontWeight.bold,
@@ -392,8 +365,8 @@ class AgendaScreenState extends State<AgendaScreen> {
                   ),
                   FilledButton.icon(
                     onPressed: () {
+                      widget.onYearChanged?.call(2026);
                       setState(() {
-                        _selectedYear = 2026;
                         _selectedDates.clear();
                         _selectedTypes.clear();
                         _selectedAudiences.clear();
@@ -475,9 +448,7 @@ class AgendaScreenState extends State<AgendaScreen> {
                     ],
                   ),
                 )
-              : RefreshIndicator(
-                  onRefresh: _loadSchedule,
-                  child: ListView.builder(
+              : ListView.builder(
                     itemCount: sortedDates.length,
                     itemBuilder: (context, index) {
                       final dateKey = sortedDates[index];
@@ -505,7 +476,7 @@ class AgendaScreenState extends State<AgendaScreen> {
                             ),
                           ),
                           ...sessions.map((session) => SessionCard(
-                                showBookmark: _selectedYear == 2026,
+                                showBookmark: widget.selectedYear == 2026,
                                 session: session,
                                 onTap: () => _showSessionDetails(session),
                               )),
@@ -513,7 +484,6 @@ class AgendaScreenState extends State<AgendaScreen> {
                       );
                     },
                   ),
-                ),
           ),
         ],
       ),
@@ -588,7 +558,7 @@ class AgendaScreenState extends State<AgendaScreen> {
                           .toList(),
                     ),
                   ],
-                  if (_selectedYear == 2026) ...[
+                  if (widget.selectedYear == 2026) ...[
                     const SizedBox(height: 24),
                     SizedBox(
                       width: double.infinity,

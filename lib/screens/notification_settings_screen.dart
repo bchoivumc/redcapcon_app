@@ -101,6 +101,30 @@ class _NotificationSettingsScreenState extends State<NotificationSettingsScreen>
       orElse: () => _savedSessions.first,
     );
 
+    // Show confirmation dialog
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Cancel Notification'),
+        content: Text('Cancel reminder for "${session.title}"?\n\nThe session will stay in your schedule.'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: const Text('Cancel'),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.pop(context, true),
+            style: FilledButton.styleFrom(
+              backgroundColor: Colors.red,
+            ),
+            child: const Text('Remove'),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed != true) return;
+
     // Cancel only the notification, keep the session in schedule
     await _notificationService.cancelSessionReminder(session);
 
@@ -113,33 +137,20 @@ class _NotificationSettingsScreenState extends State<NotificationSettingsScreen>
     await _loadSettings();
   }
 
-  Future<void> _rescheduleAll() async {
-    await _notificationService.cancelAllReminders();
-
-    for (final session in _savedSessions) {
-      await _notificationService.scheduleSessionReminder(session);
-    }
-
-    if (mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('All notifications rescheduled')),
-      );
-    }
-
-    await _loadSettings();
-  }
-
   String _formatNotificationTime(int? id) {
-    if (id == null) return 'Unknown';
+    if (id == null || _savedSessions.isEmpty) return 'Unknown';
 
-    // Find the session with matching ID
-    final session = _savedSessions.firstWhere(
-      (s) => s.id.hashCode == id,
-      orElse: () => _savedSessions.first,
-    );
+    try {
+      // Find the session with matching ID
+      final session = _savedSessions.firstWhere(
+        (s) => s.id.hashCode == id,
+      );
 
-    final notificationTime = session.startTime.subtract(const Duration(minutes: 5));
-    return DateFormat('MMM d, yyyy - h:mm a').format(notificationTime);
+      final notificationTime = session.startTime.subtract(const Duration(minutes: 5));
+      return DateFormat('MMM d, yyyy - h:mm a').format(notificationTime);
+    } catch (e) {
+      return 'Unknown';
+    }
   }
 
   String _getSessionTitle(int? id) {
@@ -160,14 +171,6 @@ class _NotificationSettingsScreenState extends State<NotificationSettingsScreen>
     return Scaffold(
       appBar: AppBar(
         title: const Text('Notification Settings'),
-        actions: [
-          if (!_isLoading && _savedSessions.isNotEmpty)
-            IconButton(
-              icon: const Icon(Icons.refresh),
-              onPressed: _rescheduleAll,
-              tooltip: 'Reschedule All',
-            ),
-        ],
       ),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
@@ -183,10 +186,6 @@ class _NotificationSettingsScreenState extends State<NotificationSettingsScreen>
                       subtitle: const Text('Receive reminders 5 minutes before sessions'),
                       value: _notificationsEnabled,
                       onChanged: _toggleNotifications,
-                      secondary: Icon(
-                        _notificationsEnabled ? Icons.notifications_active : Icons.notifications_off,
-                        color: _notificationsEnabled ? Colors.blue : Colors.grey,
-                      ),
                     ),
                   ),
                   const SizedBox(height: 16),
@@ -342,13 +341,6 @@ class _NotificationSettingsScreenState extends State<NotificationSettingsScreen>
                       return Card(
                         margin: const EdgeInsets.only(bottom: 8),
                         child: ListTile(
-                          leading: CircleAvatar(
-                            backgroundColor: Colors.blue.shade100,
-                            child: Icon(
-                              Icons.alarm,
-                              color: Colors.blue.shade700,
-                            ),
-                          ),
                           title: Text(
                             _getSessionTitle(notification.id),
                             maxLines: 2,
@@ -359,15 +351,9 @@ class _NotificationSettingsScreenState extends State<NotificationSettingsScreen>
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const SizedBox(height: 4),
-                              Row(
-                                children: [
-                                  Icon(Icons.access_time, size: 14, color: Colors.grey[600]),
-                                  const SizedBox(width: 4),
-                                  Text(
-                                    _formatNotificationTime(notification.id),
-                                    style: TextStyle(fontSize: 12, color: Colors.grey[600]),
-                                  ),
-                                ],
+                              Text(
+                                _formatNotificationTime(notification.id),
+                                style: TextStyle(fontSize: 12, color: Colors.grey[600]),
                               ),
                               const SizedBox(height: 2),
                               Text(

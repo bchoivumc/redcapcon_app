@@ -121,15 +121,26 @@ class NotificationService {
     // Calculate notification time (5 minutes before session)
     final notificationTime = session.startTime.subtract(const Duration(minutes: 5));
 
-    // Don't schedule if the notification time is in the past
-    final now = DateTime.now();
-    if (notificationTime.isBefore(now)) {
+    // Session times are stored as CDT local values (the hour/minute components represent
+    // Central time, regardless of any UTC/Z suffix in the source data). Build the
+    // TZDateTime directly from those components so we get the correct CDT moment.
+    final chicagoLocation = tz.getLocation('America/Chicago');
+    final tzNotificationTime = tz.TZDateTime(
+      chicagoLocation,
+      notificationTime.year,
+      notificationTime.month,
+      notificationTime.day,
+      notificationTime.hour,
+      notificationTime.minute,
+      notificationTime.second,
+    );
+
+    // Don't schedule if the notification time is in the past (compare in CDT)
+    final tzNow = tz.TZDateTime.now(chicagoLocation);
+    if (tzNotificationTime.isBefore(tzNow)) {
       print('Skipping notification for ${session.title} - time is in the past');
       return;
     }
-
-    // Convert to timezone-aware datetime in CDT
-    final tzNotificationTime = tz.TZDateTime.from(notificationTime, tz.getLocation('America/Chicago'));
 
     // Create notification details
     const androidDetails = AndroidNotificationDetails(
@@ -184,8 +195,19 @@ class NotificationService {
     }
 
     try {
-      await _notifications.cancel(session.id.hashCode);
-      print('Cancelled notification for ${session.title}');
+      final notificationId = session.id.hashCode;
+      print('Attempting to cancel notification ID: $notificationId for session: ${session.title}');
+      await _notifications.cancel(notificationId);
+      print('Successfully cancelled notification for ${session.title}');
+
+      // Verify cancellation
+      final pending = await _notifications.pendingNotificationRequests();
+      final stillExists = pending.any((n) => n.id == notificationId);
+      if (stillExists) {
+        print('WARNING: Notification still exists after cancellation!');
+      } else {
+        print('Verified: Notification successfully removed from pending list');
+      }
     } catch (e) {
       print('Error cancelling notification: $e');
     }

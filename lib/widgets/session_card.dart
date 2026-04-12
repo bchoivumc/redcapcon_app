@@ -6,12 +6,18 @@ class SessionCard extends StatefulWidget {
   final Session session;
   final VoidCallback? onTap;
   final bool showBookmark;
+  final bool isDeleting;
+  final bool canRestore;
+  final Future<void> Function()? onDelete;
 
   const SessionCard({
     super.key,
     required this.session,
     this.onTap,
     this.showBookmark = true,
+    this.isDeleting = false,
+    this.canRestore = false,
+    this.onDelete,
   });
 
   @override
@@ -102,33 +108,42 @@ class _SessionCardState extends State<SessionCard> with SingleTickerProviderStat
       );
     }
 
-    return SlideTransition(
-      position: _slideAnimation,
-      child: FadeTransition(
-        opacity: _fadeAnimation,
-        child: Card(
-          margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-          child: InkWell(
-            onTap: widget.onTap,
-            borderRadius: BorderRadius.circular(12),
-            child: Padding(
-          padding: const EdgeInsets.all(12),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
+    return Opacity(
+      opacity: widget.isDeleting ? 0.5 : 1.0,
+      child: ColorFiltered(
+        colorFilter: widget.isDeleting
+            ? const ColorFilter.mode(Colors.grey, BlendMode.saturation)
+            : const ColorFilter.mode(Colors.transparent, BlendMode.dst),
+        child: SlideTransition(
+          position: _slideAnimation,
+          child: FadeTransition(
+            opacity: _fadeAnimation,
+            child: Card(
+              margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+              child: InkWell(
+                onTap: widget.onTap,
+                borderRadius: BorderRadius.circular(12),
+                child: Padding(
+              padding: const EdgeInsets.all(12),
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          widget.session.title,
-                          style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                fontWeight: FontWeight.bold,
-                              ),
-                        ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              widget.session.title,
+                              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                    decoration: widget.isDeleting ? TextDecoration.lineThrough : null,
+                                    decorationColor: Colors.red,
+                                    decorationThickness: 2.0,
+                                  ),
+                            ),
                         const SizedBox(height: 4),
                         Row(
                           children: [
@@ -166,30 +181,27 @@ class _SessionCardState extends State<SessionCard> with SingleTickerProviderStat
                       future: _scheduleService.isSessionSaved(widget.session.id),
                       builder: (context, snapshot) {
                         final isSaved = snapshot.data ?? false;
+                        final showAsRestoreable = widget.canRestore;
+
                         return IconButton(
                           icon: Icon(
-                            isSaved ? Icons.bookmark : Icons.bookmark_border,
-                            color: isSaved ? Theme.of(context).colorScheme.primary : null,
+                            (isSaved || showAsRestoreable) ? Icons.bookmark : Icons.bookmark_border,
+                            color: (isSaved || showAsRestoreable) ? Theme.of(context).colorScheme.primary : null,
                           ),
                           onPressed: () async {
-                            if (isSaved) {
-                              // Removing - play animation
+                            // If in My Schedule with onDelete handler
+                            if (widget.onDelete != null) {
+                              await widget.onDelete!();
+                              setState(() {}); // Refresh to show updated state
+                            } else if (isSaved) {
+                              // Default behavior - with animation (other screens)
                               setState(() => _isRemoving = true);
-
-                              // Start the animation (but don't await, let it play in background)
                               _animationController.forward();
-
-                              // Wait for animation to complete
                               await Future.delayed(const Duration(milliseconds: 1200));
-
-                              // Remove the session
                               if (mounted) {
                                 await _scheduleService.toggleSession(widget.session.id, session: widget.session);
                               }
-
-                              // Reset animation for next time
                               _animationController.reset();
-
                               if (mounted) {
                                 setState(() => _isRemoving = false);
                               }
@@ -267,6 +279,8 @@ class _SessionCardState extends State<SessionCard> with SingleTickerProviderStat
           ),
         ),
       ),
+            ),
+          ),
         ),
       ),
     );

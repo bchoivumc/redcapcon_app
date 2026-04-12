@@ -1,10 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../theme/theme_provider.dart';
 import '../theme/app_theme.dart';
 
-class SettingsScreen extends StatelessWidget {
+class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
+
+  @override
+  State<SettingsScreen> createState() => _SettingsScreenState();
+}
+
+class _SettingsScreenState extends State<SettingsScreen> {
+  String _version = 'Loading...';
+
+  @override
+  void initState() {
+    super.initState();
+    _loadVersion();
+  }
+
+  Future<void> _loadVersion() async {
+    final packageInfo = await PackageInfo.fromPlatform();
+    if (mounted) {
+      setState(() {
+        _version = '${packageInfo.version} (${packageInfo.buildNumber})';
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -107,12 +131,34 @@ class SettingsScreen extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.info_outline),
             title: const Text('App Version'),
-            subtitle: const Text('1.0.0'),
+            subtitle: Text(_version),
           ),
           ListTile(
-            leading: Icon(Icons.event),
-            title: const Text('REDCap Conference'),
-            subtitle: const Text('Official conference schedule app'),
+            leading: Icon(Icons.dashboard),
+            title: const Text('2026 Con Dashboard'),
+            subtitle: const Text('View conference dashboard'),
+            trailing: Icon(Icons.open_in_new),
+            onTap: () async {
+              final url = Uri.parse('https://redcap.vumc.org/surveys/?__dashboard=7YEYW7CYA7F');
+              try {
+                final canLaunch = await canLaunchUrl(url);
+                print('Can launch URL: $canLaunch');
+                if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
+                  if (context.mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Could not open dashboard')),
+                    );
+                  }
+                }
+              } catch (e) {
+                print('Error launching URL: $e');
+                if (context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Error: $e')),
+                  );
+                }
+              }
+            },
           ),
         ],
       ),

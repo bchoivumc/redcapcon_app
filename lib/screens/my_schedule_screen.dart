@@ -16,6 +16,7 @@ class MyScheduleScreenState extends State<MyScheduleScreen> {
   final ScheduleService _scheduleService = ScheduleService();
   List<Session> _savedSessions = [];
   bool _isLoading = true;
+  final Set<String> _deletingSessionIds = {}; // Track sessions being grayed out
 
   @override
   void initState() {
@@ -35,6 +36,8 @@ class MyScheduleScreenState extends State<MyScheduleScreen> {
             .toList()
           ..sort((a, b) => a.startTime.compareTo(b.startTime));
         _isLoading = false;
+        // Clear the grayed-out set when reloading
+        _deletingSessionIds.clear();
       });
     } catch (e) {
       setState(() => _isLoading = false);
@@ -72,17 +75,10 @@ class MyScheduleScreenState extends State<MyScheduleScreen> {
                   builder: (context) => const NotificationSettingsScreen(),
                 ),
               );
-              // Refresh the schedule when returning from settings
               _loadSavedSessions();
             },
             tooltip: 'Notification Settings',
           ),
-          if (_savedSessions.isNotEmpty)
-            IconButton(
-              icon: const Icon(Icons.refresh),
-              onPressed: _loadSavedSessions,
-              tooltip: 'Refresh',
-            ),
         ],
       ),
       body: _isLoading
@@ -113,9 +109,7 @@ class MyScheduleScreenState extends State<MyScheduleScreen> {
                     ],
                   ),
                 )
-              : RefreshIndicator(
-                  onRefresh: _loadSavedSessions,
-                  child: ListView.builder(
+              : ListView.builder(
                     itemCount: sortedDates.length,
                     itemBuilder: (context, index) {
                       final dateKey = sortedDates[index];
@@ -142,77 +136,37 @@ class MyScheduleScreenState extends State<MyScheduleScreen> {
                               ),
                             ),
                           ),
-                          ...sessions.map((session) => Dismissible(
-                                key: Key(session.id),
-                                direction: DismissDirection.endToStart,
-                                background: Container(
-                                  alignment: Alignment.centerRight,
-                                  padding: const EdgeInsets.only(right: 20),
-                                  color: Colors.red,
-                                  child: const Icon(
-                                    Icons.delete,
-                                    color: Colors.white,
-                                    size: 32,
-                                  ),
-                                ),
-                                confirmDismiss: (direction) async {
-                                  // Show confirmation dialog
-                                  return await showDialog<bool>(
-                                    context: context,
-                                    builder: (context) => AlertDialog(
-                                      title: const Text('Remove Session'),
-                                      content: Text(
-                                        'Remove "${session.title}" from your schedule?',
-                                      ),
-                                      actions: [
-                                        TextButton(
-                                          onPressed: () => Navigator.of(context).pop(false),
-                                          child: const Text('Cancel'),
-                                        ),
-                                        FilledButton(
-                                          onPressed: () => Navigator.of(context).pop(true),
-                                          style: FilledButton.styleFrom(
-                                            backgroundColor: Colors.red,
-                                          ),
-                                          child: const Text('Remove'),
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                },
-                                onDismissed: (direction) async {
-                                  final messenger = ScaffoldMessenger.of(context);
-
-                                  // Remove the session
+                          ...sessions.map((session) {
+                            final isDeleting = _deletingSessionIds.contains(session.id);
+                            return SessionCard(
+                              session: session,
+                              onTap: isDeleting ? null : () => _showSessionDetails(session),
+                              showBookmark: true,
+                              isDeleting: isDeleting,
+                              canRestore: isDeleting,
+                              onDelete: () async {
+                                if (isDeleting) {
+                                  // Restore: remove from deleting set and re-add to schedule
+                                  setState(() {
+                                    _deletingSessionIds.remove(session.id);
+                                  });
+                                  // Re-add to SharedPreferences and reschedule notification
+                                  await _scheduleService.saveSession(session.id, session: session);
+                                } else {
+                                  // Delete: mark as deleting (gray out) and remove from SharedPreferences immediately
+                                  setState(() {
+                                    _deletingSessionIds.add(session.id);
+                                  });
+                                  // Remove from SharedPreferences and cancel notification
                                   await _scheduleService.removeSession(session.id, session: session);
-
-                                  messenger.showSnackBar(
-                                    SnackBar(
-                                      content: Text('Removed "${session.title}" from your schedule'),
-                                      action: SnackBarAction(
-                                        label: 'Undo',
-                                        onPressed: () async {
-                                          // Re-add the session
-                                          await _scheduleService.saveSession(session.id, session: session);
-                                          _loadSavedSessions();
-                                        },
-                                      ),
-                                    ),
-                                  );
-
-                                  // Reload the list
-                                  _loadSavedSessions();
-                                },
-                                child: SessionCard(
-                                  session: session,
-                                  onTap: () => _showSessionDetails(session),
-                                ),
-                              )),
+                                }
+                              },
+                            );
+                          }),
                         ],
                       );
                     },
                   ),
-                ),
     );
   }
 
@@ -289,7 +243,7 @@ class MyScheduleScreenState extends State<MyScheduleScreen> {
                     width: double.infinity,
                     child: FilledButton.icon(
                       onPressed: () async {
-                        await _scheduleService.removeSession(session.id);
+                        await _scheduleService.removeSession(session.id, session: session);
                         await _loadSavedSessions();
                         if (context.mounted) Navigator.pop(context);
                       },

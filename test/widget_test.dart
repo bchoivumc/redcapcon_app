@@ -7,7 +7,7 @@
 
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:redcapcon_beta/main.dart';
+import 'package:redcapcon/main.dart';
 
 void main() {
   testWidgets('App loads successfully', (WidgetTester tester) async {

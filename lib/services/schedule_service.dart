@@ -2,21 +2,19 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/session.dart';
 import '../data/mock_data.dart';
+import '../data/mock_data_2025.dart';
 import '../data/mock_data_2024.dart';
 import '../data/mock_data_2023.dart';
 import '../data/mock_data_2022.dart';
-import 'redcap_scraper_service.dart';
 import 'notification_service.dart';
 import 'json_api_service.dart';
 
 class ScheduleService {
   static const String _savedSessionsKey = 'saved_sessions';
-  static const String _lastUpdateKey = 'last_update';
   static const String _cacheTimestampKey = 'cache_timestamp';
   static const String _cacheVersionKey = 'cache_version';
-  static const int _currentCacheVersion = 5; // Increment this to invalidate old cache
+  static const int _currentCacheVersion = 8; // Increment this to invalidate old cache (v8: fixed notification CDT scheduling - times stored as CDT not UTC)
 
-  final RedCapScraperService _scraperService = RedCapScraperService();
   final NotificationService _notificationService = NotificationService();
   final JsonApiService _jsonApiService = JsonApiService();
 
@@ -61,7 +59,6 @@ class ScheduleService {
         if (liveSessions.isNotEmpty) {
           // Cache the schedule
           await _cacheSchedule(liveSessions, year);
-          await markAsUpdated();
           print('Successfully fetched and cached ${liveSessions.length} sessions from JSON API');
           return liveSessions;
         } else {
@@ -82,13 +79,22 @@ class ScheduleService {
 
     // Final fallback to bundled mock data
     print('Using bundled mock data for $year');
-    final mockSessions = year == 2024 
-        ? MockData2024.getSessions() 
-        : year == 2023 
-            ? MockData2023.getSessions() 
-            : year == 2022 
-                ? MockData2022.getSessions() 
-                : MockData.getSessions();
+    var mockSessions = year == 2026
+        ? MockData.getSessions()
+        : year == 2025
+            ? MockData2025.getSessions()
+            : year == 2024
+                ? MockData2024.getSessions()
+                : year == 2023
+                    ? MockData2023.getSessions()
+                    : year == 2022
+                        ? MockData2022.getSessions()
+                        : <Session>[]; // Return empty list for years without data
+
+    if (mockSessions.isEmpty) {
+      print('No schedule data available for $year');
+      return mockSessions;
+    }
 
     // Cache the mock data for offline use
     await _cacheSchedule(mockSessions, year);
@@ -96,28 +102,6 @@ class ScheduleService {
     return mockSessions;
   }
 
-  /// Check if there are updates available
-  Future<bool> checkForUpdates() async {
-    try {
-      // Try to fetch latest data
-      final liveSessions = await _scraperService.fetchSchedule();
-
-      if (liveSessions.isEmpty) return false;
-
-      final prefs = await SharedPreferences.getInstance();
-      final lastUpdate = prefs.getString(_lastUpdateKey);
-
-      if (lastUpdate == null) return true;
-
-      // Compare session count or timestamps
-      final cachedCount = prefs.getInt('cached_session_count') ?? 0;
-      return liveSessions.length != cachedCount;
-
-    } catch (e) {
-      print('Error checking for updates: $e');
-      return false;
-    }
-  }
 
   /// Get cached schedule from local storage for specific year
   Future<List<Session>?> _getCachedSchedule(int year) async {
@@ -189,11 +173,6 @@ class ScheduleService {
     }
   }
 
-  // Mark that we've updated the schedule
-  Future<void> markAsUpdated() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(_lastUpdateKey, DateTime.now().toIso8601String());
-  }
 
   // Save a session to personal schedule
   Future<void> saveSession(String sessionId, {Session? session}) async {
@@ -237,6 +216,35 @@ class ScheduleService {
   Future<List<String>> getSavedSessionIds() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getStringList(_savedSessionsKey) ?? [];
+  }
+
+  /// Cancel all existing notifications and reschedule for all saved sessions.
+  /// Call this on app startup after fixing the CDT scheduling bug so any
+  /// previously-scheduled notifications (which fired at the wrong time) are corrected.
+  Future<void> rescheduleAllNotifications() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final notificationsEnabled = prefs.getBool('notifications_enabled') ?? true;
+      if (!notificationsEnabled) return;
+
+      // Cancel all pending notifications first
+      await _notificationService.cancelAllReminders();
+
+      // Load saved session IDs
+      final savedIds = await getSavedSessionIds();
+      if (savedIds.isEmpty) return;
+
+      // Fetch 2026 sessions (the only year with future sessions)
+      final sessions = await fetchSchedule(year: 2026);
+      for (final session in sessions) {
+        if (savedIds.contains(session.id)) {
+          await _notificationService.scheduleSessionReminder(session);
+        }
+      }
+      print('Rescheduled notifications for ${savedIds.length} saved sessions');
+    } catch (e) {
+      print('Error rescheduling notifications: $e');
+    }
   }
 
   // Toggle session saved status

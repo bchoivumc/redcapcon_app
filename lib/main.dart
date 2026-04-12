@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'screens/splash_screen.dart';
 import 'theme/theme_provider.dart';
 import 'services/notification_service.dart';
+import 'services/schedule_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -12,6 +13,10 @@ void main() async {
     final notificationService = NotificationService();
     await notificationService.initialize();
     await notificationService.requestPermissions();
+
+    // Reschedule all saved sessions in case notifications were previously
+    // scheduled with wrong times (CDT stored-as-UTC bug, fixed in cache v8)
+    await ScheduleService().rescheduleAllNotifications();
   } catch (e) {
     print('Failed to initialize notifications: $e');
     // Continue running the app even if notifications fail

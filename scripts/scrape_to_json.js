@@ -33,6 +33,21 @@ async function scrapeSchedule() {
     // Wait for DataTables to render
     await new Promise(resolve => setTimeout(resolve, 3000));
 
+    // Force DataTables to show all rows (fixes pagination cutting off sessions)
+    await page.evaluate(() => {
+      try {
+        if (typeof jQuery !== 'undefined' && jQuery.fn.dataTable) {
+          jQuery('table').DataTable().page.len(-1).draw();
+        }
+      } catch (e) {}
+    });
+    // Also try selecting "All" via the length-select dropdown as a fallback
+    try {
+      await page.select('select[name$="_length"]', '-1');
+    } catch (e) {}
+    // Wait for redraw
+    await new Promise(resolve => setTimeout(resolve, 2000));
+
     // Extract table data
     const sessions = await page.evaluate(() => {
       const tables = document.querySelectorAll('table');

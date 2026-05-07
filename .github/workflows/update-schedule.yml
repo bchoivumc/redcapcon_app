@@ -13,6 +13,9 @@ jobs:
   scrape-and-update:
     runs-on: ubuntu-latest
 
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -22,7 +25,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
 
       - name: Install dependencies and Chrome
         run: |
@@ -33,9 +36,14 @@ jobs:
       - name: Scrape schedule
         run: |
           cd scripts
+          set +e
           node scrape_to_json.js > ../docs/schedule_2026_api.json 2>../scrape.log
+          EXIT_CODE=$?
+          set -e
           echo "=== Scraper log ==="
           cat ../scrape.log
+          echo "=== Exit code: $EXIT_CODE ==="
+          exit $EXIT_CODE
 
       - name: Check for changes
         id: changes

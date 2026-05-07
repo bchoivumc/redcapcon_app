@@ -24,23 +24,18 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Setup Chrome
-        uses: browser-actions/setup-chrome@v1
-        id: setup-chrome
-        with:
-          chrome-version: stable
-
-      - name: Install dependencies
+      - name: Install dependencies and Chrome
         run: |
           cd scripts
           npm install
+          npx puppeteer browsers install chrome
 
       - name: Scrape schedule
         run: |
           cd scripts
-          node scrape_to_json.js > ../docs/schedule_2026_api.json
-        env:
-          PUPPETEER_EXECUTABLE_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
+          node scrape_to_json.js > ../docs/schedule_2026_api.json 2>../scrape.log
+          echo "=== Scraper log ==="
+          cat ../scrape.log
 
       - name: Check for changes
         id: changes

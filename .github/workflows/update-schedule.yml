@@ -36,8 +36,6 @@ jobs:
         run: |
           cd scripts
           node scrape_to_json.js > ../docs/schedule_2026_api.json
-        env:
-          PUPPETEER_EXECUTABLE_PATH: /usr/bin/google-chrome
 
       - name: Check for changes
         id: changes

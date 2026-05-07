@@ -32,17 +32,10 @@ jobs:
           cd scripts
           npm install
 
-      - name: Install Chromium for Puppeteer
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y chromium-browser
-
       - name: Scrape schedule
         run: |
           cd scripts
           node scrape_to_json.js > ../docs/schedule_2026_api.json
-        env:
-          PUPPETEER_EXECUTABLE_PATH: /usr/bin/chromium-browser
 
       - name: Check for changes
         id: changes

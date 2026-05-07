@@ -1,9 +1,11 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../theme/theme_provider.dart';
 import '../theme/app_theme.dart';
+import '../services/schedule_service.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -133,6 +135,39 @@ class _SettingsScreenState extends State<SettingsScreen> {
             title: const Text('App Version'),
             subtitle: Text(_version),
           ),
+          if (kDebugMode) ...[
+            const Divider(height: 32),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
+              child: Row(
+                children: [
+                  Icon(Icons.bug_report,
+                      size: 18, color: Colors.orange.shade700),
+                  const SizedBox(width: 8),
+                  Text(
+                    'Developer',
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.orange.shade700,
+                        ),
+                  ),
+                ],
+              ),
+            ),
+            ListTile(
+              leading: Icon(Icons.delete_sweep_outlined,
+                  color: Theme.of(context).colorScheme.error),
+              title: Text(
+                'Reset App State',
+                style:
+                    TextStyle(color: Theme.of(context).colorScheme.error),
+              ),
+              subtitle: const Text('Clear all data — same as first install'),
+              trailing: Icon(Icons.chevron_right,
+                  color: Theme.of(context).colorScheme.error),
+              onTap: () => _confirmReset(context),
+            ),
+          ],
           ListTile(
             leading: Icon(Icons.dashboard),
             title: const Text('2026 Con Dashboard'),
@@ -161,6 +196,47 @@ class _SettingsScreenState extends State<SettingsScreen> {
             },
           ),
         ],
+      ),
+    );
+  }
+
+  Future<void> _confirmReset(BuildContext context) async {
+    final messenger = ScaffoldMessenger.of(context);
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        icon: Icon(Icons.warning_amber_rounded,
+            color: Theme.of(ctx).colorScheme.error, size: 36),
+        title: const Text('Reset Everything?'),
+        content: const Text(
+          'This clears your saved schedule, all badges, notification settings, '
+          'and cached data — exactly like a fresh install.\n\n'
+          'This cannot be undone.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, false),
+            child: const Text('Cancel'),
+          ),
+          FilledButton(
+            style: FilledButton.styleFrom(
+              backgroundColor: Theme.of(ctx).colorScheme.error,
+            ),
+            onPressed: () => Navigator.pop(ctx, true),
+            child: const Text('Reset'),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed != true || !mounted) return;
+
+    await ScheduleService().masterReset();
+
+    messenger.showSnackBar(
+      const SnackBar(
+        content: Text('App state reset — restart the app to start fresh.'),
+        duration: Duration(seconds: 4),
       ),
     );
   }

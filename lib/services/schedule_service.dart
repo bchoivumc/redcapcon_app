@@ -247,6 +247,15 @@ class ScheduleService {
     }
   }
 
+  /// Wipes every SharedPreferences key and cancels all notifications —
+  /// leaves the app in exactly the state it would be on a fresh install.
+  Future<void> masterReset() async {
+    await _notificationService.cancelAllReminders();
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.clear();
+    print('Master reset complete — all app state cleared');
+  }
+
   // Toggle session saved status
   Future<bool> toggleSession(String sessionId, {Session? session}) async {
     final isSaved = await isSessionSaved(sessionId);

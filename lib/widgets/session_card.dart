@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/session.dart';
 import '../services/schedule_service.dart';
+import '../services/badge_service.dart';
 
 class SessionCard extends StatefulWidget {
   final Session session;
@@ -121,7 +122,10 @@ class _SessionCardState extends State<SessionCard> with SingleTickerProviderStat
             child: Card(
               margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               child: InkWell(
-                onTap: widget.onTap,
+                onTap: widget.onTap == null ? null : () {
+                  BadgeService().checkTreasureHuntSession(widget.session.id);
+                  widget.onTap!();
+                },
                 borderRadius: BorderRadius.circular(12),
                 child: Padding(
               padding: const EdgeInsets.all(12),
@@ -200,6 +204,7 @@ class _SessionCardState extends State<SessionCard> with SingleTickerProviderStat
                               await Future.delayed(const Duration(milliseconds: 1200));
                               if (mounted) {
                                 await _scheduleService.toggleSession(widget.session.id, session: widget.session);
+                                await BadgeService().trackSessionToggle(widget.session.id);
                               }
                               _animationController.reset();
                               if (mounted) {
@@ -208,6 +213,15 @@ class _SessionCardState extends State<SessionCard> with SingleTickerProviderStat
                             } else {
                               // Adding - no animation
                               await _scheduleService.toggleSession(widget.session.id, session: widget.session);
+                              // Check schedule-related badges
+                              final savedIds = await _scheduleService.getSavedSessionIds();
+                              await BadgeService().onSessionAdded(
+                                sessionId: widget.session.id,
+                                sessionType: widget.session.type,
+                                savedCount: savedIds.length,
+                              );
+                              await BadgeService().trackSessionToggle(widget.session.id);
+                              await BadgeService().trackSaveTimestamp();
                               setState(() {});
                             }
                           },

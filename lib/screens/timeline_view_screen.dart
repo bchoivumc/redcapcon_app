@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../models/session.dart';
 import '../services/schedule_service.dart';
+import '../services/badge_service.dart';
 
 class TimelineViewScreen extends StatefulWidget {
   final int selectedYear;
@@ -23,6 +24,7 @@ class TimelineViewScreenState extends State<TimelineViewScreen> {
   @override
   void initState() {
     super.initState();
+    BadgeService().trackYearBrowse(widget.selectedYear);
     _loadSchedule();
   }
 
@@ -30,6 +32,7 @@ class TimelineViewScreenState extends State<TimelineViewScreen> {
   void didUpdateWidget(TimelineViewScreen oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.selectedYear != widget.selectedYear) {
+      BadgeService().trackYearBrowse(widget.selectedYear);
       _loadSchedule();
     }
   }

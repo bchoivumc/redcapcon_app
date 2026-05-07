@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../models/session.dart';
 import '../services/schedule_service.dart';
+import '../services/badge_service.dart';
 import '../widgets/session_card.dart';
 import '../widgets/filter_bottom_sheet.dart';
 import 'settings_screen.dart';
@@ -36,6 +37,7 @@ class AgendaScreenState extends State<AgendaScreen> {
   @override
   void initState() {
     super.initState();
+    BadgeService().trackYearBrowse(widget.selectedYear);
     _loadSchedule();
   }
 
@@ -290,6 +292,7 @@ class AgendaScreenState extends State<AgendaScreen> {
               onChanged: (year) {
                 if (year != null && year != widget.selectedYear) {
                   widget.onYearChanged?.call(year);
+                  BadgeService().trackYearBrowse(year);
                   setState(() {
                     _selectedDates.clear();
                     _selectedTypes.clear();
@@ -466,13 +469,26 @@ class AgendaScreenState extends State<AgendaScreen> {
                               vertical: 12,
                             ),
                             color: Theme.of(context).colorScheme.primaryContainer,
-                            child: Text(
-                              dateFormat.format(date),
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Theme.of(context).colorScheme.onPrimaryContainer,
-                              ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  dateFormat.format(date),
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Theme.of(context).colorScheme.onPrimaryContainer,
+                                  ),
+                                ),
+                                if (index == 0)
+                                  Text(
+                                    '${_filteredSessions.length} sessions total',
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      color: Theme.of(context).colorScheme.onPrimaryContainer.withValues(alpha: 0.7),
+                                    ),
+                                  ),
+                              ],
                             ),
                           ),
                           ...sessions.map((session) => SessionCard(

@@ -256,7 +256,6 @@ class ScheduleService {
     print('Master reset complete — all app state cleared');
   }
 
-
   // Toggle session saved status
   Future<bool> toggleSession(String sessionId, {Session? session}) async {
     final isSaved = await isSessionSaved(sessionId);

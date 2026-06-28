@@ -135,6 +135,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
             title: const Text('App Version'),
             subtitle: Text(_version),
           ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 4, 16, 16),
+            child: Text(
+              'Based on the Build Your Own Agenda app developed for REDCapCon 2025, '
+              'with contributions from Vanderbilt University Medical Center (VUMC); '
+              'Marshfield Clinic Research Institute (Leila Deering, Chris Kadolph); '
+              'and The Ohio State University College of Medicine, Research Information '
+              'Technology (Jess Hale, lead developer).',
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
+                  ),
+            ),
+          ),
           if (kDebugMode) ...[
             const Divider(height: 32),
             Padding(

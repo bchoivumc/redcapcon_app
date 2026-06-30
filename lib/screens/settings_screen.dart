@@ -136,16 +136,49 @@ class _SettingsScreenState extends State<SettingsScreen> {
             subtitle: Text(_version),
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(16, 4, 16, 16),
-            child: Text(
-              'Based on the Build Your Own Agenda app developed for REDCapCon 2025, '
-              'with contributions from Vanderbilt University Medical Center (VUMC); '
-              'Marshfield Clinic Research Institute (Leila Deering, Chris Kadolph); '
-              'and The Ohio State University College of Medicine, Research Information '
-              'Technology (Jess Hale, lead developer).',
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
+            padding: const EdgeInsets.fromLTRB(12, 4, 12, 16),
+            child: Container(
+              padding: const EdgeInsets.all(14),
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.secondaryContainer.withValues(alpha: 0.4),
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(
+                  color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.2),
+                ),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Icon(Icons.people_outline,
+                          size: 15,
+                          color: Theme.of(context).colorScheme.onSurfaceVariant),
+                      const SizedBox(width: 6),
+                      Text(
+                        'Acknowledgements',
+                        style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                              color: Theme.of(context).colorScheme.onSurfaceVariant,
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 0.5,
+                            ),
+                      ),
+                    ],
                   ),
+                  const SizedBox(height: 8),
+                  Text(
+                    'Based on the Build Your Own Agenda app developed for REDCapCon 2025, '
+                    'with contributions from Vanderbilt Health; '
+                    'Marshfield Clinic Research Institute; '
+                    'and The Ohio State University College of Medicine, Research Information '
+                    'Technology (Jess Hale, lead developer)',
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.75),
+                          height: 1.5,
+                        ),
+                  ),
+                ],
+              ),
             ),
           ),
           if (kDebugMode) ...[

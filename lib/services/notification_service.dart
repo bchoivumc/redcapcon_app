@@ -25,11 +25,13 @@ class NotificationService {
       // Android initialization settings
       const androidSettings = AndroidInitializationSettings('@mipmap/ic_launcher');
 
-      // iOS initialization settings
+      // iOS initialization settings — do NOT request permissions here;
+      // that happens later via requestPermissions() so initialize() is
+      // always fast and never triggers a system dialog on startup.
       const iosSettings = DarwinInitializationSettings(
-        requestAlertPermission: true,
-        requestBadgePermission: true,
-        requestSoundPermission: true,
+        requestAlertPermission: false,
+        requestBadgePermission: false,
+        requestSoundPermission: false,
       );
 
       const initSettings = InitializationSettings(

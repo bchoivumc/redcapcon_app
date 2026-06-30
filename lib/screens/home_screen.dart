@@ -39,15 +39,16 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
     WidgetsBinding.instance.addObserver(this);
     _foregroundSince = DateTime.now();
 
-    // Time-of-day badges (early bird / night owl / phantom) on every open
-    BadgeService().checkTimeOfDayBadges();
-
-    // Track initial tab (Agenda = 0)
-    BadgeService().trackTabVisit(0);
-
-
     // Listen for newly earned badges and show overlay
     _badgeSub = BadgeService().onBadgeAwarded.listen(_showBadgeAward);
+
+    // Defer badge checks until after the first frame — they may insert an
+    // overlay entry so the Overlay must be fully live.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      BadgeService().checkTimeOfDayBadges();
+      BadgeService().trackTabVisit(0);
+    });
+
   }
 
   @override
@@ -217,31 +218,45 @@ class _BadgeToastState extends State<_BadgeToast> with TickerProviderStateMixin 
   @override
   Widget build(BuildContext context) {
     final badge = widget.badge;
-    final bottom = MediaQuery.of(context).padding.bottom + 16;
-    return Positioned(
-      bottom: bottom,
-      left: 16,
-      right: 16,
-      child: Stack(
-        alignment: Alignment.topCenter,
-        clipBehavior: Clip.none,
-        children: [
-          ConfettiWidget(
-            confettiController: _confetti,
-            blastDirectionality: BlastDirectionality.explosive,
-            numberOfParticles: 5,
-            maxBlastForce: 10,
-            minBlastForce: 3,
-            emissionFrequency: 0.02,
-            gravity: 0.5,
-            particleDrag: 0.08,
-            colors: [
-              badge.seriesColor,
-              Colors.amber,
-              Colors.white,
-            ],
+    final mq = MediaQuery.of(context);
+    final bottom = mq.padding.bottom + 16;
+    return Stack(
+      clipBehavior: Clip.none,
+      children: [
+        // Confetti fires from above the toast card, sized to zero so it
+        // doesn't influence the Stack's own layout dimensions.
+        Positioned(
+          bottom: bottom + 80,
+          left: mq.size.width / 2,
+          child: SizedBox(
+            width: 0,
+            height: 0,
+            child: OverflowBox(
+              maxWidth: 200,
+              maxHeight: 200,
+              child: ConfettiWidget(
+                confettiController: _confetti,
+                blastDirectionality: BlastDirectionality.explosive,
+                numberOfParticles: 5,
+                maxBlastForce: 10,
+                minBlastForce: 3,
+                emissionFrequency: 0.02,
+                gravity: 0.5,
+                particleDrag: 0.08,
+                colors: [
+                  badge.seriesColor,
+                  Colors.amber,
+                  Colors.white,
+                ],
+              ),
+            ),
           ),
-          SlideTransition(
+        ),
+        Positioned(
+          bottom: bottom,
+          left: 16,
+          right: 16,
+          child: SlideTransition(
             position: _slide,
             child: FadeTransition(
               opacity: _fade,
@@ -297,8 +312,8 @@ class _BadgeToastState extends State<_BadgeToast> with TickerProviderStateMixin 
               ),
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

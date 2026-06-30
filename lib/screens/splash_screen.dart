@@ -29,20 +29,12 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
 
     // Navigate to home screen after animation
     Timer(const Duration(milliseconds: 3000), () {
-      if (mounted) {
-        Navigator.of(context).pushReplacement(
-          PageRouteBuilder(
-            pageBuilder: (context, animation, secondaryAnimation) => const HomeScreen(),
-            transitionsBuilder: (context, animation, secondaryAnimation, child) {
-              return FadeTransition(
-                opacity: animation,
-                child: child,
-              );
-            },
-            transitionDuration: const Duration(milliseconds: 500),
-          ),
-        );
-      }
+      if (!mounted) return;
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (_) => const HomeScreen()),
+      );
+      // Force a frame in case the scheduler stalled (defensive, no-op if already running).
+      WidgetsBinding.instance.scheduleFrame();
     });
   }
 

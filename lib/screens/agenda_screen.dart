@@ -26,6 +26,7 @@ class AgendaScreenState extends State<AgendaScreen> {
   List<Session> _allSessions = [];
   List<Session> _filteredSessions = [];
   bool _isLoading = true;
+  bool _searchFieldVisible = false;
 
   // Filter state
   Set<String> _selectedDates = {};
@@ -39,6 +40,9 @@ class AgendaScreenState extends State<AgendaScreen> {
     super.initState();
     BadgeService().trackYearBrowse(widget.selectedYear);
     _loadSchedule();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) setState(() => _searchFieldVisible = true);
+    });
   }
 
   @override
@@ -332,63 +336,63 @@ class AgendaScreenState extends State<AgendaScreen> {
           ),
         ],
       ),
-      body: Column(
-        children: [
-          // Historical year indicator banner
-          if (widget.selectedYear != 2026)
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.tertiary.withValues(alpha: 0.25),
-                border: Border(
-                  bottom: BorderSide(
-                    color: Theme.of(context).colorScheme.tertiary.withValues(alpha: 0.5),
-                    width: 2,
-                  ),
+      body: _buildBody(context, sortedDates, groupedSessions),
+    );
+  }
+
+  Widget _buildBody(BuildContext context, List<String> sortedDates, Map<String, List<Session>> groupedSessions) {
+    return Column(
+      children: [
+        if (widget.selectedYear != 2026)
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.tertiary.withValues(alpha: 0.25),
+              border: Border(
+                bottom: BorderSide(
+                  color: Theme.of(context).colorScheme.tertiary.withValues(alpha: 0.5),
+                  width: 2,
                 ),
               ),
-              child: Row(
-                children: [
-                  Icon(
-                    Icons.history,
-                    color: Theme.of(context).colorScheme.onSurface,
-                    size: 20,
-                  ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: Text(
-                      'Viewing ${widget.selectedYear} Schedule (Historical)',
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.onSurface,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14,
-                      ),
-                    ),
-                  ),
-                  FilledButton.icon(
-                    onPressed: () {
-                      widget.onYearChanged?.call(2026);
-                      setState(() {
-                        _selectedDates.clear();
-                        _selectedTypes.clear();
-                        _selectedAudiences.clear();
-                      });
-                      _loadSchedule();
-                    },
-                    icon: Icon(Icons.today, size: 16),
-                    label: const Text('2026'),
-                    style: FilledButton.styleFrom(
-                      backgroundColor: Theme.of(context).colorScheme.tertiary,
-                      foregroundColor: Theme.of(context).colorScheme.onTertiary,
-                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                      minimumSize: const Size(0, 32),
-                    ),
-                  ),
-                ],
-              ),
             ),
-          // Search bar
+            child: Row(
+              children: [
+                Icon(Icons.history, color: Theme.of(context).colorScheme.onSurface, size: 20),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    'Viewing ${widget.selectedYear} Schedule (Historical)',
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onSurface,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
+                    ),
+                  ),
+                ),
+                FilledButton.icon(
+                  onPressed: () {
+                    widget.onYearChanged?.call(2026);
+                    setState(() {
+                      _selectedDates.clear();
+                      _selectedTypes.clear();
+                      _selectedAudiences.clear();
+                    });
+                    _loadSchedule();
+                  },
+                  icon: const Icon(Icons.today, size: 16),
+                  label: const Text('2026'),
+                  style: FilledButton.styleFrom(
+                    backgroundColor: Theme.of(context).colorScheme.tertiary,
+                    foregroundColor: Theme.of(context).colorScheme.onTertiary,
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    minimumSize: const Size(0, 32),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        if (_searchFieldVisible)
           Padding(
             padding: const EdgeInsets.all(12.0),
             child: TextField(
@@ -408,101 +412,81 @@ class AgendaScreenState extends State<AgendaScreen> {
                         },
                       )
                     : null,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
+                border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
                 filled: true,
                 fillColor: Theme.of(context).colorScheme.surfaceContainerHighest,
               ),
               onChanged: (value) {
-                setState(() {
-                  _searchQuery = value;
-                });
+                setState(() => _searchQuery = value);
                 _applyFilters();
               },
             ),
           ),
-          // Content
-          Expanded(
-            child: _isLoading
-                ? const Center(child: CircularProgressIndicator())
-                : _filteredSessions.isEmpty
-              ? Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.event_busy,
-                        size: 64,
-                        color: Theme.of(context).colorScheme.secondary,
-                      ),
-                      const SizedBox(height: 16),
-                      const Text(
-                        'No sessions found',
-                        style: TextStyle(fontSize: 18),
-                      ),
-                      if (_hasActiveFilters) ...[
-                        const SizedBox(height: 8),
-                        TextButton(
-                          onPressed: _clearFilters,
-                          child: const Text('Clear filters'),
-                        ),
-                      ],
-                    ],
-                  ),
-                )
-              : ListView.builder(
-                    itemCount: sortedDates.length,
-                    itemBuilder: (context, index) {
-                      final dateKey = sortedDates[index];
-                      final sessions = groupedSessions[dateKey]!;
-                      final date = sessions.first.startTime;
-                      final dateFormat = DateFormat('EEEE, MMMM d, yyyy');
-
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+        Expanded(
+          child: _isLoading
+              ? const Center(child: CircularProgressIndicator())
+              : _filteredSessions.isEmpty
+                  ? Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Container(
-                            width: double.infinity,
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 16,
-                              vertical: 12,
-                            ),
-                            color: Theme.of(context).colorScheme.primaryContainer,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  dateFormat.format(date),
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                    color: Theme.of(context).colorScheme.onPrimaryContainer,
-                                  ),
-                                ),
-                                if (index == 0)
+                          Icon(Icons.event_busy, size: 64, color: Theme.of(context).colorScheme.secondary),
+                          const SizedBox(height: 16),
+                          const Text('No sessions found', style: TextStyle(fontSize: 18)),
+                          if (_hasActiveFilters) ...[
+                            const SizedBox(height: 8),
+                            TextButton(onPressed: _clearFilters, child: const Text('Clear filters')),
+                          ],
+                        ],
+                      ),
+                    )
+                  : ListView.builder(
+                      itemCount: sortedDates.length,
+                      itemBuilder: (context, index) {
+                        final dateKey = sortedDates[index];
+                        final sessions = groupedSessions[dateKey]!;
+                        final date = sessions.first.startTime;
+                        final dateFormat = DateFormat('EEEE, MMMM d, yyyy');
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              width: double.infinity,
+                              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                              color: Theme.of(context).colorScheme.primaryContainer,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
                                   Text(
-                                    '${_filteredSessions.length} sessions total',
+                                    dateFormat.format(date),
                                     style: TextStyle(
-                                      fontSize: 12,
-                                      color: Theme.of(context).colorScheme.onPrimaryContainer.withValues(alpha: 0.7),
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: Theme.of(context).colorScheme.onPrimaryContainer,
                                     ),
                                   ),
-                              ],
+                                  if (index == 0)
+                                    Text(
+                                      '${_filteredSessions.length} sessions total',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: Theme.of(context).colorScheme.onPrimaryContainer.withValues(alpha: 0.7),
+                                      ),
+                                    ),
+                                ],
+                              ),
                             ),
-                          ),
-                          ...sessions.map((session) => SessionCard(
-                                showBookmark: widget.selectedYear == 2026,
-                                session: session,
-                                onTap: () => _showSessionDetails(session),
-                              )),
-                        ],
-                      );
-                    },
-                  ),
-          ),
-        ],
-      ),
+                            ...sessions.map((session) => SessionCard(
+                                  showBookmark: widget.selectedYear == 2026,
+                                  session: session,
+                                  onTap: () => _showSessionDetails(session),
+                                )),
+                          ],
+                        );
+                      },
+                    ),
+        ),
+      ],
     );
   }
 

@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git pull *)",
+      "Bash(git stash *)",
+      "Bash(python3 -c \"import sys,json; data=json.load\\(sys.stdin\\); sessions=data.get\\('sessions',[]\\); print\\(f'Sessions: {len\\(sessions\\)}\\\\nLast updated: {data.get\\(\\\\\"lastUpdated\\\\\",\\\\\"unknown\\\\\"\\)}'\\)\")",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)",
+      "Bash(brew install *)",
+      "Bash(/opt/homebrew/bin/gh run *)",
+      "Bash(node -e \"const d = JSON.parse\\(require\\('fs'\\).readFileSync\\('docs/schedule_2026_api.json','utf8'\\)\\); console.log\\('sessionCount field:', d.sessionCount\\); console.log\\('sessions array length:', d.sessions.length\\); console.log\\('lastUpdated:', d.lastUpdated\\);\")",
+      "Bash(node -e ' *)",
+      "Bash(git -C /Users/user/Documents/projects/redcapcon_beta status)",
+      "Bash(git -C /Users/user/Documents/projects/redcapcon_beta diff --stat)",
+      "Bash(git -C /Users/user/Documents/projects/redcapcon_beta add lib/screens/agenda_screen.dart lib/screens/home_screen.dart lib/screens/settings_screen.dart lib/screens/timeline_view_screen.dart lib/services/schedule_service.dart lib/widgets/session_card.dart pubspec.lock pubspec.yaml scripts/scrape_to_json.js assets/sounds/ lib/models/badge_model.dart lib/screens/badges_screen.dart lib/services/badge_service.dart)",
+      "Bash(git -C /Users/user/Documents/projects/redcapcon_beta log --oneline -3)",
+      "Bash(git -C /Users/user/Documents/projects/redcapcon_beta commit -m ' *)",
+      "Bash(git -C /Users/user/Documents/projects/redcapcon_beta push)"
+    ]
+  }
+}

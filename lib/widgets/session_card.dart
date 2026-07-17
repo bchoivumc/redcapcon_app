@@ -10,6 +10,9 @@ class SessionCard extends StatefulWidget {
   final bool isDeleting;
   final bool canRestore;
   final Future<void> Function()? onDelete;
+  final bool isLocked;
+  final Future<void> Function()? onLockToggle;
+  final bool isConflict;
 
   const SessionCard({
     super.key,
@@ -19,6 +22,9 @@ class SessionCard extends StatefulWidget {
     this.isDeleting = false,
     this.canRestore = false,
     this.onDelete,
+    this.isLocked = false,
+    this.onLockToggle,
+    this.isConflict = false,
   });
 
   @override
@@ -121,6 +127,18 @@ class _SessionCardState extends State<SessionCard> with SingleTickerProviderStat
             opacity: _fadeAnimation,
             child: Card(
               margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+              color: widget.isLocked
+                  ? Theme.of(context).colorScheme.surfaceContainerHighest
+                  : null,
+              shape: widget.isConflict
+                  ? RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      side: BorderSide(
+                        color: Colors.amber.shade600,
+                        width: 1.5,
+                      ),
+                    )
+                  : null,
               child: InkWell(
                 onTap: widget.onTap == null ? null : () {
                   BadgeService().checkTreasureHuntSession(widget.session.id);
@@ -175,11 +193,39 @@ class _SessionCardState extends State<SessionCard> with SingleTickerProviderStat
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),
+                            if (widget.isConflict) ...[
+                              const SizedBox(width: 8),
+                              Icon(Icons.warning_amber_rounded, size: 12, color: Colors.amber.shade700),
+                              const SizedBox(width: 3),
+                              Text(
+                                'Time conflict',
+                                style: TextStyle(
+                                  fontSize: 11,
+                                  color: Colors.amber.shade700,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
                           ],
                         ),
                       ],
                     ),
                   ),
+                  if (widget.onLockToggle != null)
+                    IconButton(
+                      icon: Icon(
+                        widget.isLocked ? Icons.lock_outline : Icons.lock_open,
+                        color: widget.isLocked
+                            ? Theme.of(context).colorScheme.error
+                            : Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.35),
+                        size: 20,
+                      ),
+                      tooltip: widget.isLocked ? 'Unlock session' : 'Lock session',
+                      onPressed: () async {
+                        await widget.onLockToggle!();
+                        setState(() {});
+                      },
+                    ),
                   if (widget.showBookmark)
                     FutureBuilder<bool>(
                       future: _scheduleService.isSessionSaved(widget.session.id),
@@ -192,7 +238,7 @@ class _SessionCardState extends State<SessionCard> with SingleTickerProviderStat
                             (isSaved || showAsRestoreable) ? Icons.bookmark : Icons.bookmark_border,
                             color: (isSaved || showAsRestoreable) ? Theme.of(context).colorScheme.primary : null,
                           ),
-                          onPressed: () async {
+                          onPressed: widget.isLocked ? null : () async {
                             // If in My Schedule with onDelete handler
                             if (widget.onDelete != null) {
                               await widget.onDelete!();

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../models/session.dart';
 import '../services/schedule_service.dart';
+import '../services/pdf_export_service.dart';
 import '../widgets/session_card.dart';
 import 'notification_settings_screen.dart';
 
@@ -16,7 +17,10 @@ class MyScheduleScreenState extends State<MyScheduleScreen> {
   final ScheduleService _scheduleService = ScheduleService();
   List<Session> _savedSessions = [];
   bool _isLoading = true;
-  final Set<String> _deletingSessionIds = {}; // Track sessions being grayed out
+  bool _isExporting = false;
+  final Set<String> _deletingSessionIds = {};
+  Set<String> _lockedSessionIds = {};
+  Set<String> _conflictingSessionIds = {};
 
   @override
   void initState() {
@@ -29,14 +33,16 @@ class MyScheduleScreenState extends State<MyScheduleScreen> {
     try {
       final allSessions = await _scheduleService.fetchSchedule();
       final savedIds = await _scheduleService.getSavedSessionIds();
+      final lockedIds = await _scheduleService.getLockedSessionIds();
 
       setState(() {
         _savedSessions = allSessions
             .where((session) => savedIds.contains(session.id))
             .toList()
           ..sort((a, b) => a.startTime.compareTo(b.startTime));
+        _lockedSessionIds = Set<String>.from(lockedIds);
+        _conflictingSessionIds = _computeConflicts(_savedSessions);
         _isLoading = false;
-        // Clear the grayed-out set when reloading
         _deletingSessionIds.clear();
       });
     } catch (e) {
@@ -47,6 +53,35 @@ class MyScheduleScreenState extends State<MyScheduleScreen> {
         );
       }
     }
+  }
+
+  Future<void> _exportPdf() async {
+    if (_savedSessions.isEmpty) return;
+    setState(() => _isExporting = true);
+    try {
+      await PdfExportService().shareSchedule(
+        sessions: _savedSessions,
+        lockedIds: _lockedSessionIds,
+        conflictIds: _conflictingSessionIds,
+      );
+    } finally {
+      if (mounted) setState(() => _isExporting = false);
+    }
+  }
+
+  Set<String> _computeConflicts(List<Session> sessions) {
+    final conflicts = <String>{};
+    for (int i = 0; i < sessions.length; i++) {
+      for (int j = i + 1; j < sessions.length; j++) {
+        final a = sessions[i];
+        final b = sessions[j];
+        if (a.startTime.isBefore(b.endTime) && b.startTime.isBefore(a.endTime)) {
+          conflicts.add(a.id);
+          conflicts.add(b.id);
+        }
+      }
+    }
+    return conflicts;
   }
 
   Map<String, List<Session>> _groupSessionsByDate() {
@@ -66,6 +101,17 @@ class MyScheduleScreenState extends State<MyScheduleScreen> {
       appBar: AppBar(
         title: const Text('My Schedule'),
         actions: [
+          if (_savedSessions.isNotEmpty)
+            _isExporting
+                ? const Padding(
+                    padding: EdgeInsets.all(14),
+                    child: SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2)),
+                  )
+                : IconButton(
+                    icon: const Icon(Icons.picture_as_pdf_outlined),
+                    onPressed: _exportPdf,
+                    tooltip: 'Export as PDF',
+                  ),
           IconButton(
             icon: const Icon(Icons.notifications),
             onPressed: () async {
@@ -138,26 +184,31 @@ class MyScheduleScreenState extends State<MyScheduleScreen> {
                           ),
                           ...sessions.map((session) {
                             final isDeleting = _deletingSessionIds.contains(session.id);
+                            final isLocked = _lockedSessionIds.contains(session.id);
+                            final isConflict = _conflictingSessionIds.contains(session.id);
                             return SessionCard(
                               session: session,
-                              onTap: isDeleting ? null : () => _showSessionDetails(session),
+                              onTap: isDeleting ? null : () => _showSessionDetails(session, isLocked: isLocked),
+                              isConflict: isConflict,
                               showBookmark: true,
                               isDeleting: isDeleting,
                               canRestore: isDeleting,
-                              onDelete: () async {
+                              isLocked: isLocked,
+                              onLockToggle: () async {
+                                if (isLocked) {
+                                  await _scheduleService.unlockSession(session.id);
+                                  setState(() => _lockedSessionIds.remove(session.id));
+                                } else {
+                                  await _scheduleService.lockSession(session.id);
+                                  setState(() => _lockedSessionIds.add(session.id));
+                                }
+                              },
+                              onDelete: isLocked ? null : () async {
                                 if (isDeleting) {
-                                  // Restore: remove from deleting set and re-add to schedule
-                                  setState(() {
-                                    _deletingSessionIds.remove(session.id);
-                                  });
-                                  // Re-add to SharedPreferences and reschedule notification
+                                  setState(() => _deletingSessionIds.remove(session.id));
                                   await _scheduleService.saveSession(session.id, session: session);
                                 } else {
-                                  // Delete: mark as deleting (gray out) and remove from SharedPreferences immediately
-                                  setState(() {
-                                    _deletingSessionIds.add(session.id);
-                                  });
-                                  // Remove from SharedPreferences and cancel notification
+                                  setState(() => _deletingSessionIds.add(session.id));
                                   await _scheduleService.removeSession(session.id, session: session);
                                 }
                               },
@@ -170,7 +221,7 @@ class MyScheduleScreenState extends State<MyScheduleScreen> {
     );
   }
 
-  void _showSessionDetails(Session session) {
+  void _showSessionDetails(Session session, {bool isLocked = false}) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -241,14 +292,32 @@ class MyScheduleScreenState extends State<MyScheduleScreen> {
                   const SizedBox(height: 24),
                   SizedBox(
                     width: double.infinity,
-                    child: FilledButton.icon(
+                    child: OutlinedButton.icon(
                       onPressed: () async {
+                        if (isLocked) {
+                          await _scheduleService.unlockSession(session.id);
+                          setState(() => _lockedSessionIds.remove(session.id));
+                        } else {
+                          await _scheduleService.lockSession(session.id);
+                          setState(() => _lockedSessionIds.add(session.id));
+                        }
+                        if (context.mounted) Navigator.pop(context);
+                      },
+                      icon: Icon(isLocked ? Icons.lock_open : Icons.lock),
+                      label: Text(isLocked ? 'Unlock session' : 'Lock session'),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  SizedBox(
+                    width: double.infinity,
+                    child: FilledButton.icon(
+                      onPressed: isLocked ? null : () async {
                         await _scheduleService.removeSession(session.id, session: session);
                         await _loadSavedSessions();
                         if (context.mounted) Navigator.pop(context);
                       },
                       icon: const Icon(Icons.bookmark_remove),
-                      label: const Text('Remove from My Schedule'),
+                      label: Text(isLocked ? 'Locked — unlock to remove' : 'Remove from My Schedule'),
                       style: FilledButton.styleFrom(
                         backgroundColor: Theme.of(context).colorScheme.error,
                       ),

@@ -11,6 +11,7 @@ import 'json_api_service.dart';
 
 class ScheduleService {
   static const String _savedSessionsKey = 'saved_sessions';
+  static const String _lockedSessionsKey = 'locked_sessions';
   static const String _cacheTimestampKey = 'cache_timestamp';
   static const String _cacheVersionKey = 'cache_version';
   static const int _currentCacheVersion = 8; // Increment this to invalidate old cache (v8: fixed notification CDT scheduling - times stored as CDT not UTC)
@@ -254,6 +255,30 @@ class ScheduleService {
     final prefs = await SharedPreferences.getInstance();
     await prefs.clear();
     print('Master reset complete — all app state cleared');
+  }
+
+  // Lock a session (prevents accidental removal)
+  Future<void> lockSession(String sessionId) async {
+    final prefs = await SharedPreferences.getInstance();
+    final locked = prefs.getStringList(_lockedSessionsKey) ?? [];
+    if (!locked.contains(sessionId)) {
+      locked.add(sessionId);
+      await prefs.setStringList(_lockedSessionsKey, locked);
+    }
+  }
+
+  // Unlock a session
+  Future<void> unlockSession(String sessionId) async {
+    final prefs = await SharedPreferences.getInstance();
+    final locked = prefs.getStringList(_lockedSessionsKey) ?? [];
+    locked.remove(sessionId);
+    await prefs.setStringList(_lockedSessionsKey, locked);
+  }
+
+  // Get all locked session IDs
+  Future<List<String>> getLockedSessionIds() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getStringList(_lockedSessionsKey) ?? [];
   }
 
   // Toggle session saved status

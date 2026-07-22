@@ -19,6 +19,7 @@ class MyScheduleScreenState extends State<MyScheduleScreen> {
   bool _isLoading = true;
   bool _isExporting = false;
   final Set<String> _deletingSessionIds = {};
+  final Set<String> _collapsedDates = {};
   Set<String> _lockedSessionIds = {};
   Set<String> _conflictingSessionIds = {};
 
@@ -163,25 +164,64 @@ class MyScheduleScreenState extends State<MyScheduleScreen> {
                       final date = sessions.first.startTime;
                       final dateFormat = DateFormat('EEEE, MMMM d, yyyy');
 
+                      final isCollapsed = _collapsedDates.contains(dateKey);
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Container(
-                            width: double.infinity,
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 16,
-                              vertical: 12,
-                            ),
-                            color: Theme.of(context).colorScheme.primaryContainer,
-                            child: Text(
-                              dateFormat.format(date),
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Theme.of(context).colorScheme.onPrimaryContainer,
+                          InkWell(
+                            onTap: () => setState(() {
+                              if (isCollapsed) {
+                                _collapsedDates.remove(dateKey);
+                              } else {
+                                _collapsedDates.add(dateKey);
+                              }
+                            }),
+                            child: Container(
+                              width: double.infinity,
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 16,
+                                vertical: 12,
+                              ),
+                              color: Theme.of(context).colorScheme.primaryContainer,
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      dateFormat.format(date),
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                        color: Theme.of(context).colorScheme.onPrimaryContainer,
+                                      ),
+                                    ),
+                                  ),
+                                  Text(
+                                    '${sessions.length}',
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      color: Theme.of(context).colorScheme.onPrimaryContainer.withValues(alpha: 0.7),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 4),
+                                  AnimatedRotation(
+                                    turns: isCollapsed ? -0.25 : 0,
+                                    duration: const Duration(milliseconds: 200),
+                                    child: Icon(
+                                      Icons.expand_more,
+                                      color: Theme.of(context).colorScheme.onPrimaryContainer.withValues(alpha: 0.7),
+                                      size: 20,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ),
+                          AnimatedSize(
+                            duration: const Duration(milliseconds: 220),
+                            curve: Curves.easeInOut,
+                            child: isCollapsed
+                                ? const SizedBox.shrink()
+                                : Column(children: [
                           ...sessions.map((session) {
                             final isDeleting = _deletingSessionIds.contains(session.id);
                             final isLocked = _lockedSessionIds.contains(session.id);
@@ -214,6 +254,8 @@ class MyScheduleScreenState extends State<MyScheduleScreen> {
                               },
                             );
                           }),
+                        ]),
+                          ),
                         ],
                       );
                     },

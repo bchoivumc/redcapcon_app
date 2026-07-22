@@ -45,6 +45,15 @@ jobs:
           echo "=== Exit code: $EXIT_CODE ==="
           exit $EXIT_CODE
 
+      - name: Validate scrape results
+        run: |
+          SESSION_COUNT=$(node -e "const d=JSON.parse(require('fs').readFileSync('docs/schedule_2026_api.json','utf8')); console.log(d.sessions?.length ?? 0)")
+          echo "Scraped $SESSION_COUNT sessions"
+          if [ "$SESSION_COUNT" -lt 20 ]; then
+            echo "ERROR: Only $SESSION_COUNT sessions scraped — aborting to preserve existing data"
+            exit 1
+          fi
+
       - name: Check for changes
         id: changes
         run: |

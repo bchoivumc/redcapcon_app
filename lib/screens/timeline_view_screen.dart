@@ -27,7 +27,7 @@ class TimelineViewScreenState extends State<TimelineViewScreen> {
   static const double _headerHeight = 50.0;
   static const double _cellWidth    = 200.0;
   static const double _cellPad      = 4.0;
-  static const double _sessionCardH = 76.0; // height per session card in a slot
+  static const double _sessionCardH = 88.0; // height per session card in a slot
   static const double _rowMinH      = 56.0;
 
   // ── Scroll controllers ───────────────────────────────────────────────────
@@ -511,7 +511,7 @@ class TimelineViewScreenState extends State<TimelineViewScreen> {
         return GestureDetector(
           onTap: () => _showSessionDetails(session),
           child: Container(
-            height: _sessionCardH - 8,
+            height: _sessionCardH - 6,
             margin: const EdgeInsets.only(bottom: 4),
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
             decoration: BoxDecoration(
@@ -547,8 +547,28 @@ class TimelineViewScreenState extends State<TimelineViewScreen> {
                     ),
                   ],
                 ),
+                const SizedBox(height: 3),
+                Row(
+                  children: [
+                    Icon(Icons.access_time,
+                        size: 9, color: fg.withValues(alpha: 0.6)),
+                    const SizedBox(width: 2),
+                    Expanded(
+                      child: Text(
+                        session.timeRange,
+                        style: TextStyle(
+                          fontSize: 9,
+                          color: fg.withValues(alpha: 0.8),
+                          fontWeight: FontWeight.w500,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ],
+                ),
                 if (session.location.isNotEmpty) ...[
-                  const SizedBox(height: 3),
+                  const SizedBox(height: 2),
                   Row(
                     children: [
                       Icon(Icons.location_on,

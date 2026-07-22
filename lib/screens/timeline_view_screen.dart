@@ -215,29 +215,32 @@ class TimelineViewScreenState extends State<TimelineViewScreen> {
                   Text(session.description,
                       style: Theme.of(context).textTheme.bodyMedium),
                 ],
-                const SizedBox(height: 24),
-                SizedBox(
-                  width: double.infinity,
-                  child: FutureBuilder<bool>(
-                    future: _scheduleService.isSessionSaved(session.id),
-                    builder: (context, snap) {
-                      final isSaved = snap.data ?? false;
-                      return FilledButton.icon(
-                        onPressed: () async {
-                          await _scheduleService.toggleSession(session.id,
-                              session: session);
-                          setState(() {});
-                          if (context.mounted) Navigator.pop(context);
-                        },
-                        icon: Icon(
-                            isSaved ? Icons.bookmark_remove : Icons.bookmark_add),
-                        label: Text(isSaved
-                            ? 'Remove from My Schedule'
-                            : 'Add to My Schedule'),
-                      );
-                    },
+                if (widget.selectedYear >= DateTime.now().year) ...[
+                  const SizedBox(height: 24),
+                  SizedBox(
+                    width: double.infinity,
+                    child: FutureBuilder<bool>(
+                      future: _scheduleService.isSessionSaved(session.id),
+                      builder: (context, snap) {
+                        final isSaved = snap.data ?? false;
+                        return FilledButton.icon(
+                          onPressed: () async {
+                            await _scheduleService.toggleSession(session.id,
+                                session: session);
+                            setState(() {});
+                            if (context.mounted) Navigator.pop(context);
+                          },
+                          icon: Icon(isSaved
+                              ? Icons.bookmark_remove
+                              : Icons.bookmark_add),
+                          label: Text(isSaved
+                              ? 'Remove from My Schedule'
+                              : 'Add to My Schedule'),
+                        );
+                      },
+                    ),
                   ),
-                ),
+                ],
               ],
             ),
           ),

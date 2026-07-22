@@ -265,7 +265,7 @@ class TimelineViewScreenState extends State<TimelineViewScreen> {
     if (_isLoading) {
       return Scaffold(
         appBar: AppBar(title: Text('Timeline View - ${widget.selectedYear}')),
-        body: const Center(child: CircularProgressIndicator()),
+      body: const Center(child: CircularProgressIndicator()),
       );
     }
 
@@ -276,7 +276,33 @@ class TimelineViewScreenState extends State<TimelineViewScreen> {
     final cs          = Theme.of(context).colorScheme;
 
     return Scaffold(
-      appBar: AppBar(title: Text('Timeline View - ${widget.selectedYear}')),
+      appBar: AppBar(
+        title: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text('Timeline View - ${widget.selectedYear}'),
+            if (widget.selectedYear < DateTime.now().year) ...[
+              const SizedBox(width: 8),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.surfaceContainerHighest,
+                  borderRadius: BorderRadius.circular(4),
+                ),
+                child: Text(
+                  'Historical',
+                  style: TextStyle(
+                    fontSize: 11,
+                    fontWeight: FontWeight.w600,
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                    letterSpacing: 0.3,
+                  ),
+                ),
+              ),
+            ],
+          ],
+        ),
+      ),
       body: Column(
         children: [
           _buildHeader(sortedDates, cs),

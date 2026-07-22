@@ -16,7 +16,7 @@ class _SearchScreenState extends State<SearchScreen> {
   
   Map<int, List<Session>> _allSessionsByYear = {};
   List<Session> _searchResults = [];
-  Set<int> _selectedYears = {2022, 2023, 2024, 2025, 2026};
+  Set<int> _selectedYears = {2026};
   String _searchQuery = '';
   bool _isLoading = true;
 

@@ -177,21 +177,24 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                 ],
               ),
             ),
-            Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                border: Border(
-                  top: BorderSide(color: Colors.grey.shade300),
+            SafeArea(
+              top: false,
+              child: Container(
+                padding: const EdgeInsets.fromLTRB(16, 12, 16, 20),
+                decoration: BoxDecoration(
+                  border: Border(
+                    top: BorderSide(color: Colors.grey.shade300),
+                  ),
                 ),
-              ),
-              child: SizedBox(
-                width: double.infinity,
-                child: FilledButton(
-                  onPressed: () {
-                    widget.onApply(_selectedDates, _selectedTypes, _selectedAudiences);
-                    Navigator.pop(context);
-                  },
-                  child: const Text('Apply Filters'),
+                child: SizedBox(
+                  width: double.infinity,
+                  child: FilledButton(
+                    onPressed: () {
+                      widget.onApply(_selectedDates, _selectedTypes, _selectedAudiences);
+                      Navigator.pop(context);
+                    },
+                    child: const Text('Apply Filters'),
+                  ),
                 ),
               ),
             ),

@@ -32,6 +32,7 @@ class AgendaScreenState extends State<AgendaScreen> {
   Set<String> _selectedDates = {};
   Set<String> _selectedTypes = {};
   Set<String> _selectedAudiences = {};
+  final Set<String> _collapsedDates = {};
   String _searchQuery = '';
   final TextEditingController _searchController = TextEditingController();
 
@@ -61,9 +62,7 @@ class AgendaScreenState extends State<AgendaScreen> {
 
   Future<void> _loadSchedule({bool forceRefresh = false}) async {
     if (!mounted) return;
-    setState(() {
-      _isLoading = true;
-    });
+    setState(() => _isLoading = true);
 
     try {
       final sessions = await _scheduleService.fetchSchedule(
@@ -78,11 +77,14 @@ class AgendaScreenState extends State<AgendaScreen> {
         _isLoading = false;
       });
       _applyFilters();
+
+      // After showing cached data, silently check for updates in background
+      if (widget.selectedYear == 2026 && !forceRefresh) {
+        _backgroundRefresh();
+      }
     } catch (e) {
       if (!mounted) return;
-      setState(() {
-        _isLoading = false;
-      });
+      setState(() => _isLoading = false);
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -91,6 +93,22 @@ class AgendaScreenState extends State<AgendaScreen> {
           ),
         );
       }
+    }
+  }
+
+  Future<void> _backgroundRefresh() async {
+    try {
+      final fresh = await _scheduleService.fetchSchedule(
+        forceRefresh: true,
+        year: 2026,
+      );
+      if (!mounted) return;
+      if (fresh.length != _allSessions.length) {
+        setState(() => _allSessions = fresh);
+        _applyFilters();
+      }
+    } catch (_) {
+      // Silently ignore — background refresh, don't surface errors to user
     }
   }
 
@@ -123,6 +141,7 @@ class AgendaScreenState extends State<AgendaScreen> {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
+      useSafeArea: true,
       builder: (context) => FilterBottomSheet(
         availableDates: dates,
         availableTypes: types,
@@ -447,40 +466,93 @@ class AgendaScreenState extends State<AgendaScreen> {
                         final sessions = groupedSessions[dateKey]!;
                         final date = sessions.first.startTime;
                         final dateFormat = DateFormat('EEEE, MMMM d, yyyy');
+                        final isCollapsed = _collapsedDates.contains(dateKey);
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Container(
-                              width: double.infinity,
-                              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                              color: Theme.of(context).colorScheme.primaryContainer,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    dateFormat.format(date),
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                      color: Theme.of(context).colorScheme.onPrimaryContainer,
-                                    ),
-                                  ),
-                                  if (index == 0)
-                                    Text(
-                                      '${_filteredSessions.length} sessions total',
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color: Theme.of(context).colorScheme.onPrimaryContainer.withValues(alpha: 0.7),
+                            InkWell(
+                              onTap: () => setState(() {
+                                if (isCollapsed) {
+                                  _collapsedDates.remove(dateKey);
+                                } else {
+                                  _collapsedDates.add(dateKey);
+                                }
+                              }),
+                              child: Container(
+                                width: double.infinity,
+                                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                                color: Theme.of(context).colorScheme.primaryContainer,
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        dateFormat.format(date),
+                                        style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                          color: Theme.of(context).colorScheme.onPrimaryContainer,
+                                        ),
                                       ),
                                     ),
-                                ],
+                                    if (index == 0)
+                                      RichText(
+                                        text: TextSpan(
+                                          children: [
+                                            TextSpan(
+                                              text: '${sessions.length}',
+                                              style: TextStyle(
+                                                fontSize: 13,
+                                                fontWeight: FontWeight.bold,
+                                                color: Theme.of(context).colorScheme.onPrimaryContainer,
+                                              ),
+                                            ),
+                                            TextSpan(
+                                              text: ' of ${_filteredSessions.length}',
+                                              style: TextStyle(
+                                                fontSize: 11,
+                                                color: Theme.of(context).colorScheme.onPrimaryContainer.withValues(alpha: 0.6),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                    else
+                                      Text(
+                                        '${sessions.length}',
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          color: Theme.of(context).colorScheme.onPrimaryContainer.withValues(alpha: 0.7),
+                                        ),
+                                      ),
+                                    const SizedBox(width: 4),
+                                    AnimatedRotation(
+                                      turns: isCollapsed ? -0.25 : 0,
+                                      duration: const Duration(milliseconds: 200),
+                                      child: Icon(
+                                        Icons.expand_more,
+                                        color: Theme.of(context).colorScheme.onPrimaryContainer.withValues(alpha: 0.7),
+                                        size: 20,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
-                            ...sessions.map((session) => SessionCard(
-                                  showBookmark: widget.selectedYear == 2026,
-                                  session: session,
-                                  onTap: () => _showSessionDetails(session),
-                                )),
+                            AnimatedSize(
+                              duration: const Duration(milliseconds: 220),
+                              curve: Curves.easeInOut,
+                              child: isCollapsed
+                                  ? const SizedBox.shrink()
+                                  : Column(
+                                      children: sessions
+                                          .map((session) => SessionCard(
+                                                showBookmark: widget.selectedYear == 2026,
+                                                session: session,
+                                                onTap: () => _showSessionDetails(session),
+                                              ))
+                                          .toList(),
+                                    ),
+                            ),
                           ],
                         );
                       },

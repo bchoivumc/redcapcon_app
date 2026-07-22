@@ -71,7 +71,7 @@ class ScheduleService {
       }
     }
 
-    // Try cached schedule as fallback
+    // Try cached schedule as fallback — stale cache beats mock data offline
     final cachedSessions = await _getCachedSchedule(year);
     if (cachedSessions != null && cachedSessions.isNotEmpty) {
       print('Using cached schedule as fallback for $year (${cachedSessions.length} sessions)');
@@ -104,18 +104,14 @@ class ScheduleService {
   }
 
 
-  /// Get cached schedule from local storage for specific year
+  /// Get cached schedule from local storage for specific year.
   Future<List<Session>?> _getCachedSchedule(int year) async {
     try {
       final prefs = await SharedPreferences.getInstance();
       final cachedJson = prefs.getString(_getCachedScheduleKey(year));
-
       if (cachedJson == null) return null;
-
       final List<dynamic> decoded = json.decode(cachedJson);
-      final sessions = decoded.map((item) => Session.fromJson(item as Map<String, dynamic>)).toList();
-
-      return sessions;
+      return decoded.map((item) => Session.fromJson(item as Map<String, dynamic>)).toList();
     } catch (e) {
       print('Error loading cached schedule for $year: $e');
       return null;

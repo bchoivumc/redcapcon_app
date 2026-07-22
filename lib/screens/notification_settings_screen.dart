@@ -177,7 +177,7 @@ class _NotificationSettingsScreenState extends State<NotificationSettingsScreen>
           : RefreshIndicator(
               onRefresh: _loadSettings,
               child: ListView(
-                padding: const EdgeInsets.all(16),
+                padding: EdgeInsets.fromLTRB(16, 16, 16, MediaQuery.of(context).padding.bottom + 16),
                 children: [
                   // Enable/Disable Toggle
                   Card(

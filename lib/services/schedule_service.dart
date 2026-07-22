@@ -14,7 +14,7 @@ class ScheduleService {
   static const String _lockedSessionsKey = 'locked_sessions';
   static const String _cacheTimestampKey = 'cache_timestamp';
   static const String _cacheVersionKey = 'cache_version';
-  static const int _currentCacheVersion = 8; // Increment this to invalidate old cache (v8: fixed notification CDT scheduling - times stored as CDT not UTC)
+  static const int _currentCacheVersion = 9; // v9: display times in CDT instead of raw UTC
 
   final NotificationService _notificationService = NotificationService();
   final JsonApiService _jsonApiService = JsonApiService();

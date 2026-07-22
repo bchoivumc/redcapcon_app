@@ -150,26 +150,21 @@ async function scrapeSchedule() {
       const descWithAudience = session['Session Description w/ (Audience):'] || '';
       const type = session['Session Type:'] || '';
 
-      // Parse date
-      const date = new Date(dateStr);
+      // Parse date — force UTC-based parsing so the result is timezone-independent.
+      // We store times as CDT-as-UTC (CDT hour == UTC hour in the stored ISO string),
+      // so a session at "11:30 CDT" is stored as T11:30:00.000Z.  This is deliberate:
+      // the Flutter app reads the UTC hour and displays it directly with a "CDT" label.
+      const dateParts = new Date(dateStr + 'T00:00:00Z'); // anchor to UTC midnight
+      const y = dateParts.getUTCFullYear();
+      const m = dateParts.getUTCMonth();
+      const d = dateParts.getUTCDate();
       const [startHour, startMin] = (startTime || '0:0').split(':').map(Number);
       const [endHour, endMin] = (endTime || '0:0').split(':').map(Number);
 
-      const startDateTime = new Date(
-        date.getFullYear(),
-        date.getMonth(),
-        date.getDate(),
-        startHour,
-        startMin
-      );
+      // Build UTC datetimes where hour == CDT hour (CDT-as-UTC convention)
+      const startDateTime = new Date(Date.UTC(y, m, d, startHour, startMin));
 
-      const endDateTime = new Date(
-        date.getFullYear(),
-        date.getMonth(),
-        date.getDate(),
-        endHour,
-        endMin
-      );
+      const endDateTime = new Date(Date.UTC(y, m, d, endHour, endMin));
 
       // Extract audience
       let audience = 'All';

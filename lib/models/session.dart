@@ -53,13 +53,20 @@ class Session {
     };
   }
 
+  // Times are stored as CDT hours in UTC (i.e. 11:30 AM CDT → T11:30:00Z).
+  // Display the UTC hour/minute directly and label it CDT so non-CDT users
+  // know the timezone without the app converting to their local time.
+
   String get dateKey {
-    return '${startTime.year}-${startTime.month.toString().padLeft(2, '0')}-${startTime.day.toString().padLeft(2, '0')}';
+    final t = startTime.toUtc();
+    return '${t.year}-${t.month.toString().padLeft(2, '0')}-${t.day.toString().padLeft(2, '0')}';
   }
 
   String get timeRange {
-    final start = '${startTime.hour.toString().padLeft(2, '0')}:${startTime.minute.toString().padLeft(2, '0')}';
-    final end = '${endTime.hour.toString().padLeft(2, '0')}:${endTime.minute.toString().padLeft(2, '0')}';
-    return '$start - $end';
+    final s = startTime.toUtc();
+    final e = endTime.toUtc();
+    String fmt(DateTime t) =>
+        '${t.hour.toString().padLeft(2, '0')}:${t.minute.toString().padLeft(2, '0')}';
+    return '${fmt(s)} - ${fmt(e)} CDT';
   }
 }

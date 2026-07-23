@@ -218,36 +218,6 @@ class NotificationService {
     return Set<String>.from(prefs.getStringList(_scheduledIdsKey) ?? []);
   }
 
-  // Returns only IDs whose notification time is still in the future, and
-  // prunes past ones from SharedPreferences so the count stays accurate.
-  Future<Set<String>> getActiveScheduledIds(List<Session> sessions) async {
-    if (!_initialized) await initialize();
-    final prefs = await SharedPreferences.getInstance();
-    var ids = Set<String>.from(prefs.getStringList(_scheduledIdsKey) ?? []);
-
-    final chicagoLocation = tz.getLocation('America/Chicago');
-    final now = tz.TZDateTime.now(chicagoLocation);
-    final toRemove = <String>{};
-
-    for (final session in sessions) {
-      if (!ids.contains(session.id)) continue;
-      final notifTime = session.startTime.subtract(const Duration(minutes: 5));
-      final tzNotifTime = tz.TZDateTime(
-        chicagoLocation,
-        notifTime.year, notifTime.month, notifTime.day,
-        notifTime.hour, notifTime.minute, notifTime.second,
-      );
-      if (tzNotifTime.isBefore(now)) toRemove.add(session.id);
-    }
-
-    if (toRemove.isNotEmpty) {
-      ids = ids.difference(toRemove);
-      await prefs.setStringList(_scheduledIdsKey, ids.toList());
-      await prefs.setInt(_scheduledCountKey, ids.length);
-    }
-
-    return ids;
-  }
 
   Future<int> getScheduledCount() async {
     final ids = await getScheduledSessionIds();

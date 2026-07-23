@@ -60,12 +60,10 @@ class _NotificationSettingsScreenState extends State<NotificationSettingsScreen>
       if (enabled) await _notificationService.requestPermissions();
       final canSchedule = await _notificationService.canScheduleExactAlarms();
 
+      final scheduledIds = await _notificationService.getScheduledSessionIds();
       final savedIds = await _scheduleService.getSavedSessionIds();
       final allSessions = await _scheduleService.fetchSchedule(year: 2026);
       final saved = allSessions.where((s) => savedIds.contains(s.id)).toList();
-
-      // Prune fired/past notifications and return only future ones.
-      final scheduledIds = await _notificationService.getActiveScheduledIds(saved);
 
       if (!mounted) return;
       setState(() {
@@ -156,13 +154,22 @@ class _NotificationSettingsScreenState extends State<NotificationSettingsScreen>
 
   @override
   Widget build(BuildContext context) {
-    final scheduledCount = _scheduledSessionIds.length;
-    final hasScheduled = scheduledCount > 0;
-
+    // CDT-as-UTC convention: stored T07:30Z means 7:30 CDT = 12:30 real UTC (CDT = UTC-5).
+    // A notification has fired when real UTC passes (session CDT start − 5 min) + 5 h.
+    final nowUtc = DateTime.now().toUtc();
     final scheduledSessions = _savedSessions
-        .where((s) => _scheduledSessionIds.contains(s.id))
+        .where((s) {
+          if (!_scheduledSessionIds.contains(s.id)) return false;
+          final notifRealUtc = s.startTime.toUtc()
+              .subtract(const Duration(minutes: 5))
+              .add(const Duration(hours: 5));
+          return notifRealUtc.isAfter(nowUtc);
+        })
         .toList()
       ..sort((a, b) => a.startTime.compareTo(b.startTime));
+
+    final scheduledCount = scheduledSessions.length;
+    final hasScheduled = scheduledCount > 0;
 
     return Scaffold(
       appBar: AppBar(

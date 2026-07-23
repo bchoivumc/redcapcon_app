@@ -54,6 +54,21 @@ jobs:
             exit 1
           fi
 
+          # Sanity-check: Day 1 morning sessions (Sep 1) must start before 10:00 CDT
+          # (CDT-as-UTC convention: CDT hour == UTC hour in the stored ISO string).
+          # If the survey returns times shifted vs CDT (known to occur), this aborts.
+          BREAKFAST_HOUR=$(node -e "
+            const d = JSON.parse(require('fs').readFileSync('docs/schedule_2026_api.json','utf8'));
+            const b = d.sessions.find(s => s.title === 'Breakfast' && s.startTime.startsWith('2026-09-01'));
+            if (!b) { console.log(99); process.exit(0); }
+            console.log(parseInt(b.startTime.substring(11,13)));
+          ")
+          echo "Day 1 Breakfast UTC hour (CDT hour): $BREAKFAST_HOUR"
+          if [ "$BREAKFAST_HOUR" -ge 10 ]; then
+            echo "ERROR: Day 1 Breakfast starts at hour $BREAKFAST_HOUR CDT — times appear shifted. Aborting to preserve existing data."
+            exit 1
+          fi
+
       - name: Check for changes
         id: changes
         run: |

@@ -105,9 +105,25 @@ class NotificationService {
   }
 
   Future<bool> canScheduleExactAlarms() async {
-    // We use AndroidScheduleMode.alarmClock (setAlarmClock API) which does not
-    // require SCHEDULE_EXACT_ALARM permission — always returns true.
-    return true;
+    if (!_initialized) await initialize();
+    try {
+      final canSchedule = await _notifications
+          .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
+          ?.canScheduleExactNotifications();
+      return canSchedule ?? true;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  // Opens the Alarms & Reminders settings screen so the user can grant
+  // SCHEDULE_EXACT_ALARM. Call this only from an explicit user action — NOT
+  // from _loadSettings(), or returning from settings will trigger a loop.
+  Future<void> requestExactAlarmPermission() async {
+    if (!_initialized) await initialize();
+    await _notifications
+        .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
+        ?.requestExactAlarmsPermission();
   }
 
   Future<bool> scheduleSessionReminder(Session session) async {

@@ -43,7 +43,11 @@ class _NotificationSettingsScreenState extends State<NotificationSettingsScreen>
   }
 
   Future<void> _onAppResumed() async {
+    final wasBlocked = !_canScheduleExactAlarms;
     await _loadSettings();
+    if (wasBlocked && _canScheduleExactAlarms && _notificationsEnabled) {
+      await _scheduleAllReminders(showSnackbar: true);
+    }
   }
 
   Future<void> _loadSettings() async {
@@ -213,8 +217,7 @@ class _NotificationSettingsScreenState extends State<NotificationSettingsScreen>
                             const SizedBox(height: 12),
                             FilledButton.icon(
                               onPressed: () async {
-                                await _notificationService.requestPermissions();
-                                await _loadSettings();
+                                await _notificationService.requestExactAlarmPermission();
                               },
                               icon: const Icon(Icons.settings),
                               label: const Text('Enable Exact Alarms'),

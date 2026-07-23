@@ -1,7 +1,36 @@
+import 'dart:developer' as dev;
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest_all.dart' as tz;
 import '../models/session.dart';
+
+class ScheduleResult {
+  final int scheduled;
+  final int past;
+  final int failed;
+  final String nowCdt;
+  final String? firstError;
+
+  const ScheduleResult({
+    required this.scheduled,
+    required this.past,
+    required this.failed,
+    required this.nowCdt,
+    this.firstError,
+  });
+
+  String get summary {
+    final parts = <String>['Scheduled: $scheduled'];
+    if (past > 0) parts.add('Past: $past');
+    if (failed > 0) parts.add('Failed: $failed');
+    if (firstError != null) {
+      final e = firstError!.length > 80 ? '${firstError!.substring(0, 80)}…' : firstError!;
+      parts.add('Error: $e');
+    }
+    return parts.join(' | ');
+  }
+}
 
 class NotificationService {
   static final NotificationService _instance = NotificationService._internal();
@@ -10,117 +39,85 @@ class NotificationService {
 
   final FlutterLocalNotificationsPlugin _notifications = FlutterLocalNotificationsPlugin();
   bool _initialized = false;
+  String? _lastScheduleError;
 
-  /// Initialize the notification service
+  static const _scheduledCountKey = 'notification_scheduled_count';
+  static const _scheduledIdsKey = 'notification_scheduled_ids';
+
   Future<void> initialize() async {
     if (_initialized) return;
 
     try {
-      // Initialize timezone database
       tz.initializeTimeZones();
-
-      // Set Central Daylight Time as the default location
       tz.setLocalLocation(tz.getLocation('America/Chicago'));
 
-      // Android initialization settings
       const androidSettings = AndroidInitializationSettings('@mipmap/ic_launcher');
 
-      // iOS initialization settings — do NOT request permissions here;
-      // that happens later via requestPermissions() so initialize() is
-      // always fast and never triggers a system dialog on startup.
+      // Do NOT request permissions here — that happens later, on demand.
       const iosSettings = DarwinInitializationSettings(
         requestAlertPermission: false,
         requestBadgePermission: false,
         requestSoundPermission: false,
       );
 
-      const initSettings = InitializationSettings(
-        android: androidSettings,
-        iOS: iosSettings,
-      );
-
-      final initialized = await _notifications.initialize(
-        initSettings,
+      await _notifications.initialize(
+        InitializationSettings(android: androidSettings, iOS: iosSettings),
         onDidReceiveNotificationResponse: _onNotificationTapped,
       );
+      // iOS returns false when all request*Permission are false (expected — we
+      // request permissions separately). Treat any non-throwing return as success.
+      _initialized = true;
 
-      _initialized = initialized ?? false;
-      print('Notification service initialized: $_initialized');
+      // Eagerly probe for corrupt stored notification data. If the plugin's
+      // SharedPreferences store has stale entries (e.g. after a plugin upgrade
+      // that added a required "type" field), the ScheduledNotificationBootReceiver
+      // will crash on every device reboot. Calling cancelAll() here clears that
+      // data so the next reboot is safe.
+      if (_initialized) {
+        try {
+          await _notifications.pendingNotificationRequests();
+        } catch (_) {
+          try { await _notifications.cancelAll(); } catch (_) {}
+          final prefs = await SharedPreferences.getInstance();
+          await prefs.setInt(_scheduledCountKey, 0);
+        }
+      }
     } catch (e) {
-      print('Error initializing notification service: $e');
+      _lastScheduleError = 'Init failed: $e';
       _initialized = false;
     }
   }
 
-  /// Handle notification tap
-  void _onNotificationTapped(NotificationResponse response) {
-    // Handle notification tap - could navigate to session details
-    print('Notification tapped: ${response.payload}');
-  }
+  void _onNotificationTapped(NotificationResponse response) {}
 
-  /// Request notification permissions (mainly for iOS)
   Future<bool> requestPermissions() async {
     if (!_initialized) await initialize();
 
-    // Request permissions for iOS
     final granted = await _notifications
         .resolvePlatformSpecificImplementation<IOSFlutterLocalNotificationsPlugin>()
-        ?.requestPermissions(
-          alert: true,
-          badge: true,
-          sound: true,
-        );
+        ?.requestPermissions(alert: true, badge: true, sound: true);
 
-    // Request permissions for Android 13+
     final androidGranted = await _notifications
         .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
         ?.requestNotificationsPermission();
 
-    // Request exact alarm permission for Android 12+ (required for scheduled notifications)
-    final exactAlarmPermission = await _notifications
+    await _notifications
         .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
         ?.requestExactAlarmsPermission();
-
-    print('Exact alarm permission: $exactAlarmPermission');
 
     return granted ?? androidGranted ?? true;
   }
 
-  /// Check if exact alarms are permitted (Android 12+)
   Future<bool> canScheduleExactAlarms() async {
-    if (!_initialized) await initialize();
-
-    try {
-      final canSchedule = await _notifications
-          .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
-          ?.canScheduleExactNotifications();
-
-      return canSchedule ?? true; // Default to true for iOS and older Android
-    } catch (e) {
-      print('Error checking exact alarm permission: $e');
-      return false;
-    }
+    // We use AndroidScheduleMode.alarmClock (setAlarmClock API) which does not
+    // require SCHEDULE_EXACT_ALARM permission — always returns true.
+    return true;
   }
 
-  /// Schedule a notification 5 minutes before the session starts
-  Future<void> scheduleSessionReminder(Session session) async {
+  Future<bool> scheduleSessionReminder(Session session) async {
     if (!_initialized) await initialize();
+    if (!_initialized) return false;
 
-    // If initialization failed, return early
-    if (!_initialized) {
-      print('Cannot schedule notification - service not initialized');
-      return;
-    }
-
-    // Check if we have permission for exact alarms (Android 12+)
-    final canSchedule = await canScheduleExactAlarms();
-    if (!canSchedule) {
-      print('Cannot schedule notification - exact alarm permission not granted');
-      print('Please enable exact alarms in system settings for precise notifications');
-      return;
-    }
-
-    // Calculate notification time (5 minutes before session)
     final notificationTime = session.startTime.subtract(const Duration(minutes: 5));
 
     // Session times are stored as CDT local values (the hour/minute components represent
@@ -137,14 +134,8 @@ class NotificationService {
       notificationTime.second,
     );
 
-    // Don't schedule if the notification time is in the past (compare in CDT)
-    final tzNow = tz.TZDateTime.now(chicagoLocation);
-    if (tzNotificationTime.isBefore(tzNow)) {
-      print('Skipping notification for ${session.title} - time is in the past');
-      return;
-    }
+    if (tzNotificationTime.isBefore(tz.TZDateTime.now(chicagoLocation))) return false;
 
-    // Create notification details
     const androidDetails = AndroidNotificationDetails(
       'session_reminders',
       'Session Reminders',
@@ -160,94 +151,125 @@ class NotificationService {
       presentSound: true,
     );
 
-    const notificationDetails = NotificationDetails(
-      android: androidDetails,
-      iOS: iosDetails,
-    );
-
-    // Schedule the notification with error handling
     try {
       await _notifications.zonedSchedule(
-        session.id.hashCode, // Use session ID hash as notification ID
+        session.id.hashCode,
         'Session Starting Soon!',
         '${session.title} starts in 5 minutes at ${session.location}',
         tzNotificationTime,
-        notificationDetails,
-        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-        uiLocalNotificationDateInterpretation:
-            UILocalNotificationDateInterpretation.absoluteTime,
+        const NotificationDetails(android: androidDetails, iOS: iosDetails),
+        // alarmClock mode uses AlarmManager.setAlarmClock() — always fires on time,
+        // no SCHEDULE_EXACT_ALARM permission needed, no per-call quota on Android 12+.
+        androidScheduleMode: AndroidScheduleMode.alarmClock,
         payload: session.id,
       );
-
-      print('Scheduled notification for ${session.title} at $tzNotificationTime CDT');
+      final prefs = await SharedPreferences.getInstance();
+      final ids = Set<String>.from(prefs.getStringList(_scheduledIdsKey) ?? []);
+      ids.add(session.id);
+      await prefs.setStringList(_scheduledIdsKey, ids.toList());
+      return true;
     } catch (e) {
-      print('Error scheduling notification: $e');
-      // Don't throw - just log the error so the app continues working
+      dev.log('zonedSchedule error for "${session.title}": $e', name: 'Notifications');
+      _lastScheduleError = e.toString();
+      return false;
     }
   }
 
-  /// Cancel a notification for a session
   Future<void> cancelSessionReminder(Session session) async {
     if (!_initialized) await initialize();
-
-    // If initialization failed, return early
-    if (!_initialized) {
-      print('Cannot cancel notification - service not initialized');
-      return;
-    }
+    if (!_initialized) return;
 
     try {
-      final notificationId = session.id.hashCode;
-      print('Attempting to cancel notification ID: $notificationId for session: ${session.title}');
-      await _notifications.cancel(notificationId);
-      print('Successfully cancelled notification for ${session.title}');
-
-      // Verify cancellation
-      final pending = await _notifications.pendingNotificationRequests();
-      final stillExists = pending.any((n) => n.id == notificationId);
-      if (stillExists) {
-        print('WARNING: Notification still exists after cancellation!');
-      } else {
-        print('Verified: Notification successfully removed from pending list');
-      }
-    } catch (e) {
-      print('Error cancelling notification: $e');
-    }
+      await _notifications.cancel(session.id.hashCode);
+      final prefs = await SharedPreferences.getInstance();
+      final ids = Set<String>.from(prefs.getStringList(_scheduledIdsKey) ?? []);
+      ids.remove(session.id);
+      await prefs.setStringList(_scheduledIdsKey, ids.toList());
+      await prefs.setInt(_scheduledCountKey, ids.length);
+    } catch (_) {}
   }
 
-  /// Cancel all notifications
   Future<void> cancelAllReminders() async {
     if (!_initialized) await initialize();
-
-    // If initialization failed, return early
-    if (!_initialized) {
-      print('Cannot cancel all notifications - service not initialized');
-      return;
-    }
+    if (!_initialized) return;
 
     try {
       await _notifications.cancelAll();
-      print('Cancelled all notifications');
-    } catch (e) {
-      print('Error cancelling all notifications: $e');
-    }
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setStringList(_scheduledIdsKey, []);
+      await prefs.setInt(_scheduledCountKey, 0);
+    } catch (_) {}
   }
 
-  /// Get all pending notifications
-  Future<List<PendingNotificationRequest>> getPendingNotifications() async {
+  Future<Set<String>> getScheduledSessionIds() async {
+    final prefs = await SharedPreferences.getInstance();
+    return Set<String>.from(prefs.getStringList(_scheduledIdsKey) ?? []);
+  }
+
+  Future<int> getScheduledCount() async {
+    final ids = await getScheduledSessionIds();
+    return ids.length;
+  }
+
+  /// Schedules reminders for all [sessions].
+  /// Returns a [ScheduleResult] with counts and current CDT time for diagnostics.
+  Future<ScheduleResult> scheduleAllReminders(List<Session> sessions) async {
     if (!_initialized) await initialize();
 
-    // If initialization failed, return empty list
+    // Reset the tracked ID set before rescheduling so stale IDs don't linger.
+    final prefsReset = await SharedPreferences.getInstance();
+    await prefsReset.setStringList(_scheduledIdsKey, []);
+
+    final chicagoLocation = tz.getLocation('America/Chicago');
+    final now = tz.TZDateTime.now(chicagoLocation);
+    final nowStr = '${now.year}-${now.month.toString().padLeft(2,'0')}-${now.day.toString().padLeft(2,'0')} '
+        '${now.hour.toString().padLeft(2,'0')}:${now.minute.toString().padLeft(2,'0')} CDT';
+
+    dev.log('scheduleAllReminders: now=$nowStr, sessions=${sessions.length}, initialized=$_initialized', name: 'Notifications');
+
     if (!_initialized) {
-      print('Cannot get pending notifications - service not initialized');
-      return [];
+      return ScheduleResult(scheduled: 0, past: 0, failed: sessions.length, nowCdt: nowStr, firstError: _lastScheduleError ?? 'Not initialized');
     }
 
-    try {
-      return await _notifications.pendingNotificationRequests();
-    } catch (e) {
-      print('Error getting pending notifications: $e');
-      return [];
+    int scheduled = 0;
+    int past = 0;
+    int failed = 0;
+    String? firstError;
+
+    for (final session in sessions) {
+      final notifTime = session.startTime.subtract(const Duration(minutes: 5));
+      final tzNotifTime = tz.TZDateTime(
+        chicagoLocation,
+        notifTime.year,
+        notifTime.month,
+        notifTime.day,
+        notifTime.hour,
+        notifTime.minute,
+        notifTime.second,
+      );
+      final isPast = tzNotifTime.isBefore(now);
+
+      dev.log(
+        '  "${session.title.length > 30 ? session.title.substring(0, 30) : session.title}": '
+        'notif=$tzNotifTime, isPast=$isPast',
+        name: 'Notifications',
+      );
+
+      if (isPast) {
+        past++;
+        continue;
+      }
+
+      _lastScheduleError = null;
+      final ok = await scheduleSessionReminder(session);
+      if (ok) { scheduled++; } else { failed++; firstError ??= _lastScheduleError; }
     }
+
+    dev.log('Result: scheduled=$scheduled, past=$past, failed=$failed', name: 'Notifications');
+
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt(_scheduledCountKey, scheduled);
+    return ScheduleResult(scheduled: scheduled, past: past, failed: failed, nowCdt: nowStr, firstError: firstError);
+
   }
 }

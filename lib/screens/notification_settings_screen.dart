@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../services/notification_service.dart';
 import '../services/schedule_service.dart';
 import '../models/session.dart';
@@ -13,20 +12,38 @@ class NotificationSettingsScreen extends StatefulWidget {
   State<NotificationSettingsScreen> createState() => _NotificationSettingsScreenState();
 }
 
-class _NotificationSettingsScreenState extends State<NotificationSettingsScreen> {
+class _NotificationSettingsScreenState extends State<NotificationSettingsScreen>
+    with WidgetsBindingObserver {
   final NotificationService _notificationService = NotificationService();
   final ScheduleService _scheduleService = ScheduleService();
 
   bool _notificationsEnabled = true;
   bool _isLoading = true;
   bool _canScheduleExactAlarms = true;
-  List<PendingNotificationRequest> _pendingNotifications = [];
+  Set<String> _scheduledSessionIds = {};
+  String _lastDiag = '';
   List<Session> _savedSessions = [];
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     _loadSettings();
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) _onAppResumed();
+  }
+
+  Future<void> _onAppResumed() async {
+    await _loadSettings();
   }
 
   Future<void> _loadSettings() async {
@@ -34,17 +51,12 @@ class _NotificationSettingsScreenState extends State<NotificationSettingsScreen>
     setState(() => _isLoading = true);
 
     try {
-      // Load notification enabled preference
       final prefs = await SharedPreferences.getInstance();
       final enabled = prefs.getBool('notifications_enabled') ?? true;
-
-      // Check if we can schedule exact alarms (Android 12+)
+      if (enabled) await _notificationService.requestPermissions();
       final canSchedule = await _notificationService.canScheduleExactAlarms();
+      final scheduledIds = await _notificationService.getScheduledSessionIds();
 
-      // Load pending notifications
-      final pending = await _notificationService.getPendingNotifications();
-
-      // Load saved sessions
       final savedIds = await _scheduleService.getSavedSessionIds();
       final allSessions = await _scheduleService.fetchSchedule(year: 2026);
       final saved = allSessions.where((s) => savedIds.contains(s.id)).toList();
@@ -53,14 +65,26 @@ class _NotificationSettingsScreenState extends State<NotificationSettingsScreen>
       setState(() {
         _notificationsEnabled = enabled;
         _canScheduleExactAlarms = canSchedule;
-        _pendingNotifications = pending;
+        _scheduledSessionIds = scheduledIds;
         _savedSessions = saved;
         _isLoading = false;
       });
-    } catch (e) {
-      print('Error loading settings: $e');
+    } catch (_) {
       if (!mounted) return;
       setState(() => _isLoading = false);
+    }
+  }
+
+  Future<void> _scheduleAllReminders({bool showSnackbar = false}) async {
+    await _notificationService.requestPermissions();
+    final result = await _notificationService.scheduleAllReminders(_savedSessions);
+    if (mounted) setState(() => _lastDiag = result.summary);
+    await _loadSettings();
+    if (showSnackbar && mounted) {
+      final msg = result.scheduled > 0
+          ? '${result.scheduled} reminder${result.scheduled == 1 ? '' : 's'} scheduled'
+          : 'No upcoming sessions to schedule';
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
     }
   }
 
@@ -72,102 +96,68 @@ class _NotificationSettingsScreenState extends State<NotificationSettingsScreen>
     setState(() => _notificationsEnabled = value);
 
     if (value) {
-      // Re-schedule all notifications for saved sessions
-      for (final session in _savedSessions) {
-        await _notificationService.scheduleSessionReminder(session);
-      }
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Notifications enabled and scheduled')),
-        );
-      }
+      await _notificationService.requestPermissions();
+      await _scheduleAllReminders(showSnackbar: true);
     } else {
-      // Cancel all notifications
       await _notificationService.cancelAllReminders();
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('All notifications disabled')),
         );
       }
+      await _loadSettings();
     }
-
-    await _loadSettings();
   }
 
-  Future<void> _cancelNotification(int id) async {
-    // Find the session with this notification ID
-    final session = _savedSessions.firstWhere(
-      (s) => s.id.hashCode == id,
-      orElse: () => _savedSessions.first,
-    );
-
-    // Show confirmation dialog
+  Future<void> _cancelNotification(Session session) async {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Cancel Notification'),
-        content: Text('Cancel reminder for "${session.title}"?\n\nThe session will stay in your schedule.'),
+        content: Text('Cancel reminder for "${session.title}"?\n\nThe session stays in your schedule.'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            child: const Text('Cancel'),
+            child: const Text('Keep'),
           ),
           FilledButton(
             onPressed: () => Navigator.pop(context, true),
-            style: FilledButton.styleFrom(
-              backgroundColor: Colors.red,
-            ),
-            child: const Text('Remove'),
+            style: FilledButton.styleFrom(backgroundColor: Colors.red),
+            child: const Text('Cancel Reminder'),
           ),
         ],
       ),
     );
-
     if (confirmed != true) return;
 
-    // Cancel only the notification, keep the session in schedule
     await _notificationService.cancelSessionReminder(session);
-
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Notification cancelled for "${session.title}"')),
+        SnackBar(content: Text('Reminder cancelled for "${session.title}"')),
       );
     }
-
     await _loadSettings();
   }
 
-  String _formatNotificationTime(int? id) {
-    if (id == null || _savedSessions.isEmpty) return 'Unknown';
-
-    try {
-      // Find the session with matching ID
-      final session = _savedSessions.firstWhere(
-        (s) => s.id.hashCode == id,
-      );
-
-      final notificationTime = session.startTime.subtract(const Duration(minutes: 5));
-      return DateFormat('MMM d, yyyy - h:mm a').format(notificationTime);
-    } catch (e) {
-      return 'Unknown';
-    }
-  }
-
-  String _getSessionTitle(int? id) {
-    if (id == null) return 'Unknown Session';
-
-    try {
-      final session = _savedSessions.firstWhere(
-        (s) => s.id.hashCode == id,
-      );
-      return session.title;
-    } catch (e) {
-      return 'Unknown Session';
-    }
+  String _notifTimeLabel(Session session) {
+    final t = session.startTime.toUtc().subtract(const Duration(minutes: 5));
+    final h = t.hour % 12 == 0 ? 12 : t.hour % 12;
+    final m = t.minute.toString().padLeft(2, '0');
+    final ampm = t.hour < 12 ? 'AM' : 'PM';
+    final month = DateFormat('MMM').format(DateTime.utc(t.year, t.month, t.day));
+    return '$month ${t.day}, $h:$m $ampm CDT';
   }
 
   @override
   Widget build(BuildContext context) {
+    final scheduledCount = _scheduledSessionIds.length;
+    final hasScheduled = scheduledCount > 0;
+
+    final scheduledSessions = _savedSessions
+        .where((s) => _scheduledSessionIds.contains(s.id))
+        .toList()
+      ..sort((a, b) => a.startTime.compareTo(b.startTime));
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Notification Settings'),
@@ -191,7 +181,7 @@ class _NotificationSettingsScreenState extends State<NotificationSettingsScreen>
                   const SizedBox(height: 16),
 
                   // Permission Warning (Android 12+)
-                  if (!_canScheduleExactAlarms)
+                  if (!_canScheduleExactAlarms) ...[
                     Card(
                       color: Colors.orange.shade50,
                       child: Padding(
@@ -218,10 +208,7 @@ class _NotificationSettingsScreenState extends State<NotificationSettingsScreen>
                             const SizedBox(height: 12),
                             Text(
                               'Exact alarm permission is required for precise notifications on Android 12+.',
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: Colors.orange.shade800,
-                              ),
+                              style: TextStyle(fontSize: 14, color: Colors.orange.shade800),
                             ),
                             const SizedBox(height: 12),
                             FilledButton.icon(
@@ -239,7 +226,8 @@ class _NotificationSettingsScreenState extends State<NotificationSettingsScreen>
                         ),
                       ),
                     ),
-                  if (!_canScheduleExactAlarms) const SizedBox(height: 16),
+                    const SizedBox(height: 16),
+                  ],
 
                   // Statistics
                   Row(
@@ -258,10 +246,7 @@ class _NotificationSettingsScreenState extends State<NotificationSettingsScreen>
                                       ),
                                 ),
                                 const SizedBox(height: 4),
-                                const Text(
-                                  'Saved Sessions',
-                                  style: TextStyle(fontSize: 12),
-                                ),
+                                const Text('Saved Sessions', style: TextStyle(fontSize: 12)),
                               ],
                             ),
                           ),
@@ -275,17 +260,14 @@ class _NotificationSettingsScreenState extends State<NotificationSettingsScreen>
                             child: Column(
                               children: [
                                 Text(
-                                  '${_pendingNotifications.length}',
+                                  '$scheduledCount',
                                   style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                                        color: Colors.green,
+                                        color: hasScheduled ? Colors.green : Colors.grey,
                                         fontWeight: FontWeight.bold,
                                       ),
                                 ),
                                 const SizedBox(height: 4),
-                                const Text(
-                                  'Pending Alerts',
-                                  style: TextStyle(fontSize: 12),
-                                ),
+                                const Text('Scheduled Alerts', style: TextStyle(fontSize: 12)),
                               ],
                             ),
                           ),
@@ -293,37 +275,49 @@ class _NotificationSettingsScreenState extends State<NotificationSettingsScreen>
                       ),
                     ],
                   ),
-                  const SizedBox(height: 24),
+                  const SizedBox(height: 16),
 
-                  // Pending Notifications List
-                  if (_pendingNotifications.isEmpty)
+                  // Schedule All button + diagnostic
+                  if (_savedSessions.isNotEmpty && _notificationsEnabled) ...[
+                    FilledButton.icon(
+                      onPressed: () => _scheduleAllReminders(showSnackbar: true),
+                      icon: const Icon(Icons.notifications_active),
+                      label: Text(hasScheduled ? 'Reschedule All' : 'Schedule All Reminders'),
+                    ),
+                    if (_lastDiag.isNotEmpty) ...[
+                      const SizedBox(height: 6),
+                      Center(
+                        child: Text(
+                          _lastDiag,
+                          style: TextStyle(fontSize: 11, color: Colors.grey[500]),
+                        ),
+                      ),
+                    ],
+                    const SizedBox(height: 16),
+                  ],
+
+                  // Scheduled Notifications List
+                  if (!hasScheduled)
                     Card(
                       child: Padding(
                         padding: const EdgeInsets.all(32),
                         child: Column(
                           children: [
-                            Icon(
-                              Icons.notifications_none,
-                              size: 64,
-                              color: Colors.grey[400],
-                            ),
-                            const SizedBox(height: 16),
+                            Icon(Icons.notifications_none, size: 56, color: Colors.grey[400]),
+                            const SizedBox(height: 12),
                             Text(
-                              'No Pending Notifications',
+                              'No Reminders Scheduled',
                               style: Theme.of(context).textTheme.titleMedium?.copyWith(
                                     color: Colors.grey[600],
                                   ),
                             ),
-                            const SizedBox(height: 8),
+                            const SizedBox(height: 6),
                             Text(
                               _savedSessions.isEmpty
                                   ? 'Add sessions to your schedule to receive reminders'
-                                  : 'Notifications may have already passed or been disabled',
+                                  : 'Tap "Schedule All Reminders" above to set up alerts',
                               textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: Colors.grey[600],
-                              ),
+                              style: TextStyle(fontSize: 12, color: Colors.grey[600]),
                             ),
                           ],
                         ),
@@ -337,42 +331,39 @@ class _NotificationSettingsScreenState extends State<NotificationSettingsScreen>
                           ),
                     ),
                     const SizedBox(height: 8),
-                    ..._pendingNotifications.map((notification) {
-                      return Card(
-                        margin: const EdgeInsets.only(bottom: 8),
-                        child: ListTile(
-                          title: Text(
-                            _getSessionTitle(notification.id),
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(fontWeight: FontWeight.w500),
+                    ...scheduledSessions.map((session) => Card(
+                          margin: const EdgeInsets.only(bottom: 8),
+                          child: ListTile(
+                            title: Text(
+                              session.title,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(fontWeight: FontWeight.w500),
+                            ),
+                            subtitle: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const SizedBox(height: 2),
+                                Text(
+                                  _notifTimeLabel(session),
+                                  style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+                                ),
+                                Text(
+                                  session.location,
+                                  style: TextStyle(fontSize: 11, color: Colors.grey[500]),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ],
+                            ),
+                            trailing: IconButton(
+                              icon: const Icon(Icons.notifications_off_outlined, color: Colors.red),
+                              onPressed: () => _cancelNotification(session),
+                              tooltip: 'Cancel this reminder',
+                            ),
+                            isThreeLine: true,
                           ),
-                          subtitle: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const SizedBox(height: 4),
-                              Text(
-                                _formatNotificationTime(notification.id),
-                                style: TextStyle(fontSize: 12, color: Colors.grey[600]),
-                              ),
-                              const SizedBox(height: 2),
-                              Text(
-                                notification.body ?? 'Reminder',
-                                style: TextStyle(fontSize: 11, color: Colors.grey[500]),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ],
-                          ),
-                          trailing: IconButton(
-                            icon: const Icon(Icons.notifications_off_outlined, color: Colors.red),
-                            onPressed: () => _cancelNotification(notification.id),
-                            tooltip: 'Cancel notification only',
-                          ),
-                          isThreeLine: true,
-                        ),
-                      );
-                    }),
+                        )),
                   ],
 
                   const SizedBox(height: 24),
@@ -404,10 +395,7 @@ class _NotificationSettingsScreenState extends State<NotificationSettingsScreen>
                                   '• Time zone: Central Daylight Time (CDT)\n'
                                   '• Only future sessions will have notifications\n'
                                   '• Pull down to refresh the notification list',
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    color: Colors.blue.shade800,
-                                  ),
+                                  style: TextStyle(fontSize: 12, color: Colors.blue.shade800),
                                 ),
                               ],
                             ),

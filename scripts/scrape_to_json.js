@@ -150,14 +150,25 @@ async function scrapeSchedule() {
       const descWithAudience = session['Session Description w/ (Audience):'] || '';
       const type = session['Session Type:'] || '';
 
-      // Parse date — force UTC-based parsing so the result is timezone-independent.
+      // Parse date — timezone-independent regardless of where this runs.
       // We store times as CDT-as-UTC (CDT hour == UTC hour in the stored ISO string),
-      // so a session at "11:30 CDT" is stored as T11:30:00.000Z.  This is deliberate:
-      // the Flutter app reads the UTC hour and displays it directly with a "CDT" label.
-      const dateParts = new Date(dateStr + 'T00:00:00Z'); // anchor to UTC midnight
-      const y = dateParts.getUTCFullYear();
-      const m = dateParts.getUTCMonth();
-      const d = dateParts.getUTCDate();
+      // so a session at "7:30 CDT" is stored as T07:30:00.000Z. The Flutter app reads
+      // the UTC hour directly and displays it with a "CDT" label.
+      //
+      // The survey renders dates as "Tuesday, September 1, 2026" (long locale format).
+      // We extract month/day/year via regex to avoid any timezone-dependent Date parsing.
+      const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+      let y, m, d;
+      const isoMatch = dateStr && dateStr.match(/^(\d{4})-(\d{2})-(\d{2})/);
+      const longMatch = dateStr && dateStr.match(/(\w+)\s+(\d{1,2}),\s+(\d{4})/);
+      if (isoMatch) {
+        y = parseInt(isoMatch[1]); m = parseInt(isoMatch[2]) - 1; d = parseInt(isoMatch[3]);
+      } else if (longMatch) {
+        y = parseInt(longMatch[3]); m = MONTHS.indexOf(longMatch[1]); d = parseInt(longMatch[2]);
+      } else {
+        console.error(`  WARN: unparseable date "${dateStr}" — skipping session "${title}"`);
+        return null;
+      }
       const [startHour, startMin] = (startTime || '0:0').split(':').map(Number);
       const [endHour, endMin] = (endTime || '0:0').split(':').map(Number);
 
@@ -202,7 +213,7 @@ async function scrapeSchedule() {
         location,
         tags: []
       };
-    });
+    }).filter(Boolean);
 
     return {
       year: 2026,

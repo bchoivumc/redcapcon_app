@@ -59,11 +59,13 @@ class _NotificationSettingsScreenState extends State<NotificationSettingsScreen>
       final enabled = prefs.getBool('notifications_enabled') ?? true;
       if (enabled) await _notificationService.requestPermissions();
       final canSchedule = await _notificationService.canScheduleExactAlarms();
-      final scheduledIds = await _notificationService.getScheduledSessionIds();
 
       final savedIds = await _scheduleService.getSavedSessionIds();
       final allSessions = await _scheduleService.fetchSchedule(year: 2026);
       final saved = allSessions.where((s) => savedIds.contains(s.id)).toList();
+
+      // Prune fired/past notifications and return only future ones.
+      final scheduledIds = await _notificationService.getActiveScheduledIds(saved);
 
       if (!mounted) return;
       setState(() {

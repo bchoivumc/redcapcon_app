@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../theme/theme_provider.dart';
+import '../theme/time_format_provider.dart';
 import '../theme/app_theme.dart';
 import '../services/schedule_service.dart';
 
@@ -35,6 +36,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
+    final timeFormatProvider = Provider.of<TimeFormatProvider>(context);
     
     return Scaffold(
       appBar: AppBar(
@@ -120,6 +122,36 @@ class _SettingsScreenState extends State<SettingsScreen> {
               AppTheme.brown,
             ],
           ),
+          const Divider(height: 32),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
+            child: Text(
+              'Session Times',
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: SegmentedButton<bool>(
+              segments: const [
+                ButtonSegment(
+                  value: true,
+                  label: Text('12-hour  (7:30 AM)'),
+                  icon: Icon(Icons.schedule),
+                ),
+                ButtonSegment(
+                  value: false,
+                  label: Text('24-hour  (07:30)'),
+                  icon: Icon(Icons.access_time),
+                ),
+              ],
+              selected: {timeFormatProvider.use12h},
+              onSelectionChanged: (s) => timeFormatProvider.setFormat(s.first),
+            ),
+          ),
+          const SizedBox(height: 16),
           const Divider(height: 32),
           Padding(
             padding: const EdgeInsets.all(16.0),

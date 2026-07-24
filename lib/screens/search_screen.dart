@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../models/session.dart';
 import '../services/schedule_service.dart';
 import '../widgets/session_card.dart';
+import '../theme/time_format_provider.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -87,6 +89,7 @@ class _SearchScreenState extends State<SearchScreen> {
           // Determine year from session start time
           final year = session.startTime.year;
           final showBookmark = year == 2026;
+          final use12h = Provider.of<TimeFormatProvider>(context, listen: false).use12h;
 
           return SingleChildScrollView(
             controller: scrollController,
@@ -130,7 +133,7 @@ class _SearchScreenState extends State<SearchScreen> {
                         ),
                   ),
                   const SizedBox(height: 12),
-                  _buildDetailRow(Icons.access_time, session.timeRange),
+                  _buildDetailRow(Icons.access_time, session.formattedTimeRange(use12h)),
                   _buildDetailRow(Icons.location_on, session.location),
                   if (session.speaker.isNotEmpty)
                     _buildDetailRow(Icons.person, session.speaker),

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import '../models/session.dart';
 import '../services/schedule_service.dart';
 import '../services/pdf_export_service.dart';
 import '../widgets/session_card.dart';
+import '../theme/time_format_provider.dart';
 import 'notification_settings_screen.dart';
 
 class MyScheduleScreen extends StatefulWidget {
@@ -273,6 +275,7 @@ class MyScheduleScreenState extends State<MyScheduleScreen> {
         maxChildSize: 0.95,
         expand: false,
         builder: (context, scrollController) {
+          final use12h = Provider.of<TimeFormatProvider>(context, listen: false).use12h;
           return SingleChildScrollView(
             controller: scrollController,
             child: Padding(
@@ -298,7 +301,7 @@ class MyScheduleScreenState extends State<MyScheduleScreen> {
                         ),
                   ),
                   const SizedBox(height: 12),
-                  _buildDetailRow(Icons.access_time, session.timeRange),
+                  _buildDetailRow(Icons.access_time, session.formattedTimeRange(use12h)),
                   _buildDetailRow(Icons.location_on, session.location),
                   if (session.speaker.isNotEmpty)
                     _buildDetailRow(Icons.person, session.speaker),

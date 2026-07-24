@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import '../models/session.dart';
 import '../services/schedule_service.dart';
 import '../services/badge_service.dart';
 import '../widgets/session_card.dart';
 import '../widgets/filter_bottom_sheet.dart';
+import '../theme/time_format_provider.dart';
 import 'settings_screen.dart';
 
 class AgendaScreen extends StatefulWidget {
@@ -464,7 +466,7 @@ class AgendaScreenState extends State<AgendaScreen> {
                       itemBuilder: (context, index) {
                         final dateKey = sortedDates[index];
                         final sessions = groupedSessions[dateKey]!;
-                        final date = sessions.first.startTime;
+                        final date = sessions.first.startTime.toUtc();
                         final dateFormat = DateFormat('EEEE, MMMM d, yyyy');
                         final isCollapsed = _collapsedDates.contains(dateKey);
                         return Column(
@@ -572,6 +574,7 @@ class AgendaScreenState extends State<AgendaScreen> {
         maxChildSize: 0.95,
         expand: false,
         builder: (context, scrollController) {
+          final use12h = Provider.of<TimeFormatProvider>(context, listen: false).use12h;
           return SingleChildScrollView(
             controller: scrollController,
             child: Padding(
@@ -597,7 +600,7 @@ class AgendaScreenState extends State<AgendaScreen> {
                         ),
                   ),
                   const SizedBox(height: 12),
-                  _buildDetailRow(Icons.access_time, session.timeRange),
+                  _buildDetailRow(Icons.access_time, session.formattedTimeRange(use12h)),
                   _buildDetailRow(Icons.location_on, session.location),
                   if (session.speaker.isNotEmpty)
                     _buildDetailRow(Icons.person, session.speaker),

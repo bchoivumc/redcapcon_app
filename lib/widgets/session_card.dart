@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../models/session.dart';
 import '../services/schedule_service.dart';
 import '../services/badge_service.dart';
+import '../theme/time_format_provider.dart';
 
 class SessionCard extends StatefulWidget {
   final Session session;
@@ -86,6 +88,7 @@ class _SessionCardState extends State<SessionCard> with SingleTickerProviderStat
 
   @override
   Widget build(BuildContext context) {
+    final use12h = context.watch<TimeFormatProvider>().use12h;
     // If currently removing, keep showing the animation
     if (_isRemoving) {
       return SlideTransition(
@@ -175,9 +178,13 @@ class _SessionCardState extends State<SessionCard> with SingleTickerProviderStat
                               color: Theme.of(context).colorScheme.secondary,
                             ),
                             const SizedBox(width: 4),
-                            Text(
-                              widget.session.timeRange,
-                              style: Theme.of(context).textTheme.bodySmall,
+                            Flexible(
+                              child: Text(
+                                widget.session.formattedTimeRange(use12h),
+                                style: Theme.of(context).textTheme.bodySmall,
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                              ),
                             ),
                             const SizedBox(width: 12),
                             Icon(

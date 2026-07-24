@@ -62,11 +62,22 @@ class Session {
     return '${t.year}-${t.month.toString().padLeft(2, '0')}-${t.day.toString().padLeft(2, '0')}';
   }
 
-  String get timeRange {
+  String get timeRange => formattedTimeRange(false);
+
+  String formattedTimeRange(bool use12h) {
     final s = startTime.toUtc();
     final e = endTime.toUtc();
-    String fmt(DateTime t) =>
-        '${t.hour.toString().padLeft(2, '0')}:${t.minute.toString().padLeft(2, '0')}';
-    return '${fmt(s)} - ${fmt(e)} CDT';
+    if (!use12h) {
+      String fmt(DateTime t) =>
+          '${t.hour.toString().padLeft(2, '0')}:${t.minute.toString().padLeft(2, '0')}';
+      return '${fmt(s)} - ${fmt(e)} CDT';
+    }
+    String fmt12(DateTime t) {
+      final h = t.hour % 12 == 0 ? 12 : t.hour % 12;
+      final m = t.minute.toString().padLeft(2, '0');
+      final ampm = t.hour < 12 ? 'AM' : 'PM';
+      return '$h:$m $ampm';
+    }
+    return '${fmt12(s)} - ${fmt12(e)} CDT';
   }
 }

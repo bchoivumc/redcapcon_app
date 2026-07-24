@@ -1,9 +1,11 @@
 import 'dart:math' show max;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import '../models/session.dart';
 import '../services/schedule_service.dart';
 import '../services/badge_service.dart';
+import '../theme/time_format_provider.dart';
 
 class TimelineViewScreen extends StatefulWidget {
   final int selectedYear;
@@ -27,7 +29,7 @@ class TimelineViewScreenState extends State<TimelineViewScreen> {
   static const double _headerHeight = 50.0;
   static const double _cellWidth    = 200.0;
   static const double _cellPad      = 4.0;
-  static const double _sessionCardH = 88.0; // height per session card in a slot
+  static const double _sessionCardH = 100.0; // height per session card in a slot
   static const double _rowMinH      = 56.0;
 
   // ── Scroll controllers ───────────────────────────────────────────────────
@@ -177,7 +179,9 @@ class TimelineViewScreenState extends State<TimelineViewScreen> {
         minChildSize: 0.5,
         maxChildSize: 0.95,
         expand: false,
-        builder: (context, sc) => SingleChildScrollView(
+        builder: (context, sc) {
+          final use12h = Provider.of<TimeFormatProvider>(context, listen: false).use12h;
+          return SingleChildScrollView(
           controller: sc,
           child: Padding(
             padding: const EdgeInsets.all(16),
@@ -199,7 +203,7 @@ class TimelineViewScreenState extends State<TimelineViewScreen> {
                           fontWeight: FontWeight.bold,
                         )),
                 const SizedBox(height: 12),
-                _detailRow(Icons.access_time, session.timeRange),
+                _detailRow(Icons.access_time, session.formattedTimeRange(use12h)),
                 _detailRow(Icons.location_on, session.location),
                 if (session.speaker.isNotEmpty)
                   _detailRow(Icons.person, session.speaker),
@@ -244,7 +248,8 @@ class TimelineViewScreenState extends State<TimelineViewScreen> {
               ],
             ),
           ),
-        ),
+        );
+        },
       ),
     );
   }
@@ -502,9 +507,13 @@ class TimelineViewScreenState extends State<TimelineViewScreen> {
                       child: sessions.isEmpty
                           ? _buildEmptyCell(cs)
                           : Column(
-                              children: sessions
-                                  .map((s) => _buildSessionCard(s, cs))
-                                  .toList(),
+                              children: [
+                                for (int i = 0; i < sessions.length; i++) ...[
+                                  _buildSessionCard(sessions[i], cs),
+                                  if (i < sessions.length - 1)
+                                    const SizedBox(height: 4),
+                                ],
+                              ],
                             ),
                     ),
                   );
@@ -537,12 +546,13 @@ class TimelineViewScreenState extends State<TimelineViewScreen> {
         final isSaved = snap.data ?? false;
         final bg = isSaved ? cs.primaryContainer : cs.secondaryContainer;
         final fg = isSaved ? cs.onPrimaryContainer : cs.onSecondaryContainer;
+        final use12h = Provider.of<TimeFormatProvider>(context, listen: false).use12h;
         return GestureDetector(
           onTap: () => _showSessionDetails(session),
           child: Container(
-            height: _sessionCardH - 6,
-            margin: const EdgeInsets.only(bottom: 4),
+            height: _sessionCardH - 8,
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+            clipBehavior: Clip.hardEdge,
             decoration: BoxDecoration(
               color: bg,
               borderRadius: BorderRadius.circular(6),
@@ -584,7 +594,7 @@ class TimelineViewScreenState extends State<TimelineViewScreen> {
                     const SizedBox(width: 2),
                     Expanded(
                       child: Text(
-                        session.timeRange,
+                        session.formattedTimeRange(use12h),
                         style: TextStyle(
                           fontSize: 9,
                           color: fg.withValues(alpha: 0.8),

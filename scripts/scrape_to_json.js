@@ -169,12 +169,17 @@ async function scrapeSchedule() {
         console.error(`  WARN: unparseable date "${dateStr}" — skipping session "${title}"`);
         return null;
       }
-      const [startHour, startMin] = (startTime || '0:0').split(':').map(Number);
-      const [endHour, endMin] = (endTime || '0:0').split(':').map(Number);
+      // Parse HH:MM time strings — guard against "TBD", empty, or malformed values.
+      function parseHHMM(str) {
+        const m = (str || '').match(/^(\d{1,2}):(\d{2})/);
+        if (!m) { console.error(`  WARN: unparseable time "${str}" — defaulting to 0:00`); return [0, 0]; }
+        return [parseInt(m[1], 10), parseInt(m[2], 10)];
+      }
+      const [startHour, startMin] = parseHHMM(startTime);
+      const [endHour, endMin] = parseHHMM(endTime);
 
       // Build UTC datetimes where hour == CDT hour (CDT-as-UTC convention)
       const startDateTime = new Date(Date.UTC(y, m, d, startHour, startMin));
-
       const endDateTime = new Date(Date.UTC(y, m, d, endHour, endMin));
 
       // Extract audience

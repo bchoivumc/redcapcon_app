@@ -1,6 +1,6 @@
 {
   "year": 2026,
-  "lastUpdated": "2026-07-27T05:41:30.556Z",
+  "lastUpdated": "2026-07-28T04:56:38.598Z",
   "source": "https://redcap.vumc.org/surveys/?__report=Y7EMJR9L797FTX83",
   "sessionCount": 103,
   "sessions": [
@@ -727,7 +727,7 @@
     {
       "id": "2026-61",
       "title": "Collaborative Spaces: \"Birds of a Feather\" Small Groups and Workshops",
-      "description": "Looking to connect with others who share your interests? Join us for our \"Birds of a Feather\" session-an open, participant-driven space where you can either start your own meet-up or join an existing one!  Whether you're diving into a specific REDCap topic or just want to network with like-minded peers, this is your chance to create meaningful conversations. Follow the link below to propose a session or browse the list of current meet-ups and find one that sparks your interest!  https://redcap.link/birdsofafeather26",
+      "description": "Looking to connect with others who share your interests? Join us for our \"Birds of a Feather\" session-an open, participant-driven space where you can either start your own meet-up or join an existing one!  Whether you're diving into a specific REDCap topic or just want to network with like-minded peers, this is your chance to create meaningful conversations. Follow the link below to propose a session or browse the list of current meet-ups and find one that sparks your interest!  LINK COMING SOON",
       "startTime": "2026-09-02T16:00:00.000Z",
       "endTime": "2026-09-02T17:00:00.000Z",
       "type": "Group Activity / Interactive",
@@ -739,7 +739,7 @@
     {
       "id": "2026-62",
       "title": "Annual Fun Run/Walk",
-      "description": "For those wanting to get fresh morning air and some steps in! \nMeet across from the Omni Hotel entrance, by the statue of the white feather. Check out our dashboard page for more information!  https://redcap.vumc.org/redcap_v17.3.1/index.php?route=ProjectDashController:view&dash_id=5535&pid=224495",
+      "description": "For those wanting to get fresh morning air and some steps in! \nMeet across from the Omni Hotel entrance, by the statue of the white feather. Check out our dashboard page for more information!  https://redcap.vumc.org/redcap_v17.3.2/index.php?route=ProjectDashController:view&dash_id=5535&pid=224495",
       "startTime": "2026-09-03T06:00:00.000Z",
       "endTime": "2026-09-03T08:00:00.000Z",
       "type": "Activity (Misc)",
@@ -966,7 +966,7 @@
     },
     {
       "id": "2026-81",
-      "title": "Me, Myself & I: REDCap Administration Solo",
+      "title": "Me, Myself & I: Managing REDCap with Very Small Teams",
       "description": "A discussion section of administrators that are solo (or have very small teams) about how we find resources, unique challenges we face, and how to support each other.",
       "startTime": "2026-09-03T10:00:00.000Z",
       "endTime": "2026-09-03T10:30:00.000Z",
@@ -1007,7 +1007,7 @@
       "startTime": "2026-09-03T10:00:00.000Z",
       "endTime": "2026-09-03T10:30:00.000Z",
       "type": "Discussion / Small Group",
-      "audience": "Administrative",
+      "audience": "Beginner",
       "speaker": "Scott Robertson",
       "location": "TBD",
       "tags": []

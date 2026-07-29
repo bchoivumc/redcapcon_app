@@ -1,6 +1,6 @@
 {
   "year": 2026,
-  "lastUpdated": "2026-07-28T04:56:38.598Z",
+  "lastUpdated": "2026-07-29T05:13:48.058Z",
   "source": "https://redcap.vumc.org/surveys/?__report=Y7EMJR9L797FTX83",
   "sessionCount": 103,
   "sessions": [
@@ -210,18 +210,6 @@
     },
     {
       "id": "2026-18",
-      "title": "API biostats session",
-      "description": "",
-      "startTime": "2026-09-01T13:00:00.000Z",
-      "endTime": "2026-09-01T14:10:00.000Z",
-      "type": "Deep Dive",
-      "audience": "Applied Biostatistics",
-      "speaker": "Daniel Maya, Will Beasley",
-      "location": "TBD",
-      "tags": []
-    },
-    {
-      "id": "2026-19",
       "title": "External Modules Showcase!",
       "description": "Join us for the third annual showcase celebrating the creativity and ingenuity of REDCap developers! In this session, community leaders will present their standout external modules, demonstrating how these powerful tools are solving real-world challenges and enhancing REDCap functionality in exciting ways.",
       "startTime": "2026-09-01T13:00:00.000Z",
@@ -229,6 +217,18 @@
       "type": "Deep Dive",
       "audience": "Technical",
       "speaker": "Various",
+      "location": "TBD",
+      "tags": []
+    },
+    {
+      "id": "2026-19",
+      "title": "Introduction to REDCap’s API for Data Management and Analysis",
+      "description": "",
+      "startTime": "2026-09-01T13:00:00.000Z",
+      "endTime": "2026-09-01T14:10:00.000Z",
+      "type": "Deep Dive",
+      "audience": "Applied Biostatistics",
+      "speaker": "Daniel Maya, Will Beasley",
       "location": "TBD",
       "tags": []
     },
@@ -258,8 +258,8 @@
     },
     {
       "id": "2026-22",
-      "title": "Beyond the Build: Documentation Strategies for REDCap Administration and Project Success",
-      "description": "",
+      "title": "Documentation Procrastination: how to defeat it today instead of postponing until tomorrow.",
+      "description": "Almost nobody likes writing documentation... And maintaining it is even more mind-numbing. This talk covers what to include in documentation for your team and users, such as FAQs, training materials, policies, and grant acknowledgements, and how to use AI to make the process easier and get more value for your effort.",
       "startTime": "2026-09-01T14:25:00.000Z",
       "endTime": "2026-09-01T15:35:00.000Z",
       "type": "Deep Dive",
@@ -510,18 +510,6 @@
     },
     {
       "id": "2026-43",
-      "title": "AI assisted project design and implementation",
-      "description": "",
-      "startTime": "2026-09-02T13:00:00.000Z",
-      "endTime": "2026-09-02T13:45:00.000Z",
-      "type": "Breakout",
-      "audience": "Other / Both Tech and Admin",
-      "speaker": "Erik Risinger, Gunther Rezniczek, Mamata Tokala",
-      "location": "TBD",
-      "tags": []
-    },
-    {
-      "id": "2026-44",
       "title": "Are we really keeping all these REDCap Projects?",
       "description": "This interactive session explores how institutions manage REDCap project retention, archival, and deletion decisions while meeting record retention requirements and balancing resource constraints. Through this discussion, we will share approaches to handling completed projects, defining responsibilities, and determining what data must be preserved versus retired.",
       "startTime": "2026-09-02T13:00:00.000Z",
@@ -533,7 +521,7 @@
       "tags": []
     },
     {
-      "id": "2026-45",
+      "id": "2026-44",
       "title": "Data Management in REDCap: Suggested Best Practices",
       "description": "This session will highlight various suggested best practices for data management in REDCap. Time will be included for audience members to discuss the suggested practices and to offer their own.",
       "startTime": "2026-09-02T13:00:00.000Z",
@@ -541,6 +529,18 @@
       "type": "Breakout",
       "audience": "Applied Biostatistics",
       "speaker": "Terri Scott",
+      "location": "TBD",
+      "tags": []
+    },
+    {
+      "id": "2026-45",
+      "title": "Exploring different approaches to the use of generative AI across the REDCap project lifecycle",
+      "description": "",
+      "startTime": "2026-09-02T13:00:00.000Z",
+      "endTime": "2026-09-02T13:45:00.000Z",
+      "type": "Breakout",
+      "audience": "Other / Both Tech and Admin",
+      "speaker": "Erik Risinger, Gunther Rezniczek, Mamata Tokala",
       "location": "TBD",
       "tags": []
     },
@@ -582,6 +582,18 @@
     },
     {
       "id": "2026-49",
+      "title": "Beyond the Signature Field: Electronic Signatures, Contextual Binding, and Document Trust in REDCap",
+      "description": "",
+      "startTime": "2026-09-02T14:00:00.000Z",
+      "endTime": "2026-09-02T14:45:00.000Z",
+      "type": "Breakout",
+      "audience": "Regulatory",
+      "speaker": "Theresa Baker, Gunther Rezniczek",
+      "location": "TBD",
+      "tags": []
+    },
+    {
+      "id": "2026-50",
       "title": "Exploring the REDCap SQL Back End Tables",
       "description": "In this session you will be introduced to the MySQL database tables that underpin all of REDCap. We will explore the REDCap project table, and the data and log tables. Expect lots of examples. SQL knowledge assumed. Note: we will not be discussing dynamic SQL fields - that will be a later session! ()",
       "startTime": "2026-09-02T14:00:00.000Z",
@@ -593,7 +605,7 @@
       "tags": []
     },
     {
-      "id": "2026-50",
+      "id": "2026-51",
       "title": "From Complicated to Common: Advancing Uptake & Usability of NIH Common Data Elements  through REDCap",
       "description": "This session will explore challenges and opportunities around CDE use and what is important to the NIH vs researchers for CDEs.  We'll look at the RAG model and how we've looked at CDE use here at Vanderbilt Health and what we're doing with REDCap to help make it easier to find and use the correct CDE.",
       "startTime": "2026-09-02T14:00:00.000Z",
@@ -605,7 +617,7 @@
       "tags": []
     },
     {
-      "id": "2026-51",
+      "id": "2026-52",
       "title": "From Story to System: Building a Sustainable REDCap Program Using REDCap",
       "description": "This session focuses on practical design patterns for implementing REDCap-based administrative systems. We demonstrate how documentation, decision tracking, and workflow governance can be structured directly within REDCap to transform fragmented administrative work into reusable, data-driven systems. Attendees will leave with actionable design patterns and starting points for building scalable administrative infrastructure within their own REDCap environments.",
       "startTime": "2026-09-02T14:00:00.000Z",
@@ -617,7 +629,7 @@
       "tags": []
     },
     {
-      "id": "2026-52",
+      "id": "2026-53",
       "title": "REDCap Rewards - supporting participant compensation via REDCap + Tango integration",
       "description": "",
       "startTime": "2026-09-02T14:00:00.000Z",
@@ -625,18 +637,6 @@
       "type": "Breakout",
       "audience": "Features/Functions",
       "speaker": "Michelle Jones, Francesco Delacqua",
-      "location": "TBD",
-      "tags": []
-    },
-    {
-      "id": "2026-53",
-      "title": "eSignatures in REDCap",
-      "description": "",
-      "startTime": "2026-09-02T14:00:00.000Z",
-      "endTime": "2026-09-02T14:45:00.000Z",
-      "type": "Breakout",
-      "audience": "Regulatory",
-      "speaker": "Theresa Baker, Gunther Rezniczek",
       "location": "TBD",
       "tags": []
     },
@@ -666,18 +666,6 @@
     },
     {
       "id": "2026-56",
-      "title": "API 2.0",
-      "description": "API 2.0",
-      "startTime": "2026-09-02T15:00:00.000Z",
-      "endTime": "2026-09-02T15:45:00.000Z",
-      "type": "Breakout",
-      "audience": "Technical",
-      "speaker": "Gunther Rezniczek",
-      "location": "TBD",
-      "tags": []
-    },
-    {
-      "id": "2026-57",
       "title": "Inside the RVP Validation Content Management System (VCMS)",
       "description": "This session showcases the REDCap-based Validation Content Management System (VCMS), developed to streamline validation activities including requirements management, testing, traceability, evidence collection, and change control. Attendees will learn how this RSVC-aligned approach supports validation, compliance, audit readiness, and ongoing revalidation efforts for organizations using Rapid Validation Process resources.",
       "startTime": "2026-09-02T15:00:00.000Z",
@@ -689,14 +677,26 @@
       "tags": []
     },
     {
-      "id": "2026-58",
-      "title": "Project Migration Panel: strategies and lessons learned",
+      "id": "2026-57",
+      "title": "Project Migration Panel: Strategies, Best Practices, and Lessons Learned",
       "description": "Project Migration Panel: strategies and lessons learned",
       "startTime": "2026-09-02T15:00:00.000Z",
       "endTime": "2026-09-02T15:45:00.000Z",
       "type": "Breakout",
       "audience": "Administrative",
       "speaker": "Amanda Miller, Greg Neils, Muhammad Asim Mubeen, Jenn Mauck, Savvy DeHart",
+      "location": "TBD",
+      "tags": []
+    },
+    {
+      "id": "2026-58",
+      "title": "REDCap API 2.0: A Modern API Without Breaking the Past",
+      "description": "REDCap API 2.0 introduces a modernized foundation for secure, flexible, and maintainable integrations while preserving full support for existing legacy API calls through its new token-management architecture. Attendees will learn what is changing, how backward compatibility is achieved, and what the future API 2.0 will enable for REDCap administrators, developers, and integration teams.",
+      "startTime": "2026-09-02T15:00:00.000Z",
+      "endTime": "2026-09-02T15:45:00.000Z",
+      "type": "Breakout",
+      "audience": "Technical",
+      "speaker": "Gunther Rezniczek",
       "location": "TBD",
       "tags": []
     },
@@ -739,7 +739,7 @@
     {
       "id": "2026-62",
       "title": "Annual Fun Run/Walk",
-      "description": "For those wanting to get fresh morning air and some steps in! \nMeet across from the Omni Hotel entrance, by the statue of the white feather. Check out our dashboard page for more information!  https://redcap.vumc.org/redcap_v17.3.2/index.php?route=ProjectDashController:view&dash_id=5535&pid=224495",
+      "description": "For those wanting to get fresh morning air and some steps in! \nMeet across from the Omni Hotel entrance, by the statue of the white feather. Check out our dashboard page for more information!  https://redcap.vumc.org/redcap_v17.3.3/index.php?route=ProjectDashController:view&dash_id=5535&pid=224495",
       "startTime": "2026-09-03T06:00:00.000Z",
       "endTime": "2026-09-03T08:00:00.000Z",
       "type": "Activity (Misc)",
@@ -918,8 +918,8 @@
     },
     {
       "id": "2026-77",
-      "title": "Preventing Fraudulent Activity in REDCap Surveys",
-      "description": "",
+      "title": "PUBLIC SURVEYS & COMPENSATION:  A SECURITY CHALLENGE",
+      "description": "As technology advances, it opens the door to better tools, but occasionally, it can be misused. This is especially relevant for public survey links, specially, opportunities involving electronic compensation. This presentation aims to build awareness around risks tied to public survey links and to share practical strategies for minimizing them.\nIt's worth noting — this isn't a challenge unique to research. It's a broader issue seen across many fields that rely on public-facing digital tools.",
       "startTime": "2026-09-03T09:15:00.000Z",
       "endTime": "2026-09-03T09:45:00.000Z",
       "type": "Discussion / Small Group",
@@ -954,7 +954,7 @@
     },
     {
       "id": "2026-80",
-      "title": "Digital Accessibility and REDCap",
+      "title": "Can Everyone Complete your Survey? Accessibility Tips and Tricks",
       "description": "A presentation of accessibility considerations and compliance as it relates to REDCap surveys and institutional use.",
       "startTime": "2026-09-03T10:00:00.000Z",
       "endTime": "2026-09-03T10:30:00.000Z",
@@ -1158,7 +1158,7 @@
     },
     {
       "id": "2026-97",
-      "title": "The Beginning to Now with Bas",
+      "title": "The Accidental Career: How REDCap Found Me (and What I Did Next)",
       "description": "",
       "startTime": "2026-09-03T13:10:00.000Z",
       "endTime": "2026-09-03T13:30:00.000Z",
@@ -1194,7 +1194,7 @@
     },
     {
       "id": "2026-100",
-      "title": "The Personal Effect of being a REDCap Admin",
+      "title": "So, what do you do for a living?",
       "description": "As REDCap admins we sometimes don't realize effect that our support has on individuals. In this session, we will break down the numbers to explore how personal it is to be a REDCap admin.",
       "startTime": "2026-09-03T14:05:00.000Z",
       "endTime": "2026-09-03T14:25:00.000Z",

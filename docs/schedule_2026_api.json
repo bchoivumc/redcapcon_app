@@ -1,6 +1,6 @@
 {
   "year": 2026,
-  "lastUpdated": "2026-07-31T05:28:10.594Z",
+  "lastUpdated": "2026-08-01T05:20:07.335Z",
   "source": "https://redcap.vumc.org/surveys/?__report=Y7EMJR9L797FTX83",
   "sessionCount": 103,
   "sessions": [
@@ -474,8 +474,8 @@
     },
     {
       "id": "2026-40",
-      "title": "REDCap at Scale: Lessons from Outbreak Response and Emergency Preparedness",
-      "description": "This presentation highlights how REDCap supports adaptable emergency preparedness and response workflows, including intake, monitoring, routing, and tracking during public health emergencies. Using real-world outbreak response examples, we will examine scalable design patterns, solutions to challenges such as high-volume intake and cross-project automation, and opportunities to expand REDCap’s capabilities for large-scale emergency operations.",
+      "title": "REDCap at Scale: Lessons from Public Health Operations and Emergency Preparedness",
+      "description": "This plenary explores how public health agencies are using REDCap far beyond traditional research to support operational workflows, emergency preparedness, and large-scale response planning. Through the story of designing and stress-testing a statewide mass dispensing system ahead of the 2026 FIFA World Cup, attendees will learn how emergency planning challenges assumptions about scalability, what was discovered through performance testing, and how these lessons may help shape the future of REDCap as an operational platform.",
       "startTime": "2026-09-02T11:30:00.000Z",
       "endTime": "2026-09-02T11:50:00.000Z",
       "type": "Plenary",
@@ -799,7 +799,7 @@
     {
       "id": "2026-67",
       "title": "Dynamic SQL in REDCap: Introduction and Beyond!",
-      "description": "This hands-on workshop is a fusion of two SQUIRL trainings: Dynamic SQL: Introduction, and Dynamic SQL: Beyond the Basics, developed by Paul Litwin and Lisa Hallberg. It was presented last year at REDCapCon 2025, and will teach attendees how to use the Dynamic SQL field in REDCap projects to query data across projects.",
+      "description": "This hands-on workshop is a fusion of two SQUIRL trainings: Dynamic SQL: Introduction, and Dynamic SQL: Beyond the Basics, developed by Paul Litwin and Lisa Hallberg. It will teach attendees how to use the Dynamic SQL field in REDCap projects to query data across projects. Due to time constraints, this workshop is NOT hands-on, but we will provide materials for you to work through the examples on your own.",
       "startTime": "2026-09-03T08:30:00.000Z",
       "endTime": "2026-09-03T09:00:00.000Z",
       "type": "Discussion / Small Group",
@@ -823,7 +823,7 @@
     {
       "id": "2026-69",
       "title": "Our Favorite EM's!!",
-      "description": "A round-robin presentation by 5 Sr. REDCap Administrators highlighting their favorite / most-valuable EM's. With opportunity for group discussion at the end.",
+      "description": "A round-robin presentation by 5 long-term REDCap Administrators highlighting their favorite and most-valuable External Modules.",
       "startTime": "2026-09-03T08:30:00.000Z",
       "endTime": "2026-09-03T09:00:00.000Z",
       "type": "Discussion / Small Group",
@@ -847,7 +847,7 @@
     {
       "id": "2026-71",
       "title": "REDCap Cypress Testing Framework",
-      "description": "",
+      "description": "Show off the latest updates to the RCTF (REDCap Cypress Testing Framework) as well as show off examples of how to automate testing of external modules using RCTF.",
       "startTime": "2026-09-03T08:30:00.000Z",
       "endTime": "2026-09-03T09:00:00.000Z",
       "type": "Discussion / Small Group",
@@ -1038,6 +1038,18 @@
     },
     {
       "id": "2026-87",
+      "title": "AI-Assisted External Module Development",
+      "description": "What if you could build your next REDCap EM in a few hours instead of a few months? In this session, I’ll show how AI is changing the way developers create External Modules, tackle tricky technical challenges, write code to automate infrastructure tasks, and troubleshoot bugs. We’ll cover practical ways to use AI as a development partner, along with a few lessons learned and common mistakes to avoid.",
+      "startTime": "2026-09-03T10:45:00.000Z",
+      "endTime": "2026-09-03T11:15:00.000Z",
+      "type": "Discussion / Small Group",
+      "audience": "Technical",
+      "speaker": "Greg Neils",
+      "location": "TBD",
+      "tags": []
+    },
+    {
+      "id": "2026-88",
       "title": "An Interactive Framework for Streamlined Requirements Gathering & Project Delivery",
       "description": "We will share an interactive intake framework designed to go beyond collecting standard requirements for building user-centered projects by capturing the complexities and nuances of research workflows that often go unaddressed in static intake forms. We’ve created a centralized hub for collecting and sharing all study, project, and user information to help establish clear expectations and streamline communications from intake to delivery. Built-in automations reduce manual effort by programmatically generating cost ranges and timeline estimates, while integration with Jira enables automatic creation and updating of project tasks.",
       "startTime": "2026-09-03T10:45:00.000Z",
@@ -1049,7 +1061,7 @@
       "tags": []
     },
     {
-      "id": "2026-88",
+      "id": "2026-89",
       "title": "Building Powerful External Modules: Lessons from Harmonist Hub",
       "description": "This session showcases the range of experiences you can deliver with External Modules, using Harmonist Hub as a concrete example of what’s possible. Rather than a build tutorial, we’ll highlight advanced capabilities and design patterns that enable rich, application-like workflows—such as launching REDCap surveys in pop-up/iframe windows and embedding purpose-built utilities directly into a module. We’ll also demo Hub Updates, an in-hub link that supports maintaining data dictionaries in an intuitive, user-friendly way.",
       "startTime": "2026-09-03T10:45:00.000Z",
@@ -1057,18 +1069,6 @@
       "type": "Discussion / Small Group",
       "audience": "Technical",
       "speaker": "Eva Bascompte Moragas",
-      "location": "TBD",
-      "tags": []
-    },
-    {
-      "id": "2026-89",
-      "title": "Confessions of an AI-Assisted REDCap Developer: Building Better REDCap So",
-      "description": "What if your next REDCap project could be completed in half the time? This session explores how AI is transforming the way developers build External Modules, solve complex technical problems, automate infrastructure, and create documentation. Using real examples from varioius REDCap environments, attendees will learn practical techniques for turning AI into a trusted engineering partner while avoiding common pitfalls.",
-      "startTime": "2026-09-03T10:45:00.000Z",
-      "endTime": "2026-09-03T11:15:00.000Z",
-      "type": "Discussion / Small Group",
-      "audience": "Technical",
-      "speaker": "Greg Neils",
       "location": "TBD",
       "tags": []
     },

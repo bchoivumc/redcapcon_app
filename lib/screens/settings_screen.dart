@@ -8,6 +8,7 @@ import '../theme/time_format_provider.dart';
 import '../theme/app_theme.dart';
 import '../services/schedule_service.dart';
 import '../services/backup_service.dart';
+import '../main.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -359,26 +360,27 @@ class _SettingsScreenState extends State<SettingsScreen> {
     setState(() => _isImporting = true);
     try {
       final result = await _backup.importBackup();
-      if (mounted) {
-        await showDialog<void>(
-          context: context,
-          builder: (ctx) => AlertDialog(
-            icon: const Icon(Icons.check_circle_outline, color: Colors.green, size: 36),
-            title: const Text('Backup Restored'),
-            content: Text(
-              '${result.savedSessions} saved session(s) and '
-              '${result.earnedBadges} badge(s) have been restored.\n\n'
-              'Please restart the app to see all your data.',
-            ),
-            actions: [
-              FilledButton(
-                onPressed: () => Navigator.pop(ctx),
-                child: const Text('OK'),
-              ),
-            ],
+      if (!mounted) return;
+      await showDialog<void>(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          icon: const Icon(Icons.check_circle_outline, color: Colors.green, size: 36),
+          title: const Text('Backup Restored'),
+          content: Text(
+            '${result.savedSessions} saved session(s) and '
+            '${result.earnedBadges} badge(s) have been restored.',
           ),
-        );
-      }
+          actions: [
+            FilledButton(
+              onPressed: () {
+                Navigator.pop(ctx);
+                AppRestarter.restart(context);
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
     } on FormatException catch (e) {
       if (e.message == 'No file selected') return;
       if (mounted) {

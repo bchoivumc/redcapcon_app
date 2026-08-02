@@ -9,6 +9,7 @@ import '../theme/app_theme.dart';
 import '../services/schedule_service.dart';
 import '../services/backup_service.dart';
 import '../main.dart';
+import 'badges_2027_preview_screen.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -293,6 +294,22 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ),
                   ),
                 ],
+              ),
+            ),
+            ListTile(
+              leading: Icon(Icons.auto_awesome,
+                  color: Colors.purple.shade400),
+              title: Text(
+                '2027 Badge Screen Preview',
+                style: TextStyle(color: Colors.purple.shade400),
+              ),
+              subtitle: const Text('Sneak peek at the proposed multi-year badge layout'),
+              trailing: Icon(Icons.chevron_right, color: Colors.purple.shade400),
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const Badges2027PreviewScreen(),
+                ),
               ),
             ),
             ListTile(

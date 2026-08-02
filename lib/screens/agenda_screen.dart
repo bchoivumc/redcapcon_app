@@ -323,7 +323,9 @@ class AgendaScreenState extends State<AgendaScreen> {
                     _selectedTypes.clear();
                     _selectedAudiences.clear();
                   });
-                  _loadSchedule();
+                  // didUpdateWidget fires once widget.selectedYear is updated by
+                  // the parent rebuild — calling _loadSchedule() here would use
+                  // the old year and race against the correct load.
                 }
               },
             ),

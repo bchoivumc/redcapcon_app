@@ -7,6 +7,7 @@ import '../theme/theme_provider.dart';
 import '../theme/time_format_provider.dart';
 import '../theme/app_theme.dart';
 import '../services/schedule_service.dart';
+import '../services/backup_service.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -17,6 +18,9 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
   String _version = 'Loading...';
+  bool _isExporting = false;
+  bool _isImporting = false;
+  final _backup = BackupService();
 
   @override
   void initState() {
@@ -154,6 +158,64 @@ class _SettingsScreenState extends State<SettingsScreen> {
           const SizedBox(height: 16),
           const Divider(height: 32),
           Padding(
+            padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
+            child: Text(
+              'Your Data',
+              style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(12, 0, 12, 8),
+            child: Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.secondaryContainer.withValues(alpha: 0.35),
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(
+                  color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.2),
+                ),
+              ),
+              child: Text(
+                'Back up your saved sessions and earned badges to a file. '
+                'Save it to Files, Google Drive, or email — then restore it '
+                'after reinstalling the app next year.',
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.75),
+                      height: 1.5,
+                    ),
+              ),
+            ),
+          ),
+          ListTile(
+            leading: _isExporting
+                ? const SizedBox(
+                    width: 24,
+                    height: 24,
+                    child: CircularProgressIndicator(strokeWidth: 2),
+                  )
+                : const Icon(Icons.backup_outlined),
+            title: const Text('Create Backup'),
+            subtitle: const Text('Export your data to a file'),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: _isExporting || _isImporting ? null : _exportBackup,
+          ),
+          ListTile(
+            leading: _isImporting
+                ? const SizedBox(
+                    width: 24,
+                    height: 24,
+                    child: CircularProgressIndicator(strokeWidth: 2),
+                  )
+                : const Icon(Icons.restore_outlined),
+            title: const Text('Restore from Backup'),
+            subtitle: const Text('Import a previously saved backup file'),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: _isExporting || _isImporting ? null : _importBackup,
+          ),
+          const Divider(height: 32),
+          Padding(
             padding: const EdgeInsets.all(16.0),
             child: Text(
               'About',
@@ -276,6 +338,63 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ],
       ),
     );
+  }
+
+  Future<void> _exportBackup() async {
+    setState(() => _isExporting = true);
+    try {
+      await _backup.exportBackup();
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Export failed: $e')),
+        );
+      }
+    } finally {
+      if (mounted) setState(() => _isExporting = false);
+    }
+  }
+
+  Future<void> _importBackup() async {
+    setState(() => _isImporting = true);
+    try {
+      final result = await _backup.importBackup();
+      if (mounted) {
+        await showDialog<void>(
+          context: context,
+          builder: (ctx) => AlertDialog(
+            icon: const Icon(Icons.check_circle_outline, color: Colors.green, size: 36),
+            title: const Text('Backup Restored'),
+            content: Text(
+              '${result.savedSessions} saved session(s) and '
+              '${result.earnedBadges} badge(s) have been restored.\n\n'
+              'Please restart the app to see all your data.',
+            ),
+            actions: [
+              FilledButton(
+                onPressed: () => Navigator.pop(ctx),
+                child: const Text('OK'),
+              ),
+            ],
+          ),
+        );
+      }
+    } on FormatException catch (e) {
+      if (e.message == 'No file selected') return;
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Invalid backup file: ${e.message}')),
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Restore failed: $e')),
+        );
+      }
+    } finally {
+      if (mounted) setState(() => _isImporting = false);
+    }
   }
 
   Future<void> _confirmReset(BuildContext context) async {

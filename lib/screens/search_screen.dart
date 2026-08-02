@@ -209,7 +209,7 @@ class _SearchScreenState extends State<SearchScreen> {
             padding: const EdgeInsets.all(12.0),
             child: TextField(
               controller: _searchController,
-              autofocus: true,
+              autofocus: false,
               decoration: InputDecoration(
                 hintText: 'Search sessions across all years...',
                 prefixIcon: const Icon(Icons.search),

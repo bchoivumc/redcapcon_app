@@ -31,6 +31,8 @@ class MyScheduleScreenState extends State<MyScheduleScreen> {
     _loadSavedSessions();
   }
 
+  void reload() => _loadSavedSessions();
+
   Future<void> _loadSavedSessions() async {
     setState(() => _isLoading = true);
     try {

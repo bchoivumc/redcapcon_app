@@ -81,6 +81,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   void _onItemTapped(int index) {
     setState(() => _selectedIndex = index);
     BadgeService().trackTabVisit(index);
+    if (index == 4) _myScheduleKey.currentState?.reload();
   }
 
   void _onYearChanged(int year) {

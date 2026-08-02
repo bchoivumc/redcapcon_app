@@ -158,110 +158,70 @@ class MyScheduleScreenState extends State<MyScheduleScreen> {
                     ],
                   ),
                 )
-              : ListView.builder(
-                    itemCount: sortedDates.length,
-                    itemBuilder: (context, index) {
-                      final dateKey = sortedDates[index];
-                      final sessions = groupedSessions[dateKey]!;
-                      final date = sessions.first.startTime;
-                      final dateFormat = DateFormat('EEEE, MMMM d, yyyy');
-
-                      final isCollapsed = _collapsedDates.contains(dateKey);
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          InkWell(
-                            onTap: () => setState(() {
-                              if (isCollapsed) {
-                                _collapsedDates.remove(dateKey);
-                              } else {
-                                _collapsedDates.add(dateKey);
-                              }
-                            }),
-                            child: Container(
-                              width: double.infinity,
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 16,
-                                vertical: 12,
-                              ),
-                              color: Theme.of(context).colorScheme.primaryContainer,
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    child: Text(
-                                      dateFormat.format(date),
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
-                                        color: Theme.of(context).colorScheme.onPrimaryContainer,
-                                      ),
-                                    ),
-                                  ),
-                                  Text(
-                                    '${sessions.length}',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: Theme.of(context).colorScheme.onPrimaryContainer.withValues(alpha: 0.7),
-                                    ),
-                                  ),
-                                  const SizedBox(width: 4),
-                                  AnimatedRotation(
-                                    turns: isCollapsed ? -0.25 : 0,
-                                    duration: const Duration(milliseconds: 200),
-                                    child: Icon(
-                                      Icons.expand_more,
-                                      color: Theme.of(context).colorScheme.onPrimaryContainer.withValues(alpha: 0.7),
-                                      size: 20,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          AnimatedSize(
-                            duration: const Duration(milliseconds: 220),
-                            curve: Curves.easeInOut,
-                            child: isCollapsed
-                                ? const SizedBox.shrink()
-                                : Column(children: [
-                          ...sessions.map((session) {
-                            final isDeleting = _deletingSessionIds.contains(session.id);
-                            final isLocked = _lockedSessionIds.contains(session.id);
-                            final isConflict = _conflictingSessionIds.contains(session.id);
-                            return SessionCard(
-                              session: session,
-                              onTap: isDeleting ? null : () => _showSessionDetails(session, isLocked: isLocked),
-                              isConflict: isConflict,
-                              showBookmark: true,
-                              isDeleting: isDeleting,
-                              canRestore: isDeleting,
-                              isLocked: isLocked,
-                              onLockToggle: () async {
-                                if (isLocked) {
-                                  await _scheduleService.unlockSession(session.id);
-                                  setState(() => _lockedSessionIds.remove(session.id));
-                                } else {
-                                  await _scheduleService.lockSession(session.id);
-                                  setState(() => _lockedSessionIds.add(session.id));
-                                }
-                              },
-                              onDelete: isLocked ? null : () async {
-                                if (isDeleting) {
-                                  setState(() => _deletingSessionIds.remove(session.id));
-                                  await _scheduleService.saveSession(session.id, session: session);
-                                } else {
-                                  setState(() => _deletingSessionIds.add(session.id));
-                                  await _scheduleService.removeSession(session.id, session: session);
-                                }
-                              },
-                            );
+              : CustomScrollView(
+                  slivers: [
+                    for (final dateKey in sortedDates) ...[
+                      SliverPersistentHeader(
+                        pinned: true,
+                        delegate: _DateHeaderDelegate(
+                          dateText: DateFormat('EEEE, MMMM d, yyyy')
+                              .format(groupedSessions[dateKey]!.first.startTime),
+                          sessionCount: groupedSessions[dateKey]!.length,
+                          isCollapsed: _collapsedDates.contains(dateKey),
+                          onTap: () => setState(() {
+                            if (_collapsedDates.contains(dateKey)) {
+                              _collapsedDates.remove(dateKey);
+                            } else {
+                              _collapsedDates.add(dateKey);
+                            }
                           }),
-                        ]),
-                          ),
-                        ],
-                      );
-                    },
-                  ),
+                        ),
+                      ),
+                      SliverToBoxAdapter(
+                        child: AnimatedSize(
+                          duration: const Duration(milliseconds: 220),
+                          curve: Curves.easeInOut,
+                          child: _collapsedDates.contains(dateKey)
+                              ? const SizedBox.shrink()
+                              : Column(
+                                  children: groupedSessions[dateKey]!.map((session) {
+                                    final isDeleting = _deletingSessionIds.contains(session.id);
+                                    final isLocked = _lockedSessionIds.contains(session.id);
+                                    final isConflict = _conflictingSessionIds.contains(session.id);
+                                    return SessionCard(
+                                      session: session,
+                                      onTap: isDeleting ? null : () => _showSessionDetails(session, isLocked: isLocked),
+                                      isConflict: isConflict,
+                                      showBookmark: true,
+                                      isDeleting: isDeleting,
+                                      canRestore: isDeleting,
+                                      isLocked: isLocked,
+                                      onLockToggle: () async {
+                                        if (isLocked) {
+                                          await _scheduleService.unlockSession(session.id);
+                                          setState(() => _lockedSessionIds.remove(session.id));
+                                        } else {
+                                          await _scheduleService.lockSession(session.id);
+                                          setState(() => _lockedSessionIds.add(session.id));
+                                        }
+                                      },
+                                      onDelete: isLocked ? null : () async {
+                                        if (isDeleting) {
+                                          setState(() => _deletingSessionIds.remove(session.id));
+                                          await _scheduleService.saveSession(session.id, session: session);
+                                        } else {
+                                          setState(() => _deletingSessionIds.add(session.id));
+                                          await _scheduleService.removeSession(session.id, session: session);
+                                        }
+                                      },
+                                    );
+                                  }).toList(),
+                                ),
+                        ),
+                      ),
+                    ],
+                  ],
+                ),
     );
   }
 
@@ -389,4 +349,73 @@ class MyScheduleScreenState extends State<MyScheduleScreen> {
       ),
     );
   }
+}
+
+class _DateHeaderDelegate extends SliverPersistentHeaderDelegate {
+  final String dateText;
+  final int sessionCount;
+  final bool isCollapsed;
+  final VoidCallback onTap;
+  const _DateHeaderDelegate({
+    required this.dateText,
+    required this.sessionCount,
+    required this.isCollapsed,
+    required this.onTap,
+  });
+
+  static const double _height = 48.0;
+
+  @override double get minExtent => _height;
+  @override double get maxExtent => _height;
+
+  @override
+  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
+    final cs = Theme.of(context).colorScheme;
+    return Material(
+      color: cs.primaryContainer,
+      child: InkWell(
+        onTap: onTap,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  dateText,
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: cs.onPrimaryContainer,
+                  ),
+                ),
+              ),
+              Text(
+                '$sessionCount',
+                style: TextStyle(
+                  fontSize: 12,
+                  color: cs.onPrimaryContainer.withValues(alpha: 0.7),
+                ),
+              ),
+              const SizedBox(width: 4),
+              AnimatedRotation(
+                turns: isCollapsed ? -0.25 : 0,
+                duration: const Duration(milliseconds: 200),
+                child: Icon(
+                  Icons.expand_more,
+                  color: cs.onPrimaryContainer.withValues(alpha: 0.7),
+                  size: 20,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  @override
+  bool shouldRebuild(_DateHeaderDelegate old) =>
+      old.dateText != dateText ||
+      old.sessionCount != sessionCount ||
+      old.isCollapsed != isCollapsed;
 }

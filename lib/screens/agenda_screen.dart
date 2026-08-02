@@ -461,92 +461,58 @@ class AgendaScreenState extends State<AgendaScreen> {
                         ],
                       ),
                     )
-                  : ListView.builder(
-                      itemCount: sortedDates.length,
-                      itemBuilder: (context, index) {
-                        final dateKey = sortedDates[index];
-                        final sessions = groupedSessions[dateKey]!;
-                        final date = sessions.first.startTime.toUtc();
-                        final dateFormat = DateFormat('EEEE, MMMM d, yyyy');
-                        final isCollapsed = _collapsedDates.contains(dateKey);
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            InkWell(
+                  : CustomScrollView(
+                      slivers: [
+                        for (final dateKey in sortedDates) ...[
+                          SliverPersistentHeader(
+                            pinned: true,
+                            delegate: _DateHeaderDelegate(
+                              dateText: DateFormat('EEEE, MMMM d, yyyy').format(
+                                groupedSessions[dateKey]!.first.startTime.toUtc(),
+                              ),
+                              sessionCount: groupedSessions[dateKey]!.length,
+                              isCollapsed: _collapsedDates.contains(dateKey),
                               onTap: () => setState(() {
-                                if (isCollapsed) {
+                                if (_collapsedDates.contains(dateKey)) {
                                   _collapsedDates.remove(dateKey);
                                 } else {
                                   _collapsedDates.add(dateKey);
                                 }
                               }),
-                              child: Container(
-                                width: double.infinity,
-                                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                                color: Theme.of(context).colorScheme.primaryContainer,
-                                child: Row(
-                                  children: [
-                                    Expanded(
-                                      child: Text(
-                                        dateFormat.format(date),
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold,
-                                          color: Theme.of(context).colorScheme.onPrimaryContainer,
-                                        ),
-                                      ),
-                                    ),
-                                    if (index == 0)
-                                      RichText(
-                                        text: TextSpan(
-                                          children: [
-                                            TextSpan(
-                                              text: '${sessions.length}',
-                                              style: TextStyle(
-                                                fontSize: 13,
-                                                fontWeight: FontWeight.bold,
-                                                color: Theme.of(context).colorScheme.onPrimaryContainer,
-                                              ),
+                              countTrailing: dateKey == sortedDates.first
+                                  ? Builder(builder: (context) {
+                                      final cs = Theme.of(context).colorScheme;
+                                      return RichText(
+                                        text: TextSpan(children: [
+                                          TextSpan(
+                                            text: '${groupedSessions[dateKey]!.length}',
+                                            style: TextStyle(
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.bold,
+                                              color: cs.onPrimaryContainer,
                                             ),
-                                            TextSpan(
-                                              text: ' of ${_filteredSessions.length}',
-                                              style: TextStyle(
-                                                fontSize: 11,
-                                                color: Theme.of(context).colorScheme.onPrimaryContainer.withValues(alpha: 0.6),
-                                              ),
+                                          ),
+                                          TextSpan(
+                                            text: ' of ${_filteredSessions.length}',
+                                            style: TextStyle(
+                                              fontSize: 11,
+                                              color: cs.onPrimaryContainer.withValues(alpha: 0.6),
                                             ),
-                                          ],
-                                        ),
-                                      )
-                                    else
-                                      Text(
-                                        '${sessions.length}',
-                                        style: TextStyle(
-                                          fontSize: 12,
-                                          color: Theme.of(context).colorScheme.onPrimaryContainer.withValues(alpha: 0.7),
-                                        ),
-                                      ),
-                                    const SizedBox(width: 4),
-                                    AnimatedRotation(
-                                      turns: isCollapsed ? -0.25 : 0,
-                                      duration: const Duration(milliseconds: 200),
-                                      child: Icon(
-                                        Icons.expand_more,
-                                        color: Theme.of(context).colorScheme.onPrimaryContainer.withValues(alpha: 0.7),
-                                        size: 20,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
+                                          ),
+                                        ]),
+                                      );
+                                    })
+                                  : null,
                             ),
-                            AnimatedSize(
+                          ),
+                          SliverToBoxAdapter(
+                            child: AnimatedSize(
                               duration: const Duration(milliseconds: 220),
                               curve: Curves.easeInOut,
-                              child: isCollapsed
+                              child: _collapsedDates.contains(dateKey)
                                   ? const SizedBox.shrink()
                                   : Column(
-                                      children: sessions
+                                      children: groupedSessions[dateKey]!
                                           .map((session) => SessionCard(
                                                 showBookmark: widget.selectedYear == 2026,
                                                 session: session,
@@ -555,9 +521,9 @@ class AgendaScreenState extends State<AgendaScreen> {
                                           .toList(),
                                     ),
                             ),
-                          ],
-                        );
-                      },
+                          ),
+                        ],
+                      ],
                     ),
         ),
       ],
@@ -675,4 +641,77 @@ class AgendaScreenState extends State<AgendaScreen> {
       ),
     );
   }
+}
+
+class _DateHeaderDelegate extends SliverPersistentHeaderDelegate {
+  final String dateText;
+  final int sessionCount;
+  final bool isCollapsed;
+  final VoidCallback onTap;
+  final Widget? countTrailing;
+
+  const _DateHeaderDelegate({
+    required this.dateText,
+    required this.sessionCount,
+    required this.isCollapsed,
+    required this.onTap,
+    this.countTrailing,
+  });
+
+  static const double _height = 48.0;
+
+  @override double get minExtent => _height;
+  @override double get maxExtent => _height;
+
+  @override
+  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
+    final cs = Theme.of(context).colorScheme;
+    return Material(
+      color: cs.primaryContainer,
+      child: InkWell(
+        onTap: onTap,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  dateText,
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: cs.onPrimaryContainer,
+                  ),
+                ),
+              ),
+              countTrailing ??
+                  Text(
+                    '$sessionCount',
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: cs.onPrimaryContainer.withValues(alpha: 0.7),
+                    ),
+                  ),
+              const SizedBox(width: 4),
+              AnimatedRotation(
+                turns: isCollapsed ? -0.25 : 0,
+                duration: const Duration(milliseconds: 200),
+                child: Icon(
+                  Icons.expand_more,
+                  color: cs.onPrimaryContainer.withValues(alpha: 0.7),
+                  size: 20,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  @override
+  bool shouldRebuild(_DateHeaderDelegate old) =>
+      old.dateText != dateText ||
+      old.sessionCount != sessionCount ||
+      old.isCollapsed != isCollapsed;
 }

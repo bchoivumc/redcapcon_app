@@ -2,28 +2,30 @@ import 'package:flutter/material.dart';
 import '../models/badge_model.dart';
 import '../services/badge_service.dart';
 
-// ── 2027 Nashville badge names — one entry per existing 2026 badge (same order) ──
+// Tuple: (name, emoji, series, points, isNew)
+// isNew = true  → new 2027 Nashville badge  (new emoji, ✨ chip shown)
+// isNew = false → carried over from 2026    (familiar name/emoji, no chip)
 const _nashvilleBadges = [
-  // Schedule Builder
-  ('First String',           '🎸', 'Schedule Builder',    1),
-  ('In The Groove',          '🎵', 'Schedule Builder',    2),
-  ('Studio Session',         '🎤', 'Schedule Builder',    3),
-  ('Music City Legend',      '🏆', 'Schedule Builder',    4),
-  // Conference Explorer
-  ('Honky Tonk Hopper',      '🤠', 'Conference Explorer', 3),
-  ('Ryman Historian',        '📜', 'Conference Explorer', 4),
-  ('Hot Chicken Connoisseur','🌶️', 'Conference Explorer', 3),
-  ('Bluebird Backstage',     '🎭', 'Conference Explorer', 4),
-  // Dedicated Attendee
-  ('River Riser',            '🌅', 'Dedicated Attendee',  3),
-  ('Lower Broad Owl',        '🦉', 'Dedicated Attendee',  4),
-  ('Pedal Taverner',         '🚲', 'Dedicated Attendee',  5),
-  ('Cumberland Runner',      '🏃', 'Dedicated Attendee',  8),
-  // Mystery
-  ('Basement Ghost',         '👻', 'Mystery',             5),
-  ('Alley Cat',              '😼', 'Mystery',             5),
-  ("Printer's Flash",        '⚡', 'Mystery',             5),
-  ('Parthenon Prize',        '🏛️', 'Mystery',            10),
+  // Schedule Builder — 2 new, 2 kept
+  ('Setlist Starter',  '📋', 'Schedule Builder',    1,  true),
+  ('Double Bill',      '🎟️', 'Schedule Builder',    2,  true),
+  ('Power Planner',    '⚡', 'Schedule Builder',    3,  false),
+  ('Schedule Legend',  '🏆', 'Schedule Builder',    4,  false),
+  // Conference Explorer — 2 new, 2 kept
+  ('Record Digger',    '💿', 'Conference Explorer', 3,  true),
+  ("Songwriter's Eye", '🎻', 'Conference Explorer', 4,  true),
+  ('Genre Sampler',    '🎨', 'Conference Explorer', 3,  false),
+  ('VIP Access',       '👑', 'Conference Explorer', 4,  false),
+  // Dedicated Attendee — 2 new, 2 kept
+  ('Sound Check',      '🔊', 'Dedicated Attendee',  3,  true),
+  ('Session Player',   '🎹', 'Dedicated Attendee',  5,  true),
+  ('Night Owl',        '🦉', 'Dedicated Attendee',  4,  false),
+  ('Marathon Mode',    '🏃', 'Dedicated Attendee',  8,  false),
+  // Mystery — 2 new, 2 kept
+  ('Boot Scooter',     '👢', 'Mystery',             5,  true),
+  ('Steel Nerve',      '💎', 'Mystery',             5,  true),
+  ('Phantom',          '👻', 'Mystery',             5,  false),
+  ('Continental',      '🥐', 'Mystery',            10,  false),
 ];
 
 /// Debug-only sneak peek of the proposed multi-year badge screen layout.
@@ -130,7 +132,7 @@ class _Badges2027PreviewScreenState extends State<Badges2027PreviewScreen>
     // Group Nashville badges by series (same order as existing series)
     final seriesOrder = ['Schedule Builder', 'Conference Explorer',
         'Dedicated Attendee', 'Mystery'];
-    final byS = <String, List<(String, String, String, int)>>{};
+    final byS = <String, List<(String, String, String, int, bool)>>{};
     for (final b in _nashvilleBadges) {
       byS.putIfAbsent(b.$3, () => []).add(b);
     }
@@ -233,7 +235,7 @@ class _Badges2027PreviewScreenState extends State<Badges2027PreviewScreen>
     BuildContext context,
     ColorScheme cs,
     String seriesName,
-    List<(String, String, String, int)> badges,
+    List<(String, String, String, int, bool)> badges,
   ) {
     final color = BadgeService.seriesColor(seriesName);
     final bonus = BadgeService.seriesBonuses[seriesName] ?? 0;
@@ -286,7 +288,7 @@ class _Badges2027PreviewScreenState extends State<Badges2027PreviewScreen>
           padding: const EdgeInsets.symmetric(horizontal: 12),
           child: Row(
             children: badges.map((b) {
-              final (name, emoji, _, pts) = b;
+              final (String name, String emoji, String _, int pts, bool isNew) = b;
               return Expanded(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 4),
@@ -342,10 +344,25 @@ class _Badges2027PreviewScreenState extends State<Badges2027PreviewScreen>
                               height: 1.2,
                               color: cs.onSurface.withValues(alpha: 0.45))),
                       const SizedBox(height: 2),
-                      Text('$pts pt${pts == 1 ? '' : 's'}',
-                          style: TextStyle(
-                              fontSize: 9,
-                              color: cs.onSurface.withValues(alpha: 0.25))),
+                      if (isNew)
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 4, vertical: 1),
+                          decoration: BoxDecoration(
+                            color: Colors.purple.withValues(alpha: 0.12),
+                            borderRadius: BorderRadius.circular(6),
+                          ),
+                          child: Text('✨ new',
+                              style: TextStyle(
+                                  fontSize: 8,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.purple.shade300)),
+                        )
+                      else
+                        Text('$pts pt${pts == 1 ? '' : 's'}',
+                            style: TextStyle(
+                                fontSize: 9,
+                                color: cs.onSurface.withValues(alpha: 0.25))),
                     ],
                   ),
                 ),

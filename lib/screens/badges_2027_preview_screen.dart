@@ -3,28 +3,28 @@ import '../models/badge_model.dart';
 import '../services/badge_service.dart';
 
 // Tuple: (name, emoji, series, points, isNew)
-// isNew = true  → new 2027 Nashville badge  (new emoji, ✨ chip shown)
-// isNew = false → carried over from 2026    (familiar name/emoji, no chip)
+// isNew = true  → new 2027 Nashville badge  (✨ chip shown)
+// isNew = false → carried over from 2026    (no chip)
 const _nashvilleBadges = [
-  // Schedule Builder — 2 new, 2 kept
-  ('Setlist Starter',  '📋', 'Schedule Builder',    1,  true),
-  ('Double Bill',      '🎟️', 'Schedule Builder',    2,  true),
+  // Schedule Builder — 3 new Nashville + 1 kept, mixed by points
+  ('Hot Pick',         '🌶️', 'Schedule Builder',    1,  true),
+  ("Titan's Draft",    '🏈', 'Schedule Builder',    2,  true),
   ('Power Planner',    '⚡', 'Schedule Builder',    3,  false),
-  ('Schedule Legend',  '🏆', 'Schedule Builder',    4,  false),
-  // Conference Explorer — 2 new, 2 kept
-  ('Record Digger',    '💿', 'Conference Explorer', 3,  true),
-  ("Songwriter's Eye", '🎻', 'Conference Explorer', 4,  true),
+  ("Batman's Plan",    '🦇', 'Schedule Builder',    4,  true),
+  // Conference Explorer — 3 new Nashville + 1 kept, mixed by points
+  ('Raccoon Scout',    '🦝', 'Conference Explorer', 3,  true),
   ('Genre Sampler',    '🎨', 'Conference Explorer', 3,  false),
-  ('VIP Access',       '👑', 'Conference Explorer', 4,  false),
-  // Dedicated Attendee — 2 new, 2 kept
-  ('Sound Check',      '🔊', 'Dedicated Attendee',  3,  true),
-  ('Session Player',   '🎹', 'Dedicated Attendee',  5,  true),
+  ('Parthenon Finder', '🏛️', 'Conference Explorer', 4,  true),
+  ('River Rambler',    '🌊', 'Conference Explorer', 4,  true),
+  // Dedicated Attendee — 2 new Nashville + Night Owl + Marathon Mode, mixed
+  ('Cheekwood Dawn',   '🌸', 'Dedicated Attendee',  3,  true),
   ('Night Owl',        '🦉', 'Dedicated Attendee',  4,  false),
+  ('Gulch Grinder',    '💼', 'Dedicated Attendee',  5,  true),
   ('Marathon Mode',    '🏃', 'Dedicated Attendee',  8,  false),
-  // Mystery — 2 new, 2 kept
-  ('Boot Scooter',     '👢', 'Mystery',             5,  true),
-  ('Steel Nerve',      '💎', 'Mystery',             5,  true),
+  // Mystery — 2 new Nashville + Phantom + Continental, mixed
   ('Phantom',          '👻', 'Mystery',             5,  false),
+  ('Bathtub Gin',      '🍸', 'Mystery',             5,  true),
+  ('Copper Still',     '🥃', 'Mystery',             5,  true),
   ('Continental',      '🥐', 'Mystery',            10,  false),
 ];
 
@@ -108,6 +108,9 @@ class _Badges2027PreviewScreenState extends State<Badges2027PreviewScreen>
         ],
         bottom: TabBar(
           controller: _tabController,
+          labelColor: Colors.white,
+          unselectedLabelColor: Colors.white.withValues(alpha: 0.55),
+          indicatorColor: Colors.white,
           tabs: const [
             Tab(text: '2027'),
             Tab(text: '2026'),
@@ -140,6 +143,30 @@ class _Badges2027PreviewScreenState extends State<Badges2027PreviewScreen>
     return ListView(
       padding: const EdgeInsets.only(bottom: 32),
       children: [
+        // Year label
+        Padding(
+          padding: const EdgeInsets.fromLTRB(16, 14, 16, 0),
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+            decoration: BoxDecoration(
+              color: Colors.purple.shade700,
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: const Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(Icons.auto_awesome, size: 14, color: Colors.white),
+                SizedBox(width: 6),
+                Text('REDCap Con 2027  —  Coming Soon',
+                    style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white)),
+              ],
+            ),
+          ),
+        ),
+
         // Coming-soon banner — dark background for contrast
         Container(
           margin: const EdgeInsets.fromLTRB(16, 16, 16, 8),
@@ -153,7 +180,7 @@ class _Badges2027PreviewScreenState extends State<Badges2027PreviewScreen>
               const Text('🔮', style: TextStyle(fontSize: 40)),
               const SizedBox(height: 10),
               const Text(
-                'REDCap Con 2027 — Nashville, TN',
+                'REDCap Con 2027',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 16,
@@ -541,19 +568,19 @@ class _Badges2027PreviewScreenState extends State<Badges2027PreviewScreen>
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
             decoration: BoxDecoration(
-              color: cs.primaryContainer,
+              color: cs.primary,
               borderRadius: BorderRadius.circular(20),
-              ),
+            ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(Icons.history, size: 14, color: cs.onPrimaryContainer),
+                Icon(Icons.history, size: 14, color: cs.onPrimary),
                 const SizedBox(width: 6),
                 Text('REDCap Con 2026  —  Your earned badges',
                     style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
-                        color: cs.onPrimaryContainer)),
+                        color: cs.onPrimary)),
               ],
             ),
           ),

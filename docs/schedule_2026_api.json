@@ -1,6 +1,6 @@
 {
   "year": 2026,
-  "lastUpdated": "2026-08-03T05:34:02.001Z",
+  "lastUpdated": "2026-08-03T18:02:09.403Z",
   "source": "https://redcap.vumc.org/surveys/?__report=Y7EMJR9L797FTX83",
   "sessionCount": 103,
   "sessions": [
@@ -390,13 +390,13 @@
     },
     {
       "id": "2026-33",
-      "title": "Clinical Data: What's New & What's Next",
-      "description": "Learn about what's new and our plans for the future with clinical data features that have been integrated into REDCap.",
+      "title": "Clinical Data Interoperability: What's New & What's Next",
+      "description": "New and planned features for automating data import from clinical information systems.",
       "startTime": "2026-09-02T09:10:00.000Z",
       "endTime": "2026-09-02T09:30:00.000Z",
       "type": "Plenary",
       "audience": "All",
-      "speaker": "Alex Cheng, Katelyn Benhoff",
+      "speaker": "Alex Cheng, Katelyn Benhoff, Francesco Delacqua, Adam Lewis",
       "location": "Oklahoma Station Ballroom 1-4",
       "tags": []
     },
@@ -1087,7 +1087,7 @@
     {
       "id": "2026-91",
       "title": "REDCap CDIS-based Healthcare Provider Organization Participation in All of Us",
-      "description": "The All of Us program is piloting an HPO-Lite model of participation. Instead of setting up infrastructure to extract EHR data from participants from the backened, institutions would be able to use REDCap CDIS to collect and contribute data with FHIR to the program. Come discuss what participating in All of Us through HPO-Lite might look like at your institution.",
+      "description": "The All of Us program is piloting an HPO-Lite model of participation where institutions use REDCap CDIS to collect and contribute data with FHIR to the program. Come discuss what participating in All of Us through HPO-Lite might look like at your institution.",
       "startTime": "2026-09-03T10:45:00.000Z",
       "endTime": "2026-09-03T11:15:00.000Z",
       "type": "Discussion / Small Group",

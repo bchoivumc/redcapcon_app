@@ -1,6 +1,6 @@
 {
   "year": 2026,
-  "lastUpdated": "2026-08-04T04:56:13.952Z",
+  "lastUpdated": "2026-08-05T04:58:10.245Z",
   "source": "https://redcap.vumc.org/surveys/?__report=Y7EMJR9L797FTX83",
   "sessionCount": 103,
   "sessions": [
@@ -396,7 +396,7 @@
       "endTime": "2026-09-02T09:30:00.000Z",
       "type": "Plenary",
       "audience": "All",
-      "speaker": "Alex Cheng, Katelyn Benhoff, Francesco Delacqua, Adam Lewis",
+      "speaker": "Alex Cheng",
       "location": "Oklahoma Station Ballroom 1-4",
       "tags": []
     },
@@ -727,7 +727,7 @@
     {
       "id": "2026-61",
       "title": "Collaborative Spaces: \"Birds of a Feather\" Small Groups and Workshops",
-      "description": "Looking to connect with others who share your interests? Join us for our \"Birds of a Feather\" session-an open, participant-driven space where you can either start your own meet-up or join an existing one!  Whether you're diving into a specific REDCap topic or just want to network with like-minded peers, this is your chance to create meaningful conversations. Follow the link below to propose a session or browse the list of current meet-ups and find one that sparks your interest!  LINK COMING SOON",
+      "description": "Looking to connect with others who share your interests? Join us for our \"Birds of a Feather\" session-an open, participant-driven space where you can either start your own meet-up or join an existing one!  Whether you're diving into a specific REDCap topic or just want to network with like-minded peers, this is your chance to create meaningful conversations. Follow the link below to propose a session or browse the list of current meet-ups and find one that sparks your interest!  https://redcap.link/birdsofafeather26",
       "startTime": "2026-09-02T16:00:00.000Z",
       "endTime": "2026-09-02T17:00:00.000Z",
       "type": "Group Activity / Interactive",
@@ -979,12 +979,12 @@
     {
       "id": "2026-82",
       "title": "Other/Misc Discussion",
-      "description": "",
+      "description": "()",
       "startTime": "2026-09-03T10:00:00.000Z",
       "endTime": "2026-09-03T10:30:00.000Z",
       "type": "Discussion / Small Group",
-      "audience": "Other / Both Tech and Admin",
-      "speaker": "",
+      "audience": "All",
+      "speaker": "Jessie Lee, Andy Arenson",
       "location": "TBD",
       "tags": []
     },
@@ -1015,7 +1015,7 @@
     {
       "id": "2026-85",
       "title": "REDCap SHARE Use Case Brainstorming and Q&A",
-      "description": "Getting participant EHR data from external institutions is typically complicated - release forms, data sharing agreements, rolls of red tape. REDCap SHARE simplifies this process by harnessing the power of the Cures Act Final Rule and REDCap's ability to connect to any US certified EHR system. Participants mediate the process and send their EHR data directly to your REDCap instance for action and analysis. Join us to discuss potential SHARE use cases at your institution and to have your questions answered. *SHARE is available as a part of REDCap+.",
+      "description": "REDCap SHARE, a powerful tool where participants authorize EHR data transfer directly to your REDCap instance is now released. Join us to discuss potential SHARE use cases at your institution and to have your questions answered.",
       "startTime": "2026-09-03T10:00:00.000Z",
       "endTime": "2026-09-03T10:30:00.000Z",
       "type": "Discussion / Small Group",

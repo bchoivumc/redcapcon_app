@@ -1,6 +1,6 @@
 {
   "year": 2026,
-  "lastUpdated": "2026-08-05T04:58:10.245Z",
+  "lastUpdated": "2026-08-06T04:58:41.446Z",
   "source": "https://redcap.vumc.org/surveys/?__report=Y7EMJR9L797FTX83",
   "sessionCount": 103,
   "sessions": [
@@ -318,13 +318,13 @@
     },
     {
       "id": "2026-27",
-      "title": "Optional Early Bird Session",
-      "description": "",
+      "title": "Optional Early Bird Session: REDCap +",
+      "description": "The REDCap Consortium is deeply committed to innovation and advancing our mission of supporting global research and data management, even as federal and institutional budgets for clinical infrastructure tighten. While funding for innovation supports REDCap development, sustaining the platform after launch - including dissemination, maintenance, and support - has unseen and unfunded costs.\n\nAs a follow-up to last year's conversations and after a successful launch of REDCap+, we'd like to revisit discussions on the long-term sustainability and evolution of the platform.\n\nJoin us as we collaboratively explore strategies to align REDCap's evolving business model with its commitment to empower research and doing good in the world.",
       "startTime": "2026-09-02T07:30:00.000Z",
       "endTime": "2026-09-02T08:15:00.000Z",
       "type": "Discussion / Small Group",
       "audience": "Other / Both Tech and Admin",
-      "speaker": "",
+      "speaker": "Paul Harris",
       "location": "TBD",
       "tags": []
     },
@@ -427,7 +427,7 @@
     {
       "id": "2026-36",
       "title": "GAIN: Delivering Synchronous and Asynchronous Autism Training with REDCap",
-      "description": "GAIN (Global Autism Interactive Network) is a researcher-led professional development program that uses REDCap to deliver Autisim Spectrum Disorders (ASD) assessment training, including ADOS-2 instruction, webinars, trainee scoring, CE tracking, and self-service account management. Using only standard REDCap functionality and a custom Survey Queue, the program supports both live and asynchronous learning through Zoom links and embedded videos, with the goal of improving clinical diagnosis of ASD to a global audience.",
+      "description": "GAIN (Global Autism Interactive Network) is a researcher-led professional development program that uses REDCap to deliver Autism Spectrum Disorders (ASD) assessment training, including ADOS-2 instruction, webinars, trainee scoring, CE tracking, and self-service account management. Using only standard REDCap functionality and a custom Survey Queue, the program supports both live and asynchronous learning through Zoom links and embedded videos, with the goal of improving clinical diagnosis of ASD to a global audience.",
       "startTime": "2026-09-02T10:15:00.000Z",
       "endTime": "2026-09-02T10:35:00.000Z",
       "type": "Plenary",
@@ -624,7 +624,7 @@
       "endTime": "2026-09-02T14:45:00.000Z",
       "type": "Breakout",
       "audience": "Other / Both Tech and Admin",
-      "speaker": "Jason Lones",
+      "speaker": "Jason Lones, Lindsay Breslin",
       "location": "TBD",
       "tags": []
     },
@@ -660,7 +660,7 @@
       "endTime": "2026-09-02T15:45:00.000Z",
       "type": "Breakout",
       "audience": "Other / Both Tech and Admin",
-      "speaker": "Paul Harris, Cathy Shyr",
+      "speaker": "Paul Harris, Cathy Shyr, Joe Granados",
       "location": "TBD",
       "tags": []
     },
@@ -750,13 +750,13 @@
     },
     {
       "id": "2026-63",
-      "title": "Optional Early Bird Session",
-      "description": "()",
+      "title": "Optional Early Bird Session: Better Together",
+      "description": "Join us for a brain-storming session on how can we take advantage of our close collaborations and shared software interests to improve opportunities for research studies, papers, common needs (CDE's), and more.",
       "startTime": "2026-09-03T07:30:00.000Z",
       "endTime": "2026-09-03T08:15:00.000Z",
       "type": "Discussion / Small Group",
-      "audience": "All",
-      "speaker": "",
+      "audience": "Other / Both Tech and Admin",
+      "speaker": "Paul Harris, Alex Cheng",
       "location": "TBD",
       "tags": []
     },

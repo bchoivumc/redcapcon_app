@@ -1,6 +1,6 @@
 {
   "year": 2026,
-  "lastUpdated": "2026-08-10T03:44:48.220Z",
+  "lastUpdated": "2026-08-11T03:27:31.653Z",
   "source": "https://redcap.vumc.org/surveys/?__report=Y7EMJR9L797FTX83",
   "sessionCount": 102,
   "sessions": [
@@ -103,12 +103,12 @@
     {
       "id": "2026-9",
       "title": "Keynote",
-      "description": "",
+      "description": "()",
       "startTime": "2026-09-01T08:30:00.000Z",
       "endTime": "2026-09-01T09:00:00.000Z",
       "type": "Keynote",
       "audience": "All",
-      "speaker": "",
+      "speaker": "Michael S. Businelle, PhD",
       "location": "Oklahoma Station Ballroom 1-4",
       "tags": []
     },

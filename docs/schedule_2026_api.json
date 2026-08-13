@@ -1,6 +1,6 @@
 {
   "year": 2026,
-  "lastUpdated": "2026-08-12T03:56:52.732Z",
+  "lastUpdated": "2026-08-13T04:02:03.447Z",
   "source": "https://redcap.vumc.org/surveys/?__report=Y7EMJR9L797FTX83",
   "sessionCount": 102,
   "sessions": [
@@ -966,7 +966,7 @@
     },
     {
       "id": "2026-81",
-      "title": "Other/Misc Discussion",
+      "title": "Security vs usability",
       "description": "()",
       "startTime": "2026-09-03T10:00:00.000Z",
       "endTime": "2026-09-03T10:30:00.000Z",

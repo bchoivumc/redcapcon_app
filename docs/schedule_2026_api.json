@@ -1,6 +1,6 @@
 {
   "year": 2026,
-  "lastUpdated": "2026-08-19T02:50:18.187Z",
+  "lastUpdated": "2026-08-20T02:49:38.367Z",
   "source": "https://redcap.vumc.org/surveys/?__report=Y7EMJR9L797FTX83",
   "sessionCount": 101,
   "sessions": [
@@ -258,18 +258,6 @@
     },
     {
       "id": "2026-22",
-      "title": "Documentation Procrastination: how to defeat it today instead of postponing until tomorrow.",
-      "description": "Almost nobody likes writing documentation... And maintaining it is even more mind-numbing. This talk covers what to include in documentation for your team and users, such as FAQs, training materials, policies, and grant acknowledgements, and how to use AI to make the process easier and get more value for your effort.",
-      "startTime": "2026-09-01T14:25:00.000Z",
-      "endTime": "2026-09-01T15:35:00.000Z",
-      "type": "Deep Dive",
-      "audience": "Administrative",
-      "speaker": "Chris Sorenson, Bas de Veer",
-      "location": "Oklahoma Station Ballroom 4",
-      "tags": []
-    },
-    {
-      "id": "2026-23",
       "title": "Transforming Local Research Via MyCap: Empowering Administrator Knowledge & Growing Local Innovation",
       "description": "This 70-minute deep dive will guide REDCap Administrators through the practical use of MyCap. We will build a project together and explore core features that support mobile, participant-facing research workflows. You will gain a clearer understanding of the key differences between MyCap and standard REDCap functionality, as well as common troubleshooting strategies to support local teams, strengthen administrator knowledge, and foster innovation across research projects.",
       "startTime": "2026-09-01T14:25:00.000Z",
@@ -277,6 +265,18 @@
       "type": "Deep Dive",
       "audience": "Features/Functions",
       "speaker": "Emily Serdoz, Byungsuk Choi, Vaishali Jagtap, Joseph Valle",
+      "location": "Oklahoma Station Ballroom 4",
+      "tags": []
+    },
+    {
+      "id": "2026-23",
+      "title": "Documentation Procrastination: how to defeat it today instead of postponing until tomorrow.",
+      "description": "Almost nobody likes writing documentation... And maintaining it is even more mind-numbing. This talk covers what to include in documentation for your team and users, such as FAQs, training materials, policies, and grant acknowledgements, and how to use AI to make the process easier and get more value for your effort.",
+      "startTime": "2026-09-01T14:25:00.000Z",
+      "endTime": "2026-09-01T15:35:00.000Z",
+      "type": "Deep Dive",
+      "audience": "Administrative",
+      "speaker": "Chris Sorenson, Bas de Veer",
       "location": "Mistletoe",
       "tags": []
     },
@@ -954,12 +954,12 @@
     },
     {
       "id": "2026-80",
-      "title": "Security vs usability",
-      "description": "()",
+      "title": "Security vs Usability",
+      "description": "Open discussion on security vs usability. The tradeoffs between more security, but possible costs and limitations on functionality vs less security and easier usability.",
       "startTime": "2026-09-03T10:00:00.000Z",
       "endTime": "2026-09-03T10:30:00.000Z",
       "type": "Discussion / Small Group",
-      "audience": "All",
+      "audience": "Other / Both Tech and Admin",
       "speaker": "Jessie Lee, Andy Arenson",
       "location": "Automobile Alley C",
       "tags": []

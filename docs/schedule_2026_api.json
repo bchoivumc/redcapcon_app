@@ -1,6 +1,6 @@
 {
   "year": 2026,
-  "lastUpdated": "2026-08-20T02:49:38.367Z",
+  "lastUpdated": "2026-08-21T02:55:37.213Z",
   "source": "https://redcap.vumc.org/surveys/?__report=Y7EMJR9L797FTX83",
   "sessionCount": 101,
   "sessions": [
@@ -90,8 +90,8 @@
     },
     {
       "id": "2026-8",
-      "title": "Keynote",
-      "description": "()",
+      "title": "Advancing Just‑In‑Time Adaptive Interventions: Current Progress and Future Directions",
+      "description": "Dr. Businelle will describe how brief, smartphone‑based assessments can be used to accurately predict unhealthy behaviors and deliver personalized interventions in real time. He will also outline critical advancements that research platforms like REDCap must adopt to enable and sustain the next generation of digital health research.",
       "startTime": "2026-09-01T08:30:00.000Z",
       "endTime": "2026-09-01T09:00:00.000Z",
       "type": "Keynote",

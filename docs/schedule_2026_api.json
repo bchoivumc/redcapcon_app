@@ -1,6 +1,6 @@
 {
   "year": 2026,
-  "lastUpdated": "2026-08-21T02:55:37.213Z",
+  "lastUpdated": "2026-08-22T02:47:10.545Z",
   "source": "https://redcap.vumc.org/surveys/?__report=Y7EMJR9L797FTX83",
   "sessionCount": 101,
   "sessions": [
@@ -439,7 +439,7 @@
     {
       "id": "2026-37",
       "title": "15-Minute Break",
-      "description": "()",
+      "description": "",
       "startTime": "2026-09-02T10:55:00.000Z",
       "endTime": "2026-09-02T11:10:00.000Z",
       "type": "Break",
@@ -769,11 +769,23 @@
       "type": "Discussion / Small Group",
       "audience": "Administrative",
       "speaker": "Ann Gleason, Courtney Howell",
-      "location": "Oklahoma Station Ballroom 4",
+      "location": "Oklahoma Station Ballroom 1-3",
       "tags": []
     },
     {
       "id": "2026-65",
+      "title": "Our Favorite EM's!!",
+      "description": "A round-robin presentation by 5 long-term REDCap Administrators highlighting their favorite and most-valuable External Modules.",
+      "startTime": "2026-09-03T08:30:00.000Z",
+      "endTime": "2026-09-03T09:00:00.000Z",
+      "type": "Discussion / Small Group",
+      "audience": "Other / Both Tech and Admin",
+      "speaker": "Scott Carey, Jeff Hawley, Lindsay Berrigan, Greg Neils, Leila Deering",
+      "location": "Oklahoma Station Ballroom 4",
+      "tags": []
+    },
+    {
+      "id": "2026-66",
       "title": "REDCap Cypress Testing Framework",
       "description": "Show off the latest updates to the RCTF (REDCap Cypress Testing Framework) as well as show off examples of how to automate testing of external modules using RCTF.",
       "startTime": "2026-09-03T08:30:00.000Z",
@@ -785,7 +797,7 @@
       "tags": []
     },
     {
-      "id": "2026-66",
+      "id": "2026-67",
       "title": "PROMIS in your pocket: Remote assessment with Mobile Toolbox and MyCap",
       "description": "The Mobile Toolbox (MTB) is a growing library of brief, validated, and sensitive measures delivered through REDCap’s free participant-facing MyCap mobile application, enabling low-burden assessment of health and functioning on participants’ own smartphones in English and Spanish. This presentation introduces the MTB and its new PROMIS integration in MyCap, highlighting its potential to amplify patient voices in research and clinical decision-making through scalable remote assessment. Attendees will learn how to leverage these measures on their projects, the advantages of the new assessment framework, as well as setup procedures, practical considerations, and emerging use cases.",
       "startTime": "2026-09-03T08:30:00.000Z",
@@ -797,18 +809,6 @@
       "tags": []
     },
     {
-      "id": "2026-67",
-      "title": "Automating Fraud Analysis for Research Survey Data",
-      "description": "Survey research increasingly faces threats from fraudulent responses including bots, speeders, and pattern-based fraud that compromise data integrity. While front-end prevention methods provide initial barriers, systematic post-collection analysis remains time-intensive and requires statistical expertise many researchers lack. This presentation demonstrates the development and pilot implementation of an algorithm-powered fraud detection tool built with Python that allows researchers to upload survey data and receive fraud risk scores for each response, streamlining data quality assessment for REDCap surveys.",
-      "startTime": "2026-09-03T08:30:00.000Z",
-      "endTime": "2026-09-03T09:00:00.000Z",
-      "type": "Discussion / Small Group",
-      "audience": "Applied Biostatistics",
-      "speaker": "Viktoriya Babicheva",
-      "location": "Automobile Alley A+B",
-      "tags": []
-    },
-    {
       "id": "2026-68",
       "title": "Dynamic SQL in REDCap: Introduction and Beyond!",
       "description": "This hands-on workshop is a fusion of two SQUIRL trainings: Dynamic SQL: Introduction, and Dynamic SQL: Beyond the Basics, developed by Paul Litwin and Lisa Hallberg. It will teach attendees how to use the Dynamic SQL field in REDCap projects to query data across projects. Due to time constraints, this workshop is NOT hands-on, but we will provide materials for you to work through the examples on your own.",
@@ -817,19 +817,19 @@
       "type": "Discussion / Small Group",
       "audience": "Features/Functions",
       "speaker": "Lisa Hallberg, Paul Litwin",
-      "location": "Oklahoma Station Ballroom 1-2",
+      "location": "Automobile Alley A+B",
       "tags": []
     },
     {
       "id": "2026-69",
-      "title": "Our Favorite EM's!!",
-      "description": "A round-robin presentation by 5 long-term REDCap Administrators highlighting their favorite and most-valuable External Modules.",
+      "title": "Automating Fraud Analysis for Research Survey Data",
+      "description": "Survey research increasingly faces threats from fraudulent responses including bots, speeders, and pattern-based fraud that compromise data integrity. While front-end prevention methods provide initial barriers, systematic post-collection analysis remains time-intensive and requires statistical expertise many researchers lack. This presentation demonstrates the development and pilot implementation of an algorithm-powered fraud detection tool built with Python that allows researchers to upload survey data and receive fraud risk scores for each response, streamlining data quality assessment for REDCap surveys.",
       "startTime": "2026-09-03T08:30:00.000Z",
       "endTime": "2026-09-03T09:00:00.000Z",
       "type": "Discussion / Small Group",
-      "audience": "Other / Both Tech and Admin",
-      "speaker": "Scott Carey, Jeff Hawley, Lindsay Berrigan, Greg Neils, Leila Deering",
-      "location": "Oklahoma Station Ballroom 3",
+      "audience": "Applied Biostatistics",
+      "speaker": "Viktoriya Babicheva",
+      "location": "Pinon",
       "tags": []
     },
     {
@@ -853,11 +853,23 @@
       "type": "Discussion / Small Group",
       "audience": "Regulatory",
       "speaker": "Yama Farooq Mujadidi, Mujtaba Ghulam Farooq",
-      "location": "Oklahoma Station Ballroom 4",
+      "location": "Oklahoma Station Ballroom 1-3",
       "tags": []
     },
     {
       "id": "2026-72",
+      "title": "Epic to REDCap Integration: Best Practices",
+      "description": "A practical guide to implementing the Epic to REDCap integration using a FHIR server. Best practices, recommendations, and where we struggled will be discussed.",
+      "startTime": "2026-09-03T09:15:00.000Z",
+      "endTime": "2026-09-03T09:45:00.000Z",
+      "type": "Discussion / Small Group",
+      "audience": "Features/Functions",
+      "speaker": "Juan Artigas, Stephen Stremmel",
+      "location": "Oklahoma Station Ballroom 4",
+      "tags": []
+    },
+    {
+      "id": "2026-73",
       "title": "Public Surveys & Compensation: A Security Challenge",
       "description": "As technology advances, it opens the door to better tools, but occasionally, it can be misused. This is especially relevant for public survey links, specially, opportunities involving electronic compensation. This presentation aims to build awareness around risks tied to public survey links and to share practical strategies for minimizing them.\nIt's worth noting — this isn't a challenge unique to research. It's a broader issue seen across many fields that rely on public-facing digital tools.",
       "startTime": "2026-09-03T09:15:00.000Z",
@@ -869,7 +881,7 @@
       "tags": []
     },
     {
-      "id": "2026-73",
+      "id": "2026-74",
       "title": "Web Dev 2.0: Spec-Driven Prototyping in REDCap",
       "description": "Web Dev 101 (REDCapCon 2023) mapped the building blocks of web development in REDCap; Rapid Prototyping in REDCap (REDCapCon 2025) introduced the Conflux workflow for developing them like a real codebase. Web Dev 2.0 puts the two together and adds spec-driven development to prototype an interactive study-team dashboard. AI use here is a dial, not a commitment. Use it up front to build your spec templates, or hand it the spec and let it run start to finish; both paths start from the same specs. Attendees leave with the full repo: spec templates for each stage, reusable context files, and the\nprototype.",
       "startTime": "2026-09-03T09:15:00.000Z",
@@ -881,18 +893,6 @@
       "tags": []
     },
     {
-      "id": "2026-74",
-      "title": "Novel uses for REDCap in QI work",
-      "description": "Have you ever wondered how to use REDCap to manage your quality improvement portfolios? This session will show you how to use REDCap with frontline staff to track quality work such as hospital acquired conditions (HACs), apparent cause analyses (ACAs), monthly quality audits (QIC, hand hygiene), PDSA cycles, and more. We will look at the builds themselves along with output displays in Power BI, REDCap dashboards and REDCap reports. The builds include, but aren't limited to, use of surveys, alerts/notifications, automatic survey invitations, and action tags.",
-      "startTime": "2026-09-03T09:15:00.000Z",
-      "endTime": "2026-09-03T09:45:00.000Z",
-      "type": "Discussion / Small Group",
-      "audience": "Other / Both Tech and Admin",
-      "speaker": "Rachel Wenthe",
-      "location": "Automobile Alley A+B",
-      "tags": []
-    },
-    {
       "id": "2026-75",
       "title": "REDCap Supporting REDCap: An Internal Ticketing System for a Small Program",
       "description": "This session builds on previous presentations demonstrating how to develop an internal Ticketing System using REDCap. Designed for a very small program (a team of one), it describes the decision-making process that led to using REDCap to manage REDCap support, along with the creative uses employed. The presentation also discusses lessons learned and anticipated strategies for scaling the system as the REDCap program expands.",
@@ -901,19 +901,19 @@
       "type": "Discussion / Small Group",
       "audience": "Administrative",
       "speaker": "Page Van Meter",
-      "location": "Oklahoma Station Ballroom 1-2",
+      "location": "Automobile Alley A+B",
       "tags": []
     },
     {
       "id": "2026-76",
-      "title": "Epic to REDCap Integration: Best Practices",
-      "description": "A practical guide to implementing the Epic to REDCap integration using a FHIR server. Best practices, recommendations, and where we struggled will be discussed.",
+      "title": "Novel uses for REDCap in QI work",
+      "description": "Have you ever wondered how to use REDCap to manage your quality improvement portfolios? This session will show you how to use REDCap with frontline staff to track quality work such as hospital acquired conditions (HACs), apparent cause analyses (ACAs), monthly quality audits (QIC, hand hygiene), PDSA cycles, and more. We will look at the builds themselves along with output displays in Power BI, REDCap dashboards and REDCap reports. The builds include, but aren't limited to, use of surveys, alerts/notifications, automatic survey invitations, and action tags.",
       "startTime": "2026-09-03T09:15:00.000Z",
       "endTime": "2026-09-03T09:45:00.000Z",
       "type": "Discussion / Small Group",
-      "audience": "Features/Functions",
-      "speaker": "Juan Artigas, Stephen Stremmel",
-      "location": "Oklahoma Station Ballroom 3",
+      "audience": "Other / Both Tech and Admin",
+      "speaker": "Rachel Wenthe",
+      "location": "Pinon",
       "tags": []
     },
     {
@@ -937,11 +937,23 @@
       "type": "Discussion / Small Group",
       "audience": "Technical",
       "speaker": "Greg Keane, Tom Mackenzie",
-      "location": "Oklahoma Station Ballroom 4",
+      "location": "Oklahoma Station Ballroom 1-3",
       "tags": []
     },
     {
       "id": "2026-79",
+      "title": "Can Everyone Complete your Survey? Accessibility Tips and Tricks",
+      "description": "Think your survey is accessible? Put it to the test. Join the DIVE Committee for demonstrations of common accessibility barriers, practical troubleshooting tips, and simple design strategies that help create surveys everyone can complete. Learn how meet digital accessibility requirements, and build a better survey experience for all users.",
+      "startTime": "2026-09-03T10:00:00.000Z",
+      "endTime": "2026-09-03T10:30:00.000Z",
+      "type": "Discussion / Small Group",
+      "audience": "Regulatory",
+      "speaker": "Page Van Meter, Courtney Howell, Kiley Yeaman, Robyn Mosher",
+      "location": "Oklahoma Station Ballroom 4",
+      "tags": []
+    },
+    {
+      "id": "2026-80",
       "title": "REDCap New Administrator Playbook: What Breaks and How to Fix It",
       "description": "Most REDCap user-reported issues are unintended consequences of project design, permissions, or user workflows. Using real support cases, this session introduces a practical playbook for new REDCap administrators to diagnose root causes, communicate effective responses, and determine when to troubleshoot, when to guide users, and when to escalate.",
       "startTime": "2026-09-03T10:00:00.000Z",
@@ -953,7 +965,7 @@
       "tags": []
     },
     {
-      "id": "2026-80",
+      "id": "2026-81",
       "title": "Security vs Usability",
       "description": "Open discussion on security vs usability. The tradeoffs between more security, but possible costs and limitations on functionality vs less security and easier usability.",
       "startTime": "2026-09-03T10:00:00.000Z",
@@ -965,18 +977,6 @@
       "tags": []
     },
     {
-      "id": "2026-81",
-      "title": "REDCap SHARE Use Case Brainstorming and Q&A",
-      "description": "REDCap SHARE, a powerful tool where participants authorize EHR data transfer directly to your REDCap instance is now released. Join us to discuss potential SHARE use cases at your institution and to have your questions answered.",
-      "startTime": "2026-09-03T10:00:00.000Z",
-      "endTime": "2026-09-03T10:30:00.000Z",
-      "type": "Discussion / Small Group",
-      "audience": "Features/Functions",
-      "speaker": "Katelyn Benhoff, Francesco Delacqua, Alex Cheng, Adam Lewis",
-      "location": "Automobile Alley A+B",
-      "tags": []
-    },
-    {
       "id": "2026-82",
       "title": "Me, Myself & I: Managing REDCap with Very Small Teams",
       "description": "A discussion section of administrators that are solo (or have very small teams) about how we find resources, unique challenges we face, and how to support each other.",
@@ -985,19 +985,19 @@
       "type": "Discussion / Small Group",
       "audience": "Administrative",
       "speaker": "Madison Albright",
-      "location": "Oklahoma Station Ballroom 1-2",
+      "location": "Automobile Alley A+B",
       "tags": []
     },
     {
       "id": "2026-83",
-      "title": "Can Everyone Complete your Survey? Accessibility Tips and Tricks",
-      "description": "Think your survey is accessible? Put it to the test. Join the DIVE Committee for demonstrations of common accessibility barriers, practical troubleshooting tips, and simple design strategies that help create surveys everyone can complete. Learn how meet digital accessibility requirements, and build a better survey experience for all users.",
+      "title": "REDCap SHARE Use Case Brainstorming and Q&A",
+      "description": "REDCap SHARE, a powerful tool where participants authorize EHR data transfer directly to your REDCap instance is now released. Join us to discuss potential SHARE use cases at your institution and to have your questions answered.",
       "startTime": "2026-09-03T10:00:00.000Z",
       "endTime": "2026-09-03T10:30:00.000Z",
       "type": "Discussion / Small Group",
-      "audience": "Regulatory",
-      "speaker": "Page Van Meter, Courtney Howell, Kiley Yeaman, Robyn Mosher",
-      "location": "Oklahoma Station Ballroom 3",
+      "audience": "Features/Functions",
+      "speaker": "Katelyn Benhoff, Francesco Delacqua, Alex Cheng, Adam Lewis",
+      "location": "Pinon",
       "tags": []
     },
     {
@@ -1014,6 +1014,18 @@
     },
     {
       "id": "2026-85",
+      "title": "AI-Assisted External Module Development",
+      "description": "What if you could build your next REDCap EM in a few hours instead of a few months? In this session, I’ll show how AI is changing the way developers create External Modules, tackle tricky technical challenges, write code to automate infrastructure tasks, and troubleshoot bugs. We’ll cover practical ways to use AI as a development partner, along with a few lessons learned and common mistakes to avoid.",
+      "startTime": "2026-09-03T10:45:00.000Z",
+      "endTime": "2026-09-03T11:15:00.000Z",
+      "type": "Discussion / Small Group",
+      "audience": "Technical",
+      "speaker": "Greg Neils",
+      "location": "Oklahoma Station Ballroom 1-3",
+      "tags": []
+    },
+    {
+      "id": "2026-86",
       "title": "REDCap Learning Lab",
       "description": "In this mixed session, we will showcase the REDCap Learning Lab that is being developed at Vanderbilt Health, including the underlying LMS design and training materials. Discussion will be centered around which learning tracks to focus on developing next, what types of business models should be supported, and what types on integration with REDCap would be valuable to Consortium members.",
       "startTime": "2026-09-03T10:45:00.000Z",
@@ -1025,7 +1037,7 @@
       "tags": []
     },
     {
-      "id": "2026-86",
+      "id": "2026-87",
       "title": "REDCap CDIS-based Healthcare Provider Organization Participation in All of Us",
       "description": "The All of Us program is piloting an HPO-Lite model of participation where institutions use REDCap CDIS to collect and contribute data with FHIR to the program. Come discuss what participating in All of Us through HPO-Lite might look like at your institution.",
       "startTime": "2026-09-03T10:45:00.000Z",
@@ -1037,7 +1049,7 @@
       "tags": []
     },
     {
-      "id": "2026-87",
+      "id": "2026-88",
       "title": "Building Powerful External Modules: Lessons from Harmonist Hub",
       "description": "This session showcases the range of experiences you can deliver with External Modules, using Harmonist Hub as a concrete example of what’s possible. Rather than a build tutorial, we’ll highlight advanced capabilities and design patterns that enable rich, application-like workflows—such as launching REDCap surveys in pop-up/iframe windows and embedding purpose-built utilities directly into a module. We’ll also demo Hub Updates, an in-hub link that supports maintaining data dictionaries in an intuitive, user-friendly way.",
       "startTime": "2026-09-03T10:45:00.000Z",
@@ -1049,18 +1061,6 @@
       "tags": []
     },
     {
-      "id": "2026-88",
-      "title": "Managing Twilio at Scale: Tips, Tricks, and Lessons Learned from a Centralized Management Model",
-      "description": "A2P 10DLC registration has become a recurring pain point for REDCap administrators and users. In this session, we will share how we addressed that challenge by moving to a centralized Twilio account model supported by a REDCap integration for account and user management. We will discuss lessons learned from restructuring our A2P 10DLC workflows, along with practical tips and templates for successful campaign registration and ongoing maintenance. Attendees will leave with concrete strategies they can adapt to simplify Twilio management at their own institutions.",
-      "startTime": "2026-09-03T10:45:00.000Z",
-      "endTime": "2026-09-03T11:15:00.000Z",
-      "type": "Discussion / Small Group",
-      "audience": "Administrative",
-      "speaker": "Kiley Yeaman, Lindsay Berrigan, Lindsay Hall",
-      "location": "Automobile Alley A+B",
-      "tags": []
-    },
-    {
       "id": "2026-89",
       "title": "An Interactive Framework for Streamlined Requirements Gathering & Project Delivery",
       "description": "We will share an interactive intake framework designed to go beyond collecting standard requirements for building user-centered projects by capturing the complexities and nuances of research workflows that often go unaddressed in static intake forms. We’ve created a centralized hub for collecting and sharing all study, project, and user information to help establish clear expectations and streamline communications from intake to delivery. Built-in automations reduce manual effort by programmatically generating cost ranges and timeline estimates, while integration with Jira enables automatic creation and updating of project tasks.",
@@ -1069,19 +1069,19 @@
       "type": "Discussion / Small Group",
       "audience": "Administrative",
       "speaker": "Laura Sullivan, Jess Hale",
-      "location": "Oklahoma Station Ballroom 1-2",
+      "location": "Automobile Alley A+B",
       "tags": []
     },
     {
       "id": "2026-90",
-      "title": "AI-Assisted External Module Development",
-      "description": "What if you could build your next REDCap EM in a few hours instead of a few months? In this session, I’ll show how AI is changing the way developers create External Modules, tackle tricky technical challenges, write code to automate infrastructure tasks, and troubleshoot bugs. We’ll cover practical ways to use AI as a development partner, along with a few lessons learned and common mistakes to avoid.",
+      "title": "Managing Twilio at Scale: Tips, Tricks, and Lessons Learned from a Centralized Management Model",
+      "description": "A2P 10DLC registration has become a recurring pain point for REDCap administrators and users. In this session, we will share how we addressed that challenge by moving to a centralized Twilio account model supported by a REDCap integration for account and user management. We will discuss lessons learned from restructuring our A2P 10DLC workflows, along with practical tips and templates for successful campaign registration and ongoing maintenance. Attendees will leave with concrete strategies they can adapt to simplify Twilio management at their own institutions.",
       "startTime": "2026-09-03T10:45:00.000Z",
       "endTime": "2026-09-03T11:15:00.000Z",
       "type": "Discussion / Small Group",
-      "audience": "Technical",
-      "speaker": "Greg Neils",
-      "location": "Oklahoma Station Ballroom 3",
+      "audience": "Administrative",
+      "speaker": "Kiley Yeaman, Lindsay Berrigan, Lindsay Hall",
+      "location": "Pinon",
       "tags": []
     },
     {

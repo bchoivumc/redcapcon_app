@@ -1,6 +1,6 @@
 {
   "year": 2026,
-  "lastUpdated": "2026-08-26T02:57:08.469Z",
+  "lastUpdated": "2026-08-27T12:11:36.252Z",
   "source": "https://redcap.vumc.org/surveys/?__report=Y7EMJR9L797FTX83",
   "sessionCount": 101,
   "sessions": [
@@ -168,7 +168,7 @@
       "endTime": "2026-09-01T11:30:00.000Z",
       "type": "Plenary",
       "audience": "All",
-      "speaker": "Various",
+      "speaker": "Lindsay Hall, Vaishali Belamkar, Kim Anderson. Moderated by Paul Harris",
       "location": "Oklahoma Station Ballroom 1-4",
       "tags": []
     },

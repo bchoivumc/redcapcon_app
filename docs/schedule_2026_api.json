@@ -1,8 +1,8 @@
 {
   "year": 2026,
-  "lastUpdated": "2026-08-27T12:11:36.252Z",
+  "lastUpdated": "2026-08-28T13:36:32.622Z",
   "source": "https://redcap.vumc.org/surveys/?__report=Y7EMJR9L797FTX83",
-  "sessionCount": 101,
+  "sessionCount": 100,
   "sessions": [
     {
       "id": "2026-1",
@@ -84,7 +84,7 @@
       "endTime": "2026-09-01T08:30:00.000Z",
       "type": "Plenary",
       "audience": "All",
-      "speaker": "",
+      "speaker": "OU Team",
       "location": "Oklahoma Station Ballroom 1-4",
       "tags": []
     },
@@ -1194,18 +1194,6 @@
     },
     {
       "id": "2026-100",
-      "title": "2027 REDCapCon Host Announcement",
-      "description": "",
-      "startTime": "2026-09-03T14:35:00.000Z",
-      "endTime": "2026-09-03T14:45:00.000Z",
-      "type": "Plenary",
-      "audience": "All",
-      "speaker": "(it's a surprise!)",
-      "location": "Oklahoma Station Ballroom 1-4",
-      "tags": []
-    },
-    {
-      "id": "2026-101",
       "title": "Closing remarks and event dismissal",
       "description": "",
       "startTime": "2026-09-03T14:45:00.000Z",

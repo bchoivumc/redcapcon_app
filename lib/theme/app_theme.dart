@@ -29,6 +29,13 @@ class AppTheme {
   static const Color mediumGray = Color(0xFF898580);   // Medium gray
   static const Color lightGray = Color(0xFFFCFCFC);    // Light gray
 
+  // Golden OKC theme colors
+  static const Color goldenAmber = Color(0xFFA06000);
+  static const Color sunGold     = Color(0xFFE8A000);
+  static const Color okcBlue     = Color(0xFF0073CF);
+  static const Color warmIvory   = Color(0xFFFFFBF0);
+  static const Color richBrown   = Color(0xFF5C3D00);
+
   static ThemeData get lightTheme {
     return ThemeData(
       useMaterial3: true,
@@ -518,6 +525,121 @@ class AppTheme {
       badgeTheme: BadgeThemeData(
         backgroundColor: brightRed,
         textColor: lightGray,
+      ),
+    );
+  }
+
+  static ThemeData get goldenTheme {
+    return ThemeData(
+      useMaterial3: true,
+      colorScheme: ColorScheme.light(
+        primary: goldenAmber,
+        onPrimary: warmIvory,
+        secondary: okcBlue,
+        onSecondary: warmIvory,
+        tertiary: sunGold,
+        onTertiary: richBrown,
+        surface: warmIvory,
+        onSurface: richBrown,
+        surfaceContainerHighest: const Color(0xFFF0EBD8),
+        primaryContainer: const Color(0xFFFFE0A0),
+        onPrimaryContainer: richBrown,
+        secondaryContainer: const Color(0xFFD6EEFF),
+        onSecondaryContainer: const Color(0xFF003B6E),
+        outline: goldenAmber.withValues(alpha: 0.35),
+        error: const Color(0xFFB71C1C),
+        onError: warmIvory,
+      ),
+      scaffoldBackgroundColor: warmIvory,
+      appBarTheme: AppBarTheme(
+        backgroundColor: goldenAmber,
+        foregroundColor: warmIvory,
+        elevation: 0,
+        iconTheme: const IconThemeData(color: warmIvory),
+        titleTextStyle: const TextStyle(
+          color: warmIvory,
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      cardTheme: CardThemeData(
+        color: Colors.white,
+        elevation: 2,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      ),
+      chipTheme: ChipThemeData(
+        backgroundColor: sunGold.withValues(alpha: 0.2),
+        selectedColor: sunGold,
+        labelStyle: const TextStyle(color: richBrown),
+        secondaryLabelStyle: const TextStyle(color: richBrown),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      ),
+      filledButtonTheme: FilledButtonThemeData(
+        style: FilledButton.styleFrom(
+          backgroundColor: goldenAmber,
+          foregroundColor: warmIvory,
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        ),
+      ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: okcBlue,
+          foregroundColor: warmIvory,
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        ),
+      ),
+      textButtonTheme: TextButtonThemeData(
+        style: TextButton.styleFrom(foregroundColor: goldenAmber),
+      ),
+      inputDecorationTheme: InputDecorationTheme(
+        filled: true,
+        fillColor: Colors.white,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(color: sunGold),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide(color: sunGold.withValues(alpha: 0.5)),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(color: goldenAmber, width: 2),
+        ),
+        prefixIconColor: richBrown,
+        suffixIconColor: richBrown,
+      ),
+      iconTheme: const IconThemeData(color: richBrown),
+      floatingActionButtonTheme: const FloatingActionButtonThemeData(
+        backgroundColor: okcBlue,
+        foregroundColor: warmIvory,
+      ),
+      navigationBarTheme: NavigationBarThemeData(
+        backgroundColor: warmIvory,
+        indicatorColor: sunGold.withValues(alpha: 0.4),
+        labelTextStyle: WidgetStateProperty.all(
+          const TextStyle(color: richBrown, fontSize: 12),
+        ),
+        iconTheme: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) {
+            return const IconThemeData(color: richBrown);
+          }
+          return IconThemeData(color: richBrown.withValues(alpha: 0.6));
+        }),
+      ),
+      bottomNavigationBarTheme: BottomNavigationBarThemeData(
+        backgroundColor: warmIvory,
+        selectedItemColor: goldenAmber,
+        unselectedItemColor: richBrown.withValues(alpha: 0.6),
+        selectedIconTheme: const IconThemeData(color: goldenAmber),
+        unselectedIconTheme: IconThemeData(color: richBrown.withValues(alpha: 0.6)),
+      ),
+      dividerColor: sunGold.withValues(alpha: 0.3),
+      badgeTheme: const BadgeThemeData(
+        backgroundColor: okcBlue,
+        textColor: warmIvory,
       ),
     );
   }

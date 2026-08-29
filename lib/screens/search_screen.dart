@@ -6,7 +6,8 @@ import '../widgets/session_card.dart';
 import '../theme/time_format_provider.dart';
 
 class SearchScreen extends StatefulWidget {
-  const SearchScreen({super.key});
+  final int? initialYear;
+  const SearchScreen({super.key, this.initialYear});
 
   @override
   State<SearchScreen> createState() => _SearchScreenState();
@@ -16,15 +17,16 @@ class _SearchScreenState extends State<SearchScreen> {
   final ScheduleService _scheduleService = ScheduleService();
   final TextEditingController _searchController = TextEditingController();
   
-  Map<int, List<Session>> _allSessionsByYear = {};
+  final Map<int, List<Session>> _allSessionsByYear = {};
   List<Session> _searchResults = [];
-  Set<int> _selectedYears = {2026};
+  late final Set<int> _selectedYears;
   String _searchQuery = '';
   bool _isLoading = true;
 
   @override
   void initState() {
     super.initState();
+    _selectedYears = {widget.initialYear ?? 2026};
     _loadAllYears();
   }
 
@@ -50,7 +52,7 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   void _performSearch() {
-    if (_searchQuery.isEmpty) {
+    if (_selectedYears.isEmpty) {
       if (mounted) setState(() => _searchResults = []);
       return;
     }
@@ -58,15 +60,17 @@ class _SearchScreenState extends State<SearchScreen> {
     final results = <Session>[];
     for (final year in _selectedYears) {
       final sessions = _allSessionsByYear[year] ?? [];
-      final filtered = sessions.where((session) {
-        final query = _searchQuery.toLowerCase();
-        return session.title.toLowerCase().contains(query) ||
-            session.description.toLowerCase().contains(query) ||
-            session.speaker.toLowerCase().contains(query) ||
-            session.location.toLowerCase().contains(query) ||
-            session.type.toLowerCase().contains(query) ||
-            session.audience.toLowerCase().contains(query);
-      }).toList();
+      final filtered = _searchQuery.isEmpty
+          ? sessions
+          : sessions.where((session) {
+              final query = _searchQuery.toLowerCase();
+              return session.title.toLowerCase().contains(query) ||
+                  session.description.toLowerCase().contains(query) ||
+                  session.speaker.toLowerCase().contains(query) ||
+                  session.location.toLowerCase().contains(query) ||
+                  session.type.toLowerCase().contains(query) ||
+                  session.audience.toLowerCase().contains(query);
+            }).toList();
       results.addAll(filtered);
     }
 
@@ -200,7 +204,7 @@ class _SearchScreenState extends State<SearchScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Search All Years'),
+        title: const Text('Browse & Search'),
       ),
       body: Column(
         children: [
@@ -211,7 +215,7 @@ class _SearchScreenState extends State<SearchScreen> {
               controller: _searchController,
               autofocus: false,
               decoration: InputDecoration(
-                hintText: 'Search sessions across all years...',
+                hintText: 'Search sessions, or browse by selecting a year...',
                 prefixIcon: const Icon(Icons.search),
                 suffixIcon: _searchQuery.isNotEmpty
                     ? IconButton(
@@ -268,19 +272,19 @@ class _SearchScreenState extends State<SearchScreen> {
           Expanded(
             child: _isLoading
                 ? const Center(child: CircularProgressIndicator())
-                : _searchQuery.isEmpty
+                : _selectedYears.isEmpty
                     ? Center(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Icon(
-                              Icons.search,
+                              Icons.calendar_month_outlined,
                               size: 64,
                               color: Theme.of(context).colorScheme.secondary,
                             ),
                             const SizedBox(height: 16),
                             const Text(
-                              'Search across all conference years',
+                              'Select a year to browse',
                               style: TextStyle(fontSize: 18),
                             ),
                           ],

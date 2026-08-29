@@ -10,6 +10,7 @@ import '../services/schedule_service.dart';
 import '../services/backup_service.dart';
 import '../main.dart';
 import 'badges_2027_preview_screen.dart';
+import '../services/badge_service.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -23,11 +24,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
   bool _isExporting = false;
   bool _isImporting = false;
   final _backup = BackupService();
+  bool _vipUnlocked = false;
 
   @override
   void initState() {
     super.initState();
     _loadVersion();
+    _checkVip();
   }
 
   Future<void> _loadVersion() async {
@@ -37,6 +40,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
         _version = '${packageInfo.version} (${packageInfo.buildNumber})';
       });
     }
+  }
+
+  Future<void> _checkVip() async {
+    final ids = await BadgeService().getEarnedBadgeIds();
+    if (mounted) setState(() => _vipUnlocked = ids.contains('vip_access'));
   }
 
   @override
@@ -128,6 +136,23 @@ class _SettingsScreenState extends State<SettingsScreen> {
               AppTheme.brown,
             ],
           ),
+          if (_vipUnlocked) ...[
+            const SizedBox(height: 8),
+            _buildThemeOption(
+              context,
+              themeProvider,
+              'golden',
+              '👑 Golden OKC',
+              'Unlocked by VIP Access — warm amber & Oklahoma sky blue',
+              [
+                AppTheme.goldenAmber,
+                AppTheme.sunGold,
+                AppTheme.okcBlue,
+                AppTheme.warmIvory,
+                AppTheme.richBrown,
+              ],
+            ),
+          ],
           const Divider(height: 32),
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),

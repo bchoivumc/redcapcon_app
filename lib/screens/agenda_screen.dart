@@ -7,6 +7,9 @@ import '../services/badge_service.dart';
 import '../widgets/session_card.dart';
 import '../widgets/filter_bottom_sheet.dart';
 import '../theme/time_format_provider.dart';
+import '../theme/theme_provider.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'settings_screen.dart';
 
 class AgendaScreen extends StatefulWidget {
@@ -35,6 +38,11 @@ class AgendaScreenState extends State<AgendaScreen> {
   Set<String> _selectedTypes = {};
   Set<String> _selectedAudiences = {};
   final Set<String> _collapsedDates = {};
+  final Map<String, GlobalKey> _dateKeys = {};
+  String _wildcardLabel = '';
+  String _wildcardUrl = '';
+  final ScrollController _scrollController = ScrollController();
+  final GlobalKey _listKey = GlobalKey();
   String _searchQuery = '';
   final TextEditingController _searchController = TextEditingController();
 
@@ -43,6 +51,7 @@ class AgendaScreenState extends State<AgendaScreen> {
     super.initState();
     BadgeService().trackYearBrowse(widget.selectedYear);
     _loadSchedule();
+    _loadWildcard();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) setState(() => _searchFieldVisible = true);
     });
@@ -59,6 +68,7 @@ class AgendaScreenState extends State<AgendaScreen> {
   @override
   void dispose() {
     _searchController.dispose();
+    _scrollController.dispose();
     super.dispose();
   }
 
@@ -132,6 +142,207 @@ class AgendaScreenState extends State<AgendaScreen> {
         return dateMatch && typeMatch && audienceMatch && searchMatch;
       }).toList();
     });
+  }
+
+  Future<void> _loadWildcard() async {
+    final prefs = await SharedPreferences.getInstance();
+    if (!mounted) return;
+    setState(() {
+      _wildcardLabel = prefs.getString('quicklink_label') ?? '';
+      _wildcardUrl = prefs.getString('quicklink_url') ?? '';
+    });
+  }
+
+  Future<void> _saveWildcard(String label, String url) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('quicklink_label', label);
+    await prefs.setString('quicklink_url', url);
+  }
+
+  Future<void> _launchUrl(String rawUrl) async {
+    final uri = Uri.parse(rawUrl);
+    if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
+      if (mounted) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text('Could not open link')));
+      }
+    }
+  }
+
+  void _showQuickLinks() {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (sheetCtx) {
+        String wcLabel = _wildcardLabel;
+        String wcUrl = _wildcardUrl;
+
+        return StatefulBuilder(
+          builder: (sheetCtx, setSheetState) {
+            return SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Center(
+                      child: Container(
+                        width: 36, height: 4,
+                        margin: const EdgeInsets.only(bottom: 12),
+                        decoration: BoxDecoration(
+                          color: Colors.grey[300],
+                          borderRadius: BorderRadius.circular(2),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'Quick Links',
+                          style: Theme.of(sheetCtx).textTheme.titleMedium?.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
+                        ),
+                      ),
+                    ),
+                    ListTile(
+                      leading: const Icon(Icons.dashboard_outlined),
+                      title: const Text('Con Dashboard'),
+                      trailing: const Icon(Icons.open_in_new, size: 18),
+                      onTap: () {
+                        Navigator.pop(sheetCtx);
+                        _launchUrl('https://redcap.vumc.org/surveys/?__dashboard=7YEYW7CYA7F');
+                      },
+                    ),
+                    ListTile(
+                      leading: const Icon(Icons.photo_library_outlined),
+                      title: const Text('Conference Photos'),
+                      trailing: const Icon(Icons.open_in_new, size: 18),
+                      onTap: () {
+                        Navigator.pop(sheetCtx);
+                        _launchUrl('https://photos.app.goo.gl/qBe11ybrr2ddCFWAA');
+                      },
+                    ),
+                    ListTile(
+                      leading: const Icon(Icons.upload_outlined),
+                      title: const Text('Upload (share) photo'),
+                      trailing: const Icon(Icons.open_in_new, size: 18),
+                      onTap: () {
+                        Navigator.pop(sheetCtx);
+                        _launchUrl('https://redcap.vumc.org/surveys/?s=CLATFYY7CK4C7NA8');
+                      },
+                    ),
+                    ListTile(
+                      leading: Icon(
+                        wcUrl.isEmpty ? Icons.add_link : Icons.link,
+                        color: wcUrl.isEmpty
+                            ? Theme.of(sheetCtx).colorScheme.secondary
+                            : null,
+                      ),
+                      title: Text(
+                        wcLabel.isEmpty ? 'Add custom link…' : wcLabel,
+                        style: wcUrl.isEmpty
+                            ? TextStyle(
+                                color: Theme.of(sheetCtx).colorScheme.secondary,
+                                fontStyle: FontStyle.italic,
+                              )
+                            : null,
+                      ),
+                      subtitle: wcUrl.isEmpty
+                          ? null
+                          : Text(wcUrl,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(fontSize: 12)),
+                      trailing: IconButton(
+                        icon: const Icon(Icons.edit_outlined, size: 20),
+                        tooltip: 'Edit',
+                        onPressed: () async {
+                          final labelCtrl =
+                              TextEditingController(text: wcLabel);
+                          final urlCtrl =
+                              TextEditingController(text: wcUrl);
+                          final saved = await showDialog<bool>(
+                            context: sheetCtx,
+                            builder: (dlgCtx) => AlertDialog(
+                              title: const Text('Custom Link'),
+                              content: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  TextField(
+                                    controller: labelCtrl,
+                                    decoration: const InputDecoration(
+                                        labelText: 'Label',
+                                        hintText: 'e.g. Slack channel'),
+                                    textCapitalization:
+                                        TextCapitalization.words,
+                                  ),
+                                  const SizedBox(height: 12),
+                                  TextField(
+                                    controller: urlCtrl,
+                                    decoration: const InputDecoration(
+                                        labelText: 'URL',
+                                        hintText: 'https://…'),
+                                    keyboardType: TextInputType.url,
+                                    autocorrect: false,
+                                  ),
+                                ],
+                              ),
+                              actions: [
+                                TextButton(
+                                  onPressed: () =>
+                                      Navigator.pop(dlgCtx, false),
+                                  child: const Text('Cancel'),
+                                ),
+                                FilledButton(
+                                  onPressed: () =>
+                                      Navigator.pop(dlgCtx, true),
+                                  child: const Text('Save'),
+                                ),
+                              ],
+                            ),
+                          );
+                          if (saved == true) {
+                            final newLabel = labelCtrl.text.trim();
+                            var newUrl = urlCtrl.text.trim();
+                            if (newUrl.isNotEmpty &&
+                                !newUrl.startsWith('http://') &&
+                                !newUrl.startsWith('https://')) {
+                              newUrl = 'https://$newUrl';
+                            }
+                            await _saveWildcard(newLabel, newUrl);
+                            setSheetState(() {
+                              wcLabel = newLabel;
+                              wcUrl = newUrl;
+                            });
+                            if (mounted) {
+                              setState(() {
+                                _wildcardLabel = newLabel;
+                                _wildcardUrl = newUrl;
+                              });
+                            }
+                          }
+                          labelCtrl.dispose();
+                          urlCtrl.dispose();
+                        },
+                      ),
+                      onTap: wcUrl.isEmpty
+                          ? null
+                          : () {
+                              Navigator.pop(sheetCtx);
+                              _launchUrl(wcUrl);
+                            },
+                    ),
+                    const SizedBox(height: 8),
+                  ],
+                ),
+              ),
+            );
+          },
+        );
+      },
+    );
   }
 
   void _showFilterSheet() {
@@ -332,11 +543,28 @@ class AgendaScreenState extends State<AgendaScreen> {
           ],
         ),
         actions: [
-          if (_hasActiveFilters)
-            IconButton(
-              icon: const Icon(Icons.filter_list_off),
-              onPressed: _clearFilters,
-              tooltip: 'Clear filters',
+          if (context.watch<ThemeProvider>().currentTheme == 'golden')
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 4),
+              child: Tooltip(
+                message: 'VIP Access',
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text('👑', style: TextStyle(fontSize: 16)),
+                    Text(
+                      'VIP',
+                      style: TextStyle(
+                        color: Color(0xFFFFD700),
+                        fontSize: 8,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 0.5,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
           IconButton(
             icon: Badge(
@@ -345,6 +573,11 @@ class AgendaScreenState extends State<AgendaScreen> {
             ),
             onPressed: _showFilterSheet,
             tooltip: 'Filter',
+          ),
+          IconButton(
+            icon: const Icon(Icons.bookmarks_outlined),
+            tooltip: 'Quick Links',
+            onPressed: _showQuickLinks,
           ),
           // Settings button
           IconButton(
@@ -366,6 +599,39 @@ class AgendaScreenState extends State<AgendaScreen> {
   Widget _buildBody(BuildContext context, List<String> sortedDates, Map<String, List<Session>> groupedSessions) {
     return Column(
       children: [
+        if (_hasActiveFilters)
+          InkWell(
+            onTap: _clearFilters,
+            child: Container(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
+              color: Theme.of(context).colorScheme.secondaryContainer,
+              child: Row(
+                children: [
+                  Icon(Icons.filter_list,
+                      size: 13,
+                      color: Theme.of(context).colorScheme.onSecondaryContainer),
+                  const SizedBox(width: 6),
+                  Text(
+                    'Filters active',
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Theme.of(context).colorScheme.onSecondaryContainer,
+                    ),
+                  ),
+                  const Spacer(),
+                  Text(
+                    'Clear ×',
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).colorScheme.onSecondaryContainer,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
         if (widget.selectedYear != 2026)
           Container(
             width: double.infinity,
@@ -464,6 +730,8 @@ class AgendaScreenState extends State<AgendaScreen> {
                       ),
                     )
                   : CustomScrollView(
+                      key: _listKey,
+                      controller: _scrollController,
                       slivers: [
                         for (final dateKey in sortedDates) ...[
                           SliverPersistentHeader(
@@ -474,13 +742,31 @@ class AgendaScreenState extends State<AgendaScreen> {
                               ),
                               sessionCount: groupedSessions[dateKey]!.length,
                               isCollapsed: _collapsedDates.contains(dateKey),
-                              onTap: () => setState(() {
-                                if (_collapsedDates.contains(dateKey)) {
-                                  _collapsedDates.remove(dateKey);
-                                } else {
-                                  _collapsedDates.add(dateKey);
+                              onTap: () {
+                                final wasCollapsed = _collapsedDates.contains(dateKey);
+                                setState(() {
+                                  if (wasCollapsed) {
+                                    _collapsedDates.remove(dateKey);
+                                  } else {
+                                    _collapsedDates.add(dateKey);
+                                  }
+                                });
+                                if (wasCollapsed) {
+                                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                                    final key = _dateKeys[dateKey];
+                                    if (key?.currentContext != null) {
+                                      Scrollable.ensureVisible(
+                                        key!.currentContext!,
+                                        duration: const Duration(milliseconds: 350),
+                                        curve: Curves.easeOut,
+                                        alignment: 0.0,
+                                        alignmentPolicy:
+                                            ScrollPositionAlignmentPolicy.explicit,
+                                      );
+                                    }
+                                  });
                                 }
-                              }),
+                              },
                               countTrailing: dateKey == sortedDates.first
                                   ? Builder(builder: (context) {
                                       final cs = Theme.of(context).colorScheme;
@@ -508,20 +794,29 @@ class AgendaScreenState extends State<AgendaScreen> {
                             ),
                           ),
                           SliverToBoxAdapter(
-                            child: AnimatedSize(
-                              duration: const Duration(milliseconds: 220),
-                              curve: Curves.easeInOut,
-                              child: _collapsedDates.contains(dateKey)
-                                  ? const SizedBox.shrink()
-                                  : Column(
-                                      children: groupedSessions[dateKey]!
-                                          .map((session) => SessionCard(
-                                                showBookmark: widget.selectedYear == 2026,
-                                                session: session,
-                                                onTap: () => _showSessionDetails(session),
-                                              ))
-                                          .toList(),
-                                    ),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                SizedBox(
+                                  key: _dateKeys.putIfAbsent(dateKey, GlobalKey.new),
+                                  height: 0,
+                                ),
+                                AnimatedSize(
+                                  duration: const Duration(milliseconds: 220),
+                                  curve: Curves.easeInOut,
+                                  child: _collapsedDates.contains(dateKey)
+                                      ? const SizedBox.shrink()
+                                      : Column(
+                                          children: groupedSessions[dateKey]!
+                                              .map((session) => SessionCard(
+                                                    showBookmark: widget.selectedYear == 2026,
+                                                    session: session,
+                                                    onTap: () => _showSessionDetails(session),
+                                                  ))
+                                              .toList(),
+                                        ),
+                                ),
+                              ],
                             ),
                           ),
                         ],

@@ -4,10 +4,10 @@ import 'app_theme.dart';
 
 class ThemeProvider extends ChangeNotifier {
   static const String _themeKey = 'selected_theme';
-  String _currentTheme = 'professional'; // 'classic', 'blue', 'earth', or 'professional'
+  String _currentTheme = 'professional';
 
   String get currentTheme => _currentTheme;
-  
+
   ThemeData get themeData {
     switch (_currentTheme) {
       case 'blue':
@@ -16,6 +16,8 @@ class ThemeProvider extends ChangeNotifier {
         return AppTheme.earthTheme;
       case 'professional':
         return AppTheme.professionalTheme;
+      case 'golden':
+        return AppTheme.goldenTheme;
       default:
         return AppTheme.lightTheme;
     }
@@ -32,8 +34,7 @@ class ThemeProvider extends ChangeNotifier {
   }
 
   Future<void> setTheme(String theme) async {
-    if (!['classic', 'blue', 'earth', 'professional'].contains(theme)) return;
-    
+    if (!['classic', 'blue', 'earth', 'professional', 'golden'].contains(theme)) return;
     _currentTheme = theme;
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(_themeKey, theme);

@@ -1,6 +1,6 @@
 {
   "year": 2026,
-  "lastUpdated": "2026-08-28T13:36:32.622Z",
+  "lastUpdated": "2026-08-29T08:27:56.369Z",
   "source": "https://redcap.vumc.org/surveys/?__report=Y7EMJR9L797FTX83",
   "sessionCount": 100,
   "sessions": [
@@ -1098,13 +1098,13 @@
     },
     {
       "id": "2026-92",
-      "title": "Door Prizes!",
-      "description": "",
+      "title": "Competition Awards and Door Prizes!",
+      "description": "()",
       "startTime": "2026-09-03T12:15:00.000Z",
       "endTime": "2026-09-03T12:30:00.000Z",
       "type": "Plenary",
       "audience": "All",
-      "speaker": "Brenda Minor",
+      "speaker": "Brenda Minor, Amanda Miller, Kris Dhanekula",
       "location": "Oklahoma Station Ballroom 1-4",
       "tags": []
     },
@@ -1182,7 +1182,7 @@
     },
     {
       "id": "2026-99",
-      "title": "Competition Winners/Awards and 2026 Host Thank You",
+      "title": "2026 Host Thank You + Spirit Award",
       "description": "",
       "startTime": "2026-09-03T14:25:00.000Z",
       "endTime": "2026-09-03T14:35:00.000Z",

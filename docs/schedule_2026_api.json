@@ -1,6 +1,6 @@
 {
   "year": 2026,
-  "lastUpdated": "2026-08-29T08:27:56.369Z",
+  "lastUpdated": "2026-08-30T07:41:48.106Z",
   "source": "https://redcap.vumc.org/surveys/?__report=Y7EMJR9L797FTX83",
   "sessionCount": 100,
   "sessions": [
@@ -606,13 +606,13 @@
     },
     {
       "id": "2026-51",
-      "title": "From Complicated to Common: Advancing Uptake & Usability of NIH Common Data Elements  through REDCap",
-      "description": "This session will focus on CDE use in the wild including how frequently CDEs are being used at a typical research institution, what challenges and opportunities exist around CDE adoption from the NIH and researcher perspective, and REDCap's potential to bring a technology solution to better enable the use of CDEs.",
+      "title": "The Engine Behind the Research: Connecting Cores Through REDCap Innovation",
+      "description": "This presentation will describe the Vanderbilt Memory and Alzheimer’s Center (VMAC) data infrastructure, highlighting a scalable, multi-core ecosystem built around REDCap as its central platform. As part of the Alzheimer’s Disease Research Center (ADRC), VMAC supports multiple functional cores with distinct operational needs, requiring a flexible yet integrated data architecture. By leveraging REDCap in combination with internal governance structures and external research tools, VMAC has developed a unified system that promotes efficiency, data integrity, and cross-core collaboration.",
       "startTime": "2026-09-02T14:00:00.000Z",
       "endTime": "2026-09-02T14:45:00.000Z",
       "type": "Breakout",
       "audience": "Applied Biostatistics",
-      "speaker": "Steph Duda, Colleen Lawrence, Lina Sulieman",
+      "speaker": "Daniel Ibarra-Scurr",
       "location": "Automobile Alley C",
       "tags": []
     },
@@ -666,13 +666,13 @@
     },
     {
       "id": "2026-56",
-      "title": "The Engine Behind the Research: Connecting Cores Through REDCap Innovation",
-      "description": "This presentation will describe the Vanderbilt Memory and Alzheimer’s Center (VMAC) data infrastructure, highlighting a scalable, multi-core ecosystem built around REDCap as its central platform. As part of the Alzheimer’s Disease Research Center (ADRC), VMAC supports multiple functional cores with distinct operational needs, requiring a flexible yet integrated data architecture. By leveraging REDCap in combination with internal governance structures and external research tools, VMAC has developed a unified system that promotes efficiency, data integrity, and cross-core collaboration.",
+      "title": "From Complicated to Common: Advancing Uptake & Usability of NIH Common Data Elements  through REDCap",
+      "description": "This session will focus on CDE use in the wild including how frequently CDEs are being used at a typical research institution, what challenges and opportunities exist around CDE adoption from the NIH and researcher perspective, and REDCap's potential to bring a technology solution to better enable the use of CDEs.",
       "startTime": "2026-09-02T15:00:00.000Z",
       "endTime": "2026-09-02T15:45:00.000Z",
       "type": "Breakout",
       "audience": "Applied Biostatistics",
-      "speaker": "Daniel Ibarra-Scurr",
+      "speaker": "Steph Duda, Colleen Lawrence, Lina Sulieman",
       "location": "Mistletoe",
       "tags": []
     },

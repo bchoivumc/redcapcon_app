@@ -1,6 +1,6 @@
 {
   "year": 2026,
-  "lastUpdated": "2026-08-30T07:41:48.106Z",
+  "lastUpdated": "2026-08-31T07:55:58.469Z",
   "source": "https://redcap.vumc.org/surveys/?__report=Y7EMJR9L797FTX83",
   "sessionCount": 100,
   "sessions": [
@@ -174,7 +174,7 @@
     },
     {
       "id": "2026-15",
-      "title": "Creative Uses of REDCap I (Beginner level)",
+      "title": "Creative Uses of REDCap (Easy to Medium)",
       "description": "Discover some creative uses of REDCap strictly using basic REDCap functionality: no external modules, no hooks, no plugins, etc.",
       "startTime": "2026-09-01T11:30:00.000Z",
       "endTime": "2026-09-01T12:00:00.000Z",
@@ -402,7 +402,7 @@
     },
     {
       "id": "2026-34",
-      "title": "Creative Uses of REDCap II (Intermediate-Advanced level)",
+      "title": "Creative Uses of REDCap (Medium to Unleashed)",
       "description": "Learn some intermediate to advanced creative uses in REDCap using basic REDCap functionality (and maybe a dash extra).",
       "startTime": "2026-09-02T09:45:00.000Z",
       "endTime": "2026-09-02T10:15:00.000Z",
